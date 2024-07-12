@@ -1,0 +1,1 @@
+export const tgApp = window.Telegram.WebApp;

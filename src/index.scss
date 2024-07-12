@@ -1,0 +1,27 @@
+@import url("./assets/fonts/index.scss");
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Pixel Operator Mono", monospace;
+}
+
+html {
+    background-color: #333;
+    color: #fff;
+}
+
+body {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+button,
+input,
+select,
+textarea,
+a {
+    outline: none;
+}

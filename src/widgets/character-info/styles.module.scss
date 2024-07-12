@@ -1,0 +1,22 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 11.5px 24px;
+    border-radius: 102px;
+    box-shadow: 12px 12px 24px 0px #3e3e3e inset,
+        -12px -12px 24px 0px #1e1e1e80 inset;
+}
+
+.name {
+    font-weight: 400;
+    font-size: 16px;
+    color: #fff;
+}
+
+.level {
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba($color: #fff, $alpha: 0.5);
+}

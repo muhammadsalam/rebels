@@ -1,0 +1,16 @@
+.wrapper {
+    box-shadow: 12px 12px 24px 0px #1e1e1e, -12px -12px 24px 0px #3e3e3e;
+    background-color: #333;
+    border-radius: 165px;
+    padding: 20px;
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.person {
+    overflow: hidden;
+    border-radius: 555px;
+}

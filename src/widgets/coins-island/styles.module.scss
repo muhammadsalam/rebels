@@ -1,0 +1,17 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15.5px 32px;
+    gap: 12px;
+
+    border-radius: 111px;
+    background-color: #333;
+    box-shadow: -12px -12px 24px rgba(30, 30, 30, 0.5) inset,
+        12px 12px 24px #3e3e3e inset;
+}
+
+.value {
+    font-size: 32px;
+    font-weight: 700;
+}
