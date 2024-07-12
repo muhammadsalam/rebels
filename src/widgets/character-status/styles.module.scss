@@ -1,0 +1,72 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.heart_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 12px 12px 24px 0px #3e3e3e inset,
+        -12px -12px 24px 0px #1e1e1e inset;
+    border-radius: 100px;
+}
+
+.heart_count {
+    margin-left: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    color: #fff;
+
+    span:last-child {
+        opacity: 0.3;
+    }
+}
+
+.line {
+    box-shadow: 2px 2px 4px 0px #000000cc inset,
+        -2px -2px 4px 0px #ffffff14 inset;
+    margin: 0 16px;
+    flex-grow: 1;
+    border-radius: 25px;
+}
+
+.line_inner {
+    width: 21%;
+    height: 9px;
+    background-color: #eb642a;
+    box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
+    border-radius: 25px;
+}
+
+.battery_count {
+    margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    span {
+        &:first-child {
+            color: #c4eb2a;
+        }
+
+        &:last-child {
+            color: #fff;
+            opacity: 0.3;
+        }
+    }
+}
+
+.battery_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 12px 12px 24px 0px #3e3e3e inset,
+        -12px -12px 24px 0px #1e1e1e inset;
+    border-radius: 100px;
+}

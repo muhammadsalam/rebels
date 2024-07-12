@@ -1,0 +1,27 @@
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-shadow: 4px 4px 8px 0px #1e1e1eb2 inset,
+        -4px -4px 8px 0px #4d4d4d40 inset, 10px 10px 20px 0px #1e1e1e,
+        -10px -10px 20px 0px #3c3c3c;
+    border-radius: 16px;
+    padding: 17.5px 24px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 0;
+
+    strong {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+}
