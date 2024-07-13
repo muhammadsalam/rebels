@@ -8,9 +8,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: perspective(1500px) rotateX(0deg) rotateY(0deg);
+    transition: transform 0.123s ease-in-out;
 }
 
 .person {
     overflow: hidden;
     border-radius: 555px;
+    pointer-events: none;
 }
