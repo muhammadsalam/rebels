@@ -1,5 +1,4 @@
 .wrapper {
-    box-shadow: 12px 12px 24px 0px #1e1e1e, -12px -12px 24px 0px #3e3e3e;
     background-color: #333;
     border-radius: 165px;
     padding: 20px;
@@ -8,12 +7,42 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: perspective(1500px) rotateX(0deg) rotateY(0deg);
-    transition: transform 0.123s ease-in-out;
+    // transform: perspective(1500px) rotateX(0deg) rotateY(0deg);
+    box-shadow: -12px -12px 24px transparent inset,
+        12px 12px 24px transparent inset;
+    transition: box-shadow 0.123s ease-in 0.2s;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 165px;
+        box-shadow: -12px -12px 24px 0px #3e3e3e, 12px 12px 24px 0px #1e1e1eb2;
+        transition: box-shadow 0.123s ease-in 0.123s;
+    }
+}
+
+.wrapper__active {
+    box-shadow: -12px -12px 24px 0px #1e1e1e80 inset,
+        12px 12px 24px 0px #1e1e1e80 inset;
+
+    &:before {
+        box-shadow: -12px -12px 24px -40px #3e3e3e,
+            12px 12px 24px -40px #1e1e1eb2;
+    }
+
+    .person {
+        scale: 0.98;
+    }
 }
 
 .person {
     overflow: hidden;
     border-radius: 555px;
     pointer-events: none;
+    transition: scale 0.123s ease-in 0.123s;
 }
