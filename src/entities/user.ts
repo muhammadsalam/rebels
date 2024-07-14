@@ -10,7 +10,7 @@ interface UserState {
 const useUserStore = create<UserState>((_) => ({
     token: null,
     fetchToken: async () => {
-        const response = await axios.post('/auth', { initdata: tgApp.initData });
+        const response = await axios.post('/auth', { initdata: import.meta.env.VITE_INITDATA || tgApp.initData });
         console.log(response.data);
     }
 }));

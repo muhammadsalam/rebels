@@ -10,7 +10,7 @@
     // transform: perspective(1500px) rotateX(0deg) rotateY(0deg);
     box-shadow: -12px -12px 24px transparent inset,
         12px 12px 24px transparent inset;
-    transition: box-shadow 0.123s ease-in 0.2s;
+    transition: box-shadow 0.07s ease-in 0.08s;
     position: relative;
 
     &::before {
@@ -22,7 +22,7 @@
         right: 0;
         border-radius: 165px;
         box-shadow: -12px -12px 24px 0px #3e3e3e, 12px 12px 24px 0px #1e1e1eb2;
-        transition: box-shadow 0.123s ease-in 0.123s;
+        transition: box-shadow 0.07s ease-in 0.07s;
     }
 }
 
@@ -44,5 +44,5 @@
     overflow: hidden;
     border-radius: 555px;
     pointer-events: none;
-    transition: scale 0.123s ease-in 0.123s;
+    transition: scale 0.07s ease-in 0.07s;
 }
