@@ -6,17 +6,16 @@
 }
 
 .heart_icon {
+    margin-right: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px;
-    box-shadow: 12px 12px 24px 0px #3e3e3e inset,
-        -12px -12px 24px 0px #1e1e1e inset;
+    box-shadow: 4px 4px 8px 0px #131313, -4px -4px 8px 0px #454545;
     border-radius: 100px;
 }
 
 .heart_count {
-    margin-left: 8px;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -44,7 +43,6 @@
 }
 
 .battery_count {
-    margin-right: 8px;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -66,7 +64,7 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-    box-shadow: 12px 12px 24px 0px #3e3e3e inset,
-        -12px -12px 24px 0px #1e1e1e inset;
+    box-shadow: 4px 4px 8px 0px #131313, -4px -4px 8px 0px #454545;
     border-radius: 100px;
+    margin-left: 12px;
 }

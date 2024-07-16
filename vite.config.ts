@@ -19,7 +19,11 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    svgr(),
+    svgr({
+      svgrOptions: {
+        memo: true
+      }
+    }),
   ],
   css: {
     postcss: {

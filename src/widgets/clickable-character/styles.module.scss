@@ -1,5 +1,5 @@
 .wrapper {
-    background-color: #333;
+    background-color: #262626;
     border-radius: 165px;
     padding: 20px;
     width: 260px;
@@ -7,7 +7,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // transform: perspective(1500px) rotateX(0deg) rotateY(0deg);
     box-shadow: -12px -12px 24px transparent inset,
         12px 12px 24px transparent inset;
     transition: box-shadow 0.07s ease-in 0.08s;
@@ -21,14 +20,14 @@
         left: 0;
         right: 0;
         border-radius: 165px;
-        box-shadow: -12px -12px 24px 0px #3e3e3e, 12px 12px 24px 0px #1e1e1eb2;
-        transition: box-shadow 0.07s ease-in 0.07s;
+        box-shadow: 8px 8px 15px 0px #131313, -4px -4px 15.2px 0px #525252;
+        transition: box-shadow 0.17s ease-in 0.07s;
     }
 }
 
 .wrapper__active {
-    box-shadow: -12px -12px 24px 0px #1e1e1e80 inset,
-        12px 12px 24px 0px #1e1e1e80 inset;
+    box-shadow: -12px -12px 24px 0px rgb(34, 34, 34, 0.7) inset,
+        12px 12px 24px 0px rgb(27, 27, 27) inset;
 
     &:before {
         box-shadow: -12px -12px 24px -40px #3e3e3e,
@@ -45,4 +44,25 @@
     border-radius: 555px;
     pointer-events: none;
     transition: scale 0.07s ease-in 0.07s;
+}
+
+@keyframes point {
+    0% {
+        translate: -50% -50%;
+    }
+    100% {
+        translate: -50% -120px;
+    }
+}
+
+.point {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    font-size: 32px;
+    translate: -50% -50%;
+    animation: point 1s ease-out forwards;
+    font-weight: 500;
+    color: #fff;
+    rotate: -10deg;
 }

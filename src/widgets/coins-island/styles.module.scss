@@ -1,17 +1,36 @@
 .wrapper {
     display: flex;
     align-items: center;
+    width: calc(100% + 16px);
+    margin-left: -8px;
+    gap: 16px;
+}
+
+.island {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 15.5px 32px;
+    padding: 7.5px 18.5px;
     gap: 12px;
 
     border-radius: 111px;
-    background-color: #333;
-    box-shadow: -12px -12px 24px rgba(30, 30, 30, 0.5) inset,
-        12px 12px 24px #3e3e3e inset;
+    background-color: #262626;
+    box-shadow: 8px 8px 15px 0px #131313, -4px -4px 15.2px 0px #454545;
+    flex-grow: 1;
+}
+
+.island__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 111px;
+    background-color: #262626;
+    box-shadow: 8px 8px 15px 0px #131313, -4px -4px 15.2px 0px #454545;
 }
 
 .value {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 700;
 }

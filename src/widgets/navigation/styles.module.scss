@@ -1,13 +1,13 @@
 .navigation {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    box-shadow: 4px 4px 8px 0px #1e1e1eb2 inset,
-        -4px -4px 8px 0px #4d4d4d40 inset, 10px 10px 20px 0px #1e1e1e,
-        -10px -10px 20px 0px #3c3c3c;
-    border-radius: 16px;
-    padding: 17.5px 24px;
+    box-shadow: 4px 4px 16px 0px #0e0e0e inset, -4px -4px 16px 0px #585858 inset;
+    border-radius: 111px;
+    padding: 18.5px 24px;
 }
 
 .link {

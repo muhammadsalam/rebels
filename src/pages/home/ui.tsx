@@ -11,8 +11,8 @@ export const HomePage = () => {
             <CoinsIsland />
             <ClickableCharacter style={{ margin: "auto 0" }} />
             <CharacterInfo />
-            <CharacterStatus style={{ marginTop: 20 }} />
-            <Navigation style={{ marginTop: 20 }} />
+            <CharacterStatus style={{ marginTop: 36 }} />
+            <Navigation style={{ marginTop: 36 }} />
         </div>
     );
 };
