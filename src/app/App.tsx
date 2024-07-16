@@ -1,5 +1,7 @@
 import useGameStatsStore from "entities/gameStats";
 import useUserStore from "entities/user";
+import claim from "features/claim";
+import fetchUser from "features/fetchUser";
 import { HomePage } from "pages/home";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -18,15 +20,27 @@ function App() {
         tgApp.expand();
         tgApp.disableVerticalSwipes();
 
-        fetchToken();
+        fetchToken().then((success) => {
+            success && fetchUser();
+        });
     }, []);
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
+        if (userId === null) return;
+
+        const intervalAddEnergy = setInterval(() => {
             addEnergy(22);
         }, 1000);
-        return () => clearInterval(intervalId);
-    }, [addEnergy]);
+
+        const intervalClaim = setInterval(() => {
+            claim();
+        }, 5000);
+
+        return () => {
+            clearInterval(intervalAddEnergy);
+            clearInterval(intervalClaim);
+        };
+    }, [userId]);
 
     if (token === null || userId === null) return <>загрузка...</>;
 

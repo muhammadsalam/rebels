@@ -6,16 +6,14 @@ interface VillainState {
     name: string;
     level: number;
     current_health: number;
-    setVillain: (villain: Partial<VillainState>) => void;
 }
 
-const useVillainStore = create<VillainState>((set) => ({
+const useVillainStore = create<VillainState>(() => ({
     id: null,
     health: 0,
     name: '',
     level: 0,
     current_health: 0,
-    setVillain: (villain) => set(villain),
 }));
 
 export default useVillainStore;

@@ -2,12 +2,12 @@ import { FC, HTMLAttributes } from "react";
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import { formatNumber } from "shared/libs";
-import useGameStatsStore from "entities/gameStats";
 import AlignCenterIcon from "icons/align-center.svg?react";
 import UserIcon from "icons/user.svg?react";
+import useUserStore from "entities/user";
 
 export const CoinsIsland: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
-    const balance = useGameStatsStore((state) => state.balance);
+    const balance = useUserStore((state) => state.balance);
 
     return (
         <div {...props} className={styles.wrapper}>

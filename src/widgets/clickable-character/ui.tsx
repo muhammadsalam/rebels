@@ -1,6 +1,7 @@
 import { FC, HTMLAttributes, MouseEventHandler, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import useGameStatsStore from "entities/gameStats";
+import clickCharacter from "features/clickCharacter";
 
 interface ClickPosition {
     x: number;
@@ -18,13 +19,12 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
     const nextIdRef = useRef(0);
     const damage = useGameStatsStore((state) => state.damage);
     const critical_chance = useGameStatsStore((state) => state.critical_chance);
-    const clickCharacter = useGameStatsStore((state) => state.clickCharacter);
 
     const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
         const isCritical = Math.random() < critical_chance / 100;
         const appliedDamage = isCritical ? damage * 2 : damage;
 
-        const condition = clickCharacter(isCritical, appliedDamage);
+        const condition = clickCharacter(appliedDamage);
         if (!condition) return;
 
         const target = e.target as HTMLDivElement;
