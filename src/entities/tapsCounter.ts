@@ -3,19 +3,21 @@ import { create } from 'zustand';
 interface TapsState {
     taps: number;
     critical_taps: number;
+    seed: number;
     addTap: (isCritical: boolean) => void;
 }
 
-const useTapsCounterStore = create<TapsState>((set, get) => ({
+const useTapsCounterStore = create<TapsState>((set) => ({
     taps: 0,
     critical_taps: 0,
-    addTap(_) {
-        const { taps } = get();
-        set({ taps: taps + 1 });
-        // if (isCritical) {
-        // } else {
-        //     this.taps++;
-        // }
+    seed: +new Date(),
+    addTap: (isCritical) => {
+        set(state => (
+            {
+                taps: state.taps + 1,
+                critical_taps: isCritical ? state.critical_taps + 1 : state.critical_taps
+            }
+        ));
     },
 }));
 

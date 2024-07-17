@@ -1,7 +1,17 @@
-import { FC, HTMLAttributes, MouseEventHandler, useRef, useState } from "react";
+import {
+    FC,
+    HTMLAttributes,
+    MouseEventHandler,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import styles from "./styles.module.scss";
 import useGameStatsStore from "entities/gameStats";
 import clickCharacter from "features/clickCharacter";
+import { seededRandom } from "shared/libs/seed-random";
+import useTapsCounterStore from "entities/tapsCounter";
+import claim from "features/claim";
 
 interface ClickPosition {
     x: number;
@@ -17,14 +27,31 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
     const [clickPositions, setClickPositions] = useState<ClickPosition[]>([]);
     const timeoutIdRef = useRef<number | null>(null);
     const nextIdRef = useRef(0);
+    const claimTimeoutRef = useRef<any | null>(null);
     const damage = useGameStatsStore((state) => state.damage);
     const critical_chance = useGameStatsStore((state) => state.critical_chance);
+    const taps = useTapsCounterStore((state) => state.taps);
+    const seed = useTapsCounterStore((state) => state.seed);
+
+    const handleClaimTimeout = () => {
+        claim().then(() => {
+            claimTimeoutRef.current = null;
+        });
+    };
+
+    const resetClaimTimeout = () => {
+        if (claimTimeoutRef.current) {
+            clearTimeout(claimTimeoutRef.current);
+        }
+        claimTimeoutRef.current = setTimeout(handleClaimTimeout, 5000);
+    };
 
     const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-        const isCritical = Math.random() < critical_chance / 100;
+        const isCritical =
+            seededRandom(seed + taps + 1) < critical_chance / 100;
         const appliedDamage = isCritical ? damage * 2 : damage;
 
-        const condition = clickCharacter(appliedDamage);
+        const condition = clickCharacter(appliedDamage, isCritical);
         if (!condition) return;
 
         const target = e.target as HTMLDivElement;
@@ -53,7 +80,17 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
             target.classList.remove(styles.wrapper__active);
             timeoutIdRef.current = null;
         }, 150);
+
+        resetClaimTimeout();
     };
+
+    useEffect(() => {
+        return () => {
+            if (claimTimeoutRef.current) {
+                clearTimeout(claimTimeoutRef.current);
+            }
+        };
+    }, []);
 
     return (
         <div {...props} className={styles.wrapper} onClick={handleClick}>

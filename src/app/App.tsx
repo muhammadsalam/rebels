@@ -1,6 +1,5 @@
 import useGameStatsStore from "entities/gameStats";
 import useUserStore from "entities/user";
-import claim from "features/claim";
 import fetchUser from "features/fetchUser";
 import { HomePage } from "pages/home";
 import { useEffect } from "react";
@@ -21,7 +20,7 @@ function App() {
         tgApp.disableVerticalSwipes();
 
         fetchToken().then((success) => {
-            success && fetchUser();
+            if (success) fetchUser();
         });
     }, []);
 
@@ -29,16 +28,11 @@ function App() {
         if (userId === null) return;
 
         const intervalAddEnergy = setInterval(() => {
-            addEnergy(22);
+            addEnergy(12);
         }, 1000);
-
-        const intervalClaim = setInterval(() => {
-            claim();
-        }, 5000);
 
         return () => {
             clearInterval(intervalAddEnergy);
-            clearInterval(intervalClaim);
         };
     }, [userId]);
 
