@@ -2,6 +2,7 @@ import useGameStatsStore from "entities/gameStats";
 import useUserStore from "entities/user";
 import fetchUser from "features/fetchUser";
 import { HomePage } from "pages/home";
+import { MinePage } from "pages/mine";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { tgApp } from "shared/libs";
@@ -42,6 +43,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/mine" element={<MinePage />} />
             </Routes>
         </Router>
     );

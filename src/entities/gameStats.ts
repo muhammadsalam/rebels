@@ -1,3 +1,4 @@
+import { axios } from 'shared/libs';
 import { create } from 'zustand';
 
 interface GameStatsState {
@@ -12,6 +13,8 @@ interface GameStatsState {
     mining_claimed_at: number;
     setGameStats: (stats: Partial<GameStatsState>) => void;
     addEnergy: (amount: number) => void;
+    startMining: () => void;
+    claimMining: () => void;
 }
 
 const useGameStatsStore = create<GameStatsState>((set) => ({
@@ -29,6 +32,14 @@ const useGameStatsStore = create<GameStatsState>((set) => ({
         set((state) => ({
             energy_balance: Math.min(state.energy_balance + amount, state.max_energy),
         }));
+    },
+    startMining: async () => {
+        const { data } = await axios.get('/mining/start');
+        console.log(data);
+    },
+    claimMining: async () => {
+        const { data } = await axios.post('/mining/claim');
+        console.log(data);
     },
 }));
 
