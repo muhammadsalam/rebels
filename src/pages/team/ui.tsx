@@ -8,7 +8,7 @@ import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import ArrowDownIcon from "icons/arrow-down.svg?react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "shared/ui";
 import { formatNumber, tgApp } from "shared/libs";
 import useUserStore from "entities/user";
@@ -204,10 +204,12 @@ export const TeamPage = () => {
         }
     };
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         tgApp.BackButton.show();
         const backButtonClick = () => {
-            window.history.back();
+            navigate("/");
         };
 
         tgApp.BackButton.onClick(backButtonClick);

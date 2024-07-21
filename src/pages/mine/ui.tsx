@@ -38,8 +38,9 @@ export const MinePage = () => {
         (state) => state.mining_claimed_at
     );
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        const navigate = useNavigate();
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");

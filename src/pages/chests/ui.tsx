@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
 import ChestIcon from "icons/chest.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
-import { formatNumber } from "shared/libs";
+import { formatNumber, tgApp } from "shared/libs";
+import { useEffect } from "react";
 
 export const ChestsPage = () => {
     const chests = [
@@ -43,6 +44,21 @@ export const ChestsPage = () => {
     const handleChestClick = (count: number) => {
         if (count === 0) return;
     };
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        tgApp.BackButton.show();
+        const backButtonClick = () => {
+            navigate("/team");
+        };
+
+        tgApp.BackButton.onClick(backButtonClick);
+
+        return () => {
+            tgApp.BackButton.offClick(backButtonClick);
+        };
+    }, []);
 
     return (
         <div className={styles.container}>
