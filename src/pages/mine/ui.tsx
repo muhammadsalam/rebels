@@ -13,13 +13,8 @@ const formatTime = (timeInSeconds: number) => {
     return `${hours}h ${minutes}m ${seconds}s`;
 };
 
-function calculateTimeToFill({
-    mining_balance,
-    mining_claimed_at,
-    mining_duration,
-    minigng_max_points,
-}: any) {
-    if (mining_balance === minigng_max_points) {
+function calculateTimeToFill({ mining_claimed_at, mining_duration }: any) {
+    if (mining_claimed_at === 0 && mining_duration === 0) {
         return "0h 0m 0s";
     }
 
@@ -28,7 +23,7 @@ function calculateTimeToFill({
     const miningEndTime = mining_claimed_at + miningDurationSeconds;
 
     const timeToFill = miningEndTime - currentTime;
-    return formatTime(timeToFill);
+    return timeToFill <= 0 ? "0h 0m 0s" : formatTime(timeToFill);
 }
 
 export const MinePage = () => {
@@ -57,19 +52,33 @@ export const MinePage = () => {
     const [timeToFill, setTimeToFill] = useState("");
 
     useEffect(() => {
+        console.log(
+            "useEffect mining_claimed_at",
+            mining_claimed_at,
+            Math.ceil(Date.now() / 1000)
+        );
         const updateTimeToFill = () => {
+            if (mining_claimed_at === 0 && mining_balance === 0) {
+                return;
+            }
+
             const time = calculateTimeToFill({
                 mining_balance,
                 mining_claimed_at,
                 mining_duration,
                 mining_max_points,
             });
+
             setTimeToFill(time);
+
+            const elapsedTime =
+                Math.ceil(Date.now() / 1000) - mining_claimed_at;
+            const newBalance = Math.min(
+                (mining_max_points / (mining_duration * 3600)) * elapsedTime,
+                mining_max_points
+            );
             useGameStatsStore.setState({
-                mining_balance:
-                    ((mining_max_points / mining_duration) *
-                        (Date.now() / 1000 - mining_claimed_at)) /
-                    3600,
+                mining_balance: newBalance,
             });
         };
 
@@ -77,10 +86,10 @@ export const MinePage = () => {
         const interval = setInterval(updateTimeToFill, 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [mining_claimed_at]);
 
     const handleOnClickButton = () => {
-        if (mining_balance === 0) {
+        if (mining_claimed_at === 0) {
             return useGameStatsStore.getState().startMining();
         }
 
@@ -98,7 +107,7 @@ export const MinePage = () => {
                 </>
             );
         }
-        if (mining_balance === 0) {
+        if (mining_claimed_at === 0) {
             return "Start";
         }
         return "Wait";
@@ -120,12 +129,16 @@ export const MinePage = () => {
                 <div className={styles.mine_row}>
                     <div className={styles.mine_item}>In storage</div>
                     <strong className={styles.mine_item}>
-                        {Math.floor(mining_balance)}
+                        {mining_claimed_at === 0 && mining_balance === 0
+                            ? 0
+                            : Math.floor(mining_balance)}
                     </strong>
                 </div>
                 <div className={styles.mine_row}>
                     <div className={styles.mine_item}>Time to fill</div>
-                    <strong className={styles.mine_item}>{timeToFill}</strong>
+                    <strong className={styles.mine_item}>
+                        {mining_claimed_at === 0 ? "0h 0m 0s" : timeToFill}
+                    </strong>
                 </div>
             </div>
             <div className={styles.line}>
@@ -136,7 +149,11 @@ export const MinePage = () => {
                             styles.line_inner__full
                     )}
                     style={{
-                        width: `${(mining_balance / mining_max_points) * 100}%`,
+                        width: `${
+                            mining_claimed_at === 0
+                                ? 0
+                                : (mining_balance / mining_max_points) * 100
+                        }%`,
                     }}
                 ></div>
             </div>

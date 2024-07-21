@@ -13,7 +13,7 @@ export const Navigation: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
                 <MineIcon />
                 <strong>Mine</strong>
             </Link>
-            <Link className={styles.link} to="/items">
+            <Link className={styles.link} to="/team">
                 <ItemsIcon />
                 <strong>Items</strong>
             </Link>

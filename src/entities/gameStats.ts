@@ -34,13 +34,36 @@ const useGameStatsStore = create<GameStatsState>((set) => ({
         }));
     },
     startMining: async () => {
-        const { data } = await axios.get('/mining/start');
-        console.log(data);
+        try {
+            const { data } = await axios.get('/mining/start');
+            set(state => ({
+                ...state,
+                mining_balance: data.mining_balance,
+                mining_max_points: data.mining_max_points,
+                mining_duration: data.mining_duration,
+                mining_claimed_at: data.mining_claimed_at,
+            }));
+            console.log(data);
+        } catch (error) {
+            console.error('Failed to start mining:', error);
+            alert('Failed to start mining. Please try again later.');
+        }
     },
     claimMining: async () => {
-        const { data } = await axios.post('/mining/claim');
-        console.log(data);
+        try {
+            const { data } = await axios.post('/mining/claim');
+            set({
+                mining_balance: data.mining_balance,
+                mining_max_points: data.mining_max_points,
+                mining_duration: data.mining_duration,
+                mining_claimed_at: data.mining_claimed_at,
+            });
+        } catch (error) {
+            console.error('Failed to claim mining:', error);
+            alert('Failed to claim mining. Please try again later.');
+        }
     },
+
 }));
 
 export default useGameStatsStore;

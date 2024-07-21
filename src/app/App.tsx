@@ -3,6 +3,7 @@ import useUserStore from "entities/user";
 import fetchUser from "features/fetchUser";
 import { HomePage } from "pages/home";
 import { MinePage } from "pages/mine";
+import { TeamPage } from "pages/team";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { tgApp } from "shared/libs";
@@ -20,9 +21,12 @@ function App() {
         tgApp.expand();
         tgApp.disableVerticalSwipes();
 
-        fetchToken().then((success) => {
-            if (success) fetchUser();
-        });
+        (async () => {
+            const tokenSuccess = await fetchToken();
+            if (tokenSuccess) {
+                await fetchUser();
+            }
+        })();
     }, []);
 
     useEffect(() => {
@@ -44,6 +48,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/mine" element={<MinePage />} />
+                <Route path="/team" element={<TeamPage />} />
             </Routes>
         </Router>
     );
