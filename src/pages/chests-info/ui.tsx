@@ -1,49 +1,19 @@
-import { Link, useNavigate } from "react-router-dom";
+import useChestsStore from "entities/chests";
 import styles from "./styles.module.scss";
-import InfoBoxIcon from "icons/info-box.svg?react";
+import clsx from "clsx";
 import ChestIcon from "icons/chest.svg?react";
 import CoinIcon from "icons/coin.svg?react";
-import clsx from "clsx";
-import { formatNumber, tgApp } from "shared/libs";
-import { useEffect } from "react";
-import useChestsStore from "entities/chests";
+import { formatNumber } from "shared/libs";
 
-export const ChestsPage = () => {
+export const ChestsInfoPage = () => {
     const chests = useChestsStore((state) => state.chests);
-    const fetchChests = useChestsStore((state) => state.fetchChests);
-
-    useEffect(() => {
-        if (chests.length === 0) fetchChests();
-    }, []);
-
-    const handleChestClick = (count: number) => {
-        if (count === 0) return;
-    };
-
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/team");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
 
     return (
         <div className={styles.container}>
             <div className={styles.top}>
                 <div className={styles.top_left}>
-                    <h2 className={styles.heading}>Chests</h2>
+                    <h2 className={styles.heading}>Chests info</h2>
                 </div>
-                <Link to="/chests/info" className={styles.top_icon}>
-                    <InfoBoxIcon />
-                </Link>
             </div>
 
             <div className={styles.chests}>
@@ -79,7 +49,7 @@ export const ChestsPage = () => {
 
                             <button
                                 className={styles.chest_button}
-                                onClick={() => handleChestClick(chest.count)}
+                                onClick={() => {}}
                             >
                                 {chest.count > 0 ? "Open" : "Buy"}
                             </button>

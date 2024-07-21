@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "shared/ui";
 import { formatNumber, tgApp } from "shared/libs";
 import useUserStore from "entities/user";
+import useChestsStore from "entities/chests";
 
 export const TeamPage = () => {
     const cards = useHeroStore((state) => state.cards);
@@ -205,8 +206,12 @@ export const TeamPage = () => {
     };
 
     const navigate = useNavigate();
-
     useEffect(() => {
+        const { chests, fetchChests } = useChestsStore.getState();
+        if (chests.length === 0) {
+            fetchChests();
+        }
+
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
