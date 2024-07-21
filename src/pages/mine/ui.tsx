@@ -5,6 +5,8 @@ import useGameStatsStore from "entities/gameStats";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { tgApp } from "shared/libs";
+import claimMining from "features/claimMining";
+import { useNavigate } from "react-router-dom";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -37,9 +39,10 @@ export const MinePage = () => {
     );
 
     useEffect(() => {
+        const navigate = useNavigate();
         tgApp.BackButton.show();
         const backButtonClick = () => {
-            window.history.back();
+            navigate("/");
         };
 
         tgApp.BackButton.onClick(backButtonClick);
@@ -58,7 +61,10 @@ export const MinePage = () => {
             Math.ceil(Date.now() / 1000)
         );
         const updateTimeToFill = () => {
-            if (mining_claimed_at === 0 && mining_balance === 0) {
+            if (
+                (mining_claimed_at === 0 && mining_balance === 0) ||
+                mining_balance >= mining_max_points
+            ) {
                 return;
             }
 
@@ -94,7 +100,7 @@ export const MinePage = () => {
         }
 
         if (mining_balance === mining_max_points) {
-            return useGameStatsStore.getState().claimMining();
+            return claimMining();
         }
     };
 

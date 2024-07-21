@@ -59,7 +59,7 @@ const useHeroStore = create<HeroState>((set, get) => ({
     },
     upgradeCard: async (hero_id) => {
         try {
-            const { status, data } = await axios.post('/user/heroes/upgrade', { hero_id })
+            const { status, data } = await axios.post(`/user/heroes/upgrade?hero_id=${hero_id}`)
 
             if (status === 200) {
                 console.log('upgraded', data);

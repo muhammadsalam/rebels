@@ -1,0 +1,130 @@
+.container {
+    padding: 20px 17px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.heading {
+    font-family: "Pixel Operator";
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 33.44px;
+}
+
+.description {
+    color: #676767;
+    font-family: "Pixel Operator";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16.72px;
+    text-align: left;
+}
+
+.top_icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 77px;
+    background: #262626;
+    box-shadow: -4px -4px 15.2px 0px #454545, 8px 8px 15px 0px #131313;
+}
+
+.chests {
+    margin-top: 27px;
+    width: 100%;
+}
+
+.chest {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: #262626;
+    box-shadow: 8px 8px 15px 0px #131313, -4px -4px 15.2px 0px #525252;
+    border-radius: 12px;
+    padding: 16px;
+
+    & + & {
+        margin-top: 32px;
+    }
+}
+
+.chest_icon svg {
+    width: 30px;
+    height: 31px;
+}
+
+.chest__epic .chest_icon path {
+    fill: #af52de;
+}
+
+.chest__rare .chest_icon path {
+    fill: #a2845e;
+}
+
+.chest__uncommon .chest_icon path {
+    fill: #32ade6;
+}
+
+.chest__common .chest_icon path {
+    fill: #34c759;
+}
+
+.chest_info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chest_title {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20.9px;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+.chest_title_span {
+    color: #676767;
+    margin-left: 6px;
+}
+
+.chest_price {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20.9px;
+}
+
+.chest__available .chest_price {
+    opacity: 0.3;
+}
+
+.chest_coin {
+    width: 16px;
+    height: 16px;
+}
+
+.chest_button {
+    margin-left: auto;
+    border: 0;
+    background-color: transparent;
+    color: #eb642a;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20.9px;
+}

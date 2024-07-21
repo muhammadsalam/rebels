@@ -14,7 +14,6 @@ interface GameStatsState {
     setGameStats: (stats: Partial<GameStatsState>) => void;
     addEnergy: (amount: number) => void;
     startMining: () => void;
-    claimMining: () => void;
 }
 
 const useGameStatsStore = create<GameStatsState>((set) => ({
@@ -48,22 +47,7 @@ const useGameStatsStore = create<GameStatsState>((set) => ({
             console.error('Failed to start mining:', error);
             alert('Failed to start mining. Please try again later.');
         }
-    },
-    claimMining: async () => {
-        try {
-            const { data } = await axios.post('/mining/claim');
-            set({
-                mining_balance: data.mining_balance,
-                mining_max_points: data.mining_max_points,
-                mining_duration: data.mining_duration,
-                mining_claimed_at: data.mining_claimed_at,
-            });
-        } catch (error) {
-            console.error('Failed to claim mining:', error);
-            alert('Failed to claim mining. Please try again later.');
-        }
-    },
-
+    }
 }));
 
 export default useGameStatsStore;

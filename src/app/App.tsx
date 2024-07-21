@@ -1,6 +1,7 @@
 import useGameStatsStore from "entities/gameStats";
 import useUserStore from "entities/user";
 import fetchUser from "features/fetchUser";
+import { ChestsPage } from "pages/chests";
 import { HomePage } from "pages/home";
 import { MinePage } from "pages/mine";
 import { TeamPage } from "pages/team";
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/mine" element={<MinePage />} />
                 <Route path="/team" element={<TeamPage />} />
+                <Route path="/chests" element={<ChestsPage />} />
             </Routes>
         </Router>
     );
