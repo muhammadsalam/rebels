@@ -2,6 +2,7 @@ import useGameStatsStore from "entities/gameStats";
 import useUserStore from "entities/user";
 import fetchUser from "features/fetchUser";
 import { ChestsPage } from "pages/chests";
+import { ChestsInfoPage } from "pages/chests-info/ui";
 import { HomePage } from "pages/home";
 import { MinePage } from "pages/mine";
 import { TeamPage } from "pages/team";
@@ -17,8 +18,8 @@ function App() {
 
     useEffect(() => {
         tgApp.ready();
-        tgApp.setHeaderColor("#262626");
-        tgApp.setBackgroundColor("#262626");
+        tgApp.setHeaderColor("#181818");
+        tgApp.setBackgroundColor("#181818");
         tgApp.expand();
         tgApp.disableVerticalSwipes();
 
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/mine" element={<MinePage />} />
                 <Route path="/team" element={<TeamPage />} />
                 <Route path="/chests" element={<ChestsPage />} />
+                <Route path="/chests/info" element={<ChestsInfoPage />} />
             </Routes>
         </Router>
     );
