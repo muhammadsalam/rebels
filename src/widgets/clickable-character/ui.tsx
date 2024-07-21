@@ -1,11 +1,4 @@
-import {
-    FC,
-    HTMLAttributes,
-    MouseEventHandler,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { FC, HTMLAttributes, MouseEventHandler, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import useGameStatsStore from "entities/gameStats";
 import clickCharacter from "features/clickCharacter";
@@ -83,14 +76,6 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
 
         resetClaimTimeout();
     };
-
-    useEffect(() => {
-        return () => {
-            if (claimTimeoutRef.current) {
-                clearTimeout(claimTimeoutRef.current);
-            }
-        };
-    }, []);
 
     return (
         <div {...props} className={styles.wrapper} onClick={handleClick}>
