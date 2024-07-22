@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    box-shadow: 4px 4px 16px 0px #0e0e0e inset, -4px -4px 16px 0px #585858 inset;
+    box-shadow: var(--inner-shadow-1);
     border-radius: 111px;
     padding: 18.5px 24px;
 }

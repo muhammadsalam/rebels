@@ -5,8 +5,8 @@
     width: 100%;
     padding: 11.5px 24px;
     border-radius: 102px;
-    box-shadow: 8px 8px 15px 0px #131313, -4px -4px 15.2px 0px #454545;
-    background-color: #262626;
+    box-shadow: var(--shadow-1);
+    background-color: var(--dark);
 }
 
 .name {

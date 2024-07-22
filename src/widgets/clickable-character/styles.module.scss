@@ -1,5 +1,5 @@
 .wrapper {
-    background-color: #262626;
+    background-color: var(--dark);
     border-radius: 165px;
     padding: 20px;
     width: 260px;
@@ -7,8 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: -12px -12px 24px transparent inset,
-        12px 12px 24px transparent inset;
+    box-shadow: var(--shadow-1);
     transition: box-shadow 0.07s ease-in;
     position: relative;
 
@@ -20,20 +19,11 @@
         left: 0;
         right: 0;
         border-radius: 165px;
-        box-shadow: 8px 8px 15px 0px #131313, -4px -4px 15.2px 0px #525252;
         transition: box-shadow 0.17s ease-in;
     }
 }
 
 .wrapper__active {
-    box-shadow: -12px -12px 24px 0px rgb(34, 34, 34, 0.7) inset,
-        12px 12px 24px 0px rgb(27, 27, 27) inset;
-
-    &:before {
-        box-shadow: -12px -12px 24px -40px #3e3e3e,
-            12px 12px 24px -40px #1e1e1eb2;
-    }
-
     .person {
         scale: 0.98;
     }

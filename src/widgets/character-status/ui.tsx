@@ -4,6 +4,7 @@ import HeartIcon from "icons/heart.svg?react";
 import useVillainStore from "entities/villain";
 import useGameStatsStore from "entities/gameStats";
 import { formatNumber } from "shared/libs";
+import clsx from "clsx";
 
 export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     const health = useVillainStore((state) => state.health);
@@ -21,11 +22,21 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
                 <span>{formatNumber(current_health)}</span>
                 <span>{formatNumber(health)}</span>
             </div>
-            <div className={styles.line}>
-                <div
-                    className={styles.line_inner}
-                    style={{ width: `${(current_health / health) * 100}%` }}
-                ></div>
+            <div className={styles.lines}>
+                <div className={clsx(styles.line, styles.line__health)}>
+                    <div
+                        className={styles.line_inner}
+                        style={{ width: `${(current_health / health) * 100}%` }}
+                    ></div>
+                </div>
+                <div className={clsx(styles.line, styles.line__energy)}>
+                    <div
+                        className={styles.line_inner}
+                        style={{
+                            width: `${(current_energy / max_energy) * 100}%`,
+                        }}
+                    ></div>
+                </div>
             </div>
             <div className={styles.battery_count}>
                 <span>{formatNumber(current_energy)}</span>

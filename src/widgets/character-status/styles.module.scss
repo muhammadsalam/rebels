@@ -11,8 +11,8 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-    box-shadow: 4px 4px 8px 0px #131313, -4px -4px 8px 0px #454545;
-    border-radius: 100px;
+    box-shadow: var(--shadow-1);
+    border-radius: 50%;
 }
 
 .heart_count {
@@ -26,20 +26,34 @@
     }
 }
 
-.line {
-    box-shadow: 2px 2px 4px 0px #000000cc inset,
-        -2px -2px 4px 0px #ffffff14 inset;
-    margin: 0 16px;
+.lines {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    gap: 8px;
+}
+
+.line {
+    box-shadow: var(--inner-shadow-1);
+    margin: 0 16px;
     border-radius: 25px;
+    line-height: 17px;
 }
 
 .line_inner {
     width: 21%;
     height: 9px;
-    background-color: #eb642a;
-    box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
     border-radius: 25px;
+}
+
+.line__health .line_inner {
+    background-color: var(--orange);
+    box-shadow: 0.63px 3px 11.7px 0px rgb(235, 100, 42, 0.58);
+}
+
+.line__energy .line_inner {
+    background-color: var(--green);
+    box-shadow: 0.63px 3px 11.7px 0px rgb(196, 235, 42, 0.38);
 }
 
 .battery_count {
@@ -64,7 +78,7 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-    box-shadow: 4px 4px 8px 0px #131313, -4px -4px 8px 0px #454545;
+    box-shadow: var(--shadow-1);
     border-radius: 100px;
     margin-left: 12px;
 }

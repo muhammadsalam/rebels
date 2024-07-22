@@ -1,5 +1,24 @@
 @import url("./assets/fonts/index.scss");
 
+:root {
+    --dark: #0a0a0a;
+    --orange: #eb642a;
+    --yellow: #ffcc00;
+    --green: #c4eb2a;
+    --gray: #676767;
+    --white: #fff;
+
+    --c-purple: #af52de;
+    --c-cyan: #32ade6;
+    --c-green: #34c759;
+    --c-brown: #a2845e;
+    --c-pink: #ff2d55;
+
+    --shadow-1: 3px 3px 9px 1px #000, -3px -3px 4px -2px #606060;
+    --inner-shadow-1: 3px 3px 9px 1px #000 inset,
+        -3px -3px 4px -2px rgb(96, 96, 96, 0.9) inset;
+}
+
 * {
     -webkit-tap-highlight-color: transparent;
     user-select: none;
@@ -10,8 +29,8 @@
 }
 
 html {
-    background-color: #181818;
-    color: #fff;
+    background-color: var(--dark);
+    color: var(--white);
 }
 
 body {

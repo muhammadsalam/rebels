@@ -15,10 +15,10 @@ export const HomePage = () => {
     return (
         <div className={styles.container}>
             <TopIslands />
-            <ClickableCharacter style={{ margin: "auto 0" }} />
             <CharacterInfo />
-            <CharacterStatus style={{ marginTop: 36 }} />
-            <Navigation style={{ marginTop: 36 }} />
+            <ClickableCharacter />
+            <CharacterStatus />
+            <Navigation />
         </div>
     );
 };

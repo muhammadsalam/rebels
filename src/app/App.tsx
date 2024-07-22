@@ -18,8 +18,8 @@ function App() {
 
     useEffect(() => {
         tgApp.ready();
-        tgApp.setHeaderColor("#181818");
-        tgApp.setBackgroundColor("#181818");
+        tgApp.setHeaderColor("#0A0A0A");
+        tgApp.setBackgroundColor("#0A0A0A");
         tgApp.expand();
         tgApp.disableVerticalSwipes();
 
