@@ -57,32 +57,43 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 45px;
+    column-gap: 19px;
+    row-gap: 11px;
     margin-top: 32px;
 }
 
 .card {
-    width: 84px;
-    height: 84px;
-    border-radius: 12px;
+    width: 101px;
+    height: 101px;
+    border-radius: 50%;
     background-color: var(--dark);
-    box-shadow: var(--shadow-1);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    overflow: hidden;
+    box-shadow: 3px 3px 9px 1px #000, -3px -3px 4px -2px #606060,
+        3px 3px 9px -30px #000 inset,
+        -3px -3px 4px -30px rgb(96, 96, 96, 0.9) inset;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 .card__active {
-    border: 1px solid var(--orange-2);
+    box-shadow: 3px 3px 9px -30px #000, -3px -3px 4px -30px #606060,
+        3px 3px 9px 1px #000 inset,
+        -3px -3px 4px -2px rgb(96, 96, 96, 0.9) inset;
 }
 
 .card_img {
-    width: 66px;
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    box-sizing: content-box;
+    border: 0.4px solid #eb642a4d;
+    transition: scale 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
 .card__active .card_img {
-    margin-bottom: -1px;
+    scale: 0.98;
+    // border-color: var(--orange-2);
 }
 
 .skills {
