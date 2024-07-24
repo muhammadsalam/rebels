@@ -74,7 +74,7 @@
 }
 
 .card__active {
-    border: 1px solid var(--orange);
+    border: 1px solid var(--orange-2);
 }
 
 .card_img {
@@ -141,7 +141,7 @@
 }
 
 .skill__knowledge .skill_value {
-    color: var(--orange);
+    color: var(--orange-2);
 }
 .skill__loyalty .skill_value {
     color: var(--green);
@@ -202,7 +202,7 @@
 
 .skill__knowledge {
     .progress_item__step {
-        background-color: var(--orange);
+        background-color: var(--orange-2);
     }
 
     .progress_item__step:not(.progress_item__active) {
@@ -375,7 +375,7 @@
 }
 
 .accordeon_item_button__select {
-    color: var(--orange);
+    color: var(--orange-2);
 }
 
 .accordeon_item_button__used {

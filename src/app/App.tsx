@@ -6,15 +6,22 @@ import { ChestsInfoPage } from "pages/chests-info/ui";
 import { HomePage } from "pages/home";
 import { MinePage } from "pages/mine";
 import { TeamPage } from "pages/team";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { tgApp } from "shared/libs";
+import { Loading } from "widgets/loading";
+import FontFaceObserver from "fontfaceobserver";
 
 function App() {
     const fetchToken = useUserStore((state) => state.fetchToken);
     const token = useUserStore((state) => state.token);
     const userId = useUserStore((state) => state.id);
     const addEnergy = useGameStatsStore((state) => state.addEnergy);
+
+    const [isFontsLoading, setIsFontsLoading] = useState({
+        PixelOperator: true,
+        PixelOperatorMono: true,
+    });
 
     useEffect(() => {
         tgApp.ready();
@@ -29,6 +36,18 @@ function App() {
                 await fetchUser();
             }
         })();
+
+        let PixelOperator = new FontFaceObserver("Pixel Operator");
+        PixelOperator.load(null, 140000).then(() => {
+            setIsFontsLoading((prev) => ({ ...prev, PixelOperator: false }));
+        });
+        let PixelOperatorMono = new FontFaceObserver("Pixel Operator Mono");
+        PixelOperatorMono.load(null, 140000).then(() => {
+            setIsFontsLoading((prev) => ({
+                ...prev,
+                PixelOperatorMono: false,
+            }));
+        });
     }, []);
 
     useEffect(() => {
@@ -43,7 +62,13 @@ function App() {
         };
     }, [userId]);
 
-    if (token === null || userId === null) return <>загрузка...</>;
+    if (
+        token === null ||
+        userId === null ||
+        isFontsLoading.PixelOperator ||
+        isFontsLoading.PixelOperatorMono
+    )
+        return <Loading />;
 
     return (
         <Router>
