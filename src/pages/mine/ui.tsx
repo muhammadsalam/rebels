@@ -20,7 +20,7 @@ function calculateTimeToFill({ mining_claimed_at, mining_duration }: any) {
         return "0h 0m 0s";
     }
 
-    const currentTime = Date.now() / 1000; // Текущее время в секундах
+    const currentTime = Math.ceil(Date.now()) / 1000; // Текущее время в секундах
     const miningDurationSeconds = mining_duration * 3600; // Продолжительность добычи в секундах
     const miningEndTime = mining_claimed_at + miningDurationSeconds;
 
@@ -59,7 +59,8 @@ export const MinePage = () => {
         console.log(
             "useEffect mining_claimed_at",
             mining_claimed_at,
-            Math.ceil(Date.now() / 1000)
+            Math.ceil(Date.now() / 1000),
+            Date.now()
         );
         const updateTimeToFill = () => {
             if (
@@ -79,7 +80,7 @@ export const MinePage = () => {
             setTimeToFill(time);
 
             const elapsedTime =
-                Math.ceil(Date.now() / 1000) - mining_claimed_at;
+                Math.floor(Date.now() / 1000) - mining_claimed_at;
             const newBalance = Math.min(
                 (mining_max_points / (mining_duration * 3600)) * elapsedTime,
                 mining_max_points
@@ -123,46 +124,48 @@ export const MinePage = () => {
     return (
         <div className={styles.container}>
             <CoinsIsland className={styles.island} />
-            <div className={styles.mine}>
-                <div className={styles.mine_row}>
-                    <div className={styles.mine_item}>
-                        <CoinIcon className={styles.mine_item_icon} />
-                        /hour
+            <div className={styles.miner}>
+                <div className={styles.mine}>
+                    <div className={styles.mine_row}>
+                        <div className={styles.mine_item}>
+                            <CoinIcon className={styles.mine_item_icon} />
+                            /hour
+                        </div>
+                        <strong className={styles.mine_item}>
+                            {Math.floor(mining_max_points / mining_duration)}
+                        </strong>
                     </div>
-                    <strong className={styles.mine_item}>
-                        {Math.floor(mining_max_points / mining_duration)}
-                    </strong>
-                </div>
-                <div className={styles.mine_row}>
-                    <div className={styles.mine_item}>In storage</div>
-                    <strong className={styles.mine_item}>
-                        {mining_claimed_at === 0 && mining_balance === 0
-                            ? 0
-                            : Math.floor(mining_balance)}
-                    </strong>
-                </div>
-                <div className={styles.mine_row}>
-                    <div className={styles.mine_item}>Time to fill</div>
-                    <strong className={styles.mine_item}>
-                        {mining_claimed_at === 0 ? "0h 0m 0s" : timeToFill}
-                    </strong>
-                </div>
-            </div>
-            <div className={styles.line}>
-                <div
-                    className={clsx(
-                        styles.line_inner,
-                        mining_max_points === mining_balance &&
-                            styles.line_inner__full
-                    )}
-                    style={{
-                        width: `${
-                            mining_claimed_at === 0
+                    <div className={styles.mine_row}>
+                        <div className={styles.mine_item}>In storage</div>
+                        <strong className={styles.mine_item}>
+                            {mining_claimed_at === 0 && mining_balance === 0
                                 ? 0
-                                : (mining_balance / mining_max_points) * 100
-                        }%`,
-                    }}
-                ></div>
+                                : Math.floor(mining_balance)}
+                        </strong>
+                    </div>
+                    <div className={styles.mine_row}>
+                        <div className={styles.mine_item}>Time to fill</div>
+                        <strong className={styles.mine_item}>
+                            {mining_claimed_at === 0 ? "0h 0m 0s" : timeToFill}
+                        </strong>
+                    </div>
+                </div>
+                <div className={styles.line}>
+                    <div
+                        className={clsx(
+                            styles.line_inner,
+                            mining_max_points === mining_balance &&
+                                styles.line_inner__full
+                        )}
+                        style={{
+                            width: `${
+                                mining_claimed_at === 0
+                                    ? 0
+                                    : (mining_balance / mining_max_points) * 100
+                            }%`,
+                        }}
+                    ></div>
+                </div>
             </div>
             <button
                 className={styles.button}
