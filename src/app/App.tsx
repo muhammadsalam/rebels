@@ -1,16 +1,16 @@
 import useGameStatsStore from "entities/gameStats";
 import useUserStore from "entities/user";
 import fetchUser from "features/fetchUser";
-import { ChestsPage } from "pages/chests";
-import { ChestsInfoPage } from "pages/chests-info/ui";
+import { ShopPage } from "pages/shop";
+import { ShopInfoPage } from "pages/shop-info/ui";
 import { HomePage } from "pages/home";
 import { MinePage } from "pages/mine";
-import { TeamPage } from "pages/team";
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { tgApp } from "shared/libs";
 import { Loading } from "widgets/loading";
 import FontFaceObserver from "fontfaceobserver";
+import { QuestsPage } from "pages/quests";
 
 function App() {
     const fetchToken = useUserStore((state) => state.fetchToken);
@@ -75,9 +75,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/mine" element={<MinePage />} />
-                <Route path="/team" element={<TeamPage />} />
-                <Route path="/chests" element={<ChestsPage />} />
-                <Route path="/chests/info" element={<ChestsInfoPage />} />
+                <Route path="/shop" element={<ShopPage />} />
+                <Route path="/shop/info" element={<ShopInfoPage />} />
+                <Route path="/quests" element={<QuestsPage />} />
             </Routes>
         </Router>
     );

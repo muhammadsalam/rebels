@@ -1,0 +1,68 @@
+.container {
+    padding: 26px 17px 46px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top {
+    width: 100%;
+}
+
+.inner {
+    margin-top: 26px;
+    width: 100%;
+}
+
+.quest {
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & + & {
+        margin-top: 16px;
+    }
+}
+
+.quest_info {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20.9px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quest_price {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.quest_button {
+    background-color: transparent;
+    border: 0;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 21px;
+
+    &__start {
+        color: var(--orange-2);
+    }
+
+    &__check {
+        color: var(--white);
+    }
+
+    &__claim {
+        color: var(--green);
+    }
+
+    &__done {
+        color: var(--gray);
+    }
+}

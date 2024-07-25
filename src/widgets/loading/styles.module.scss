@@ -19,7 +19,7 @@
         background-position: 100%;
     }
     100% {
-        background-position: 5%;
+        background-position: 0%;
     }
 }
 
@@ -39,7 +39,7 @@
         var(--gray) 100%
     );
     background-position: 10%;
-    animation: 1s line cubic-bezier(0.2, 0.38, 0.39, -0.32) forwards;
+    animation: 1s line cubic-bezier(0.21, 1, 0.78, 0.17) forwards;
 }
 
 .title__fulled {

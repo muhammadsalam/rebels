@@ -65,12 +65,16 @@
     height: 31px;
 }
 
+.chest__legendary .chest_icon path {
+    fill: var(--orange-2);
+}
+
 .chest__epic .chest_icon path {
     fill: var(--c-purple);
 }
 
 .chest__rare .chest_icon path {
-    fill: var(--c-brown);
+    fill: var(--c-pink);
 }
 
 .chest__uncommon .chest_icon path {
@@ -92,7 +96,6 @@
     font-weight: 400;
     line-height: 20.9px;
     color: var(--white);
-    text-transform: capitalize;
 }
 
 .chest_title_span {
@@ -119,6 +122,24 @@
     height: 16px;
 }
 
+@keyframes buyAnimation {
+    0% {
+        translate: -4px;
+    }
+    25% {
+        translate: 4px;
+    }
+    50% {
+        translate: -1px;
+    }
+    75% {
+        translate: 1px;
+    }
+    100% {
+        translate: 0;
+    }
+}
+
 .chest_button {
     margin-left: auto;
     border: 0;
@@ -127,4 +148,9 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 20.9px;
+
+    &:disabled {
+        color: var(--gray);
+        // animation: buyAnimation ease-in-out 0.5s infinite;
+    }
 }

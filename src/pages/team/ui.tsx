@@ -280,7 +280,7 @@ export const TeamPage = () => {
             </div>
 
             <div className={styles.choosed_cards}>
-                {choosedCards.map((hero) => (
+                {choosedCards.slice(0, 5).map((hero) => (
                     <div
                         className={clsx(
                             styles.card,
@@ -317,35 +317,15 @@ export const TeamPage = () => {
                                 : activeChoosedCard.knowledge}
                         </span>
                     </div>
-                    <div
-                        className={clsx(styles.progress, styles.skill_progress)}
-                    >
-                        {new Array(20).fill(0).map((_, index) => (
-                            <div
-                                key={index}
-                                className={clsx(
-                                    styles.progress_item,
-                                    (activeChoosedCard === null
-                                        ? index + 1 <=
-                                          Math.max(
-                                              Math.round(
-                                                  team_skills.knowledge /
-                                                      Math.round(231 / 20)
-                                              ),
-                                              1
-                                          )
-                                        : index + 1 <=
-                                          Math.max(
-                                              Math.round(
-                                                  activeChoosedCard.knowledge /
-                                                      2.75
-                                              ),
-                                              1
-                                          )) && styles.progress_item__step,
-                                    styles.progress_item__active
-                                )}
-                            ></div>
-                        ))}
+                    <div className={styles.line}>
+                        <div
+                            className={clsx(styles.line_inner)}
+                            style={{
+                                width: `${
+                                    (team_skills.knowledge / 231) * 100
+                                }%`,
+                            }}
+                        ></div>
                     </div>
                 </div>
                 <div className={clsx(styles.skill, styles.skill__loyalty)}>
@@ -360,35 +340,13 @@ export const TeamPage = () => {
                                 : activeChoosedCard.loyalty}
                         </span>
                     </div>
-                    <div
-                        className={clsx(styles.progress, styles.skill_progress)}
-                    >
-                        {new Array(20).fill(0).map((_, index) => (
-                            <div
-                                key={index}
-                                className={clsx(
-                                    styles.progress_item,
-                                    (activeChoosedCard === null
-                                        ? index + 1 <=
-                                          Math.max(
-                                              Math.round(
-                                                  team_skills.loyalty /
-                                                      Math.round(228 / 20)
-                                              ),
-                                              1
-                                          )
-                                        : index + 1 <=
-                                          Math.max(
-                                              Math.round(
-                                                  activeChoosedCard.loyalty /
-                                                      2.75
-                                              ),
-                                              1
-                                          )) && styles.progress_item__step,
-                                    styles.progress_item__active
-                                )}
-                            ></div>
-                        ))}
+                    <div className={styles.line}>
+                        <div
+                            className={clsx(styles.line_inner)}
+                            style={{
+                                width: `${(team_skills.loyalty / 228) * 100}%`,
+                            }}
+                        ></div>
                     </div>
                 </div>
                 <div className={clsx(styles.skill, styles.skill__influence)}>
@@ -403,35 +361,15 @@ export const TeamPage = () => {
                                 : activeChoosedCard.influence}
                         </span>
                     </div>
-                    <div
-                        className={clsx(styles.progress, styles.skill_progress)}
-                    >
-                        {new Array(20).fill(0).map((_, index) => (
-                            <div
-                                key={index}
-                                className={clsx(
-                                    styles.progress_item,
-                                    (activeChoosedCard === null
-                                        ? index + 1 <=
-                                          Math.max(
-                                              Math.round(
-                                                  team_skills.influence /
-                                                      Math.round(220 / 20)
-                                              ),
-                                              1
-                                          )
-                                        : index + 1 <=
-                                          Math.max(
-                                              Math.round(
-                                                  activeChoosedCard.influence /
-                                                      2.75
-                                              ),
-                                              1
-                                          )) && styles.progress_item__step,
-                                    styles.progress_item__active
-                                )}
-                            ></div>
-                        ))}
+                    <div className={styles.line}>
+                        <div
+                            className={clsx(styles.line_inner)}
+                            style={{
+                                width: `${
+                                    (team_skills.knowledge / 220) * 100
+                                }%`,
+                            }}
+                        ></div>
                     </div>
                 </div>
             </div>

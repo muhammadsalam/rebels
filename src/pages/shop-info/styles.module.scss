@@ -1,0 +1,95 @@
+.container {
+    padding: 26px 17px 46px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top {
+    width: 100%;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 33.44px;
+}
+
+.chests {
+    width: 100%;
+    margin-top: 29px;
+}
+
+.chest {
+    padding: 24px;
+    box-shadow: var(--shadow-1);
+    border-radius: 12px;
+    background-color: var(--dark);
+
+    & + & {
+        margin-top: 36px;
+    }
+}
+
+.chest_title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 25.08px;
+}
+
+.chest_icon {
+    width: 24px;
+    height: 24px;
+}
+
+.chest__common .chest_icon path {
+    fill: var(--c-green);
+}
+
+.chest__uncommon .chest_icon path {
+    fill: var(--c-cyan);
+}
+
+.chest__rare .chest_icon path {
+    fill: var(--c-pink);
+}
+
+.chest__epic .chest_icon path {
+    fill: var(--c-purple);
+}
+
+.chest__legendary .chest_icon path {
+    fill: var(--orange-2);
+}
+
+.chest_info {
+    margin-top: 16px;
+}
+
+.chest_info_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    & + & {
+        margin-top: 16px;
+    }
+}
+
+.chest_info_row span {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16.72px;
+    opacity: 0.5;
+}
+
+.chest_info_row p {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16.72px;
+}

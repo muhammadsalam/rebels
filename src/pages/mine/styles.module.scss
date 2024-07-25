@@ -34,7 +34,7 @@
     gap: 4px;
 
     &:first-child {
-        color: rgba($color: #fff, $alpha: 0.5);
+        color: rgba(182, 182, 182, 0.5);
     }
 }
 
@@ -79,7 +79,7 @@
     line-height: 25.08px;
 
     &:disabled {
-        color: rgba($color: #fff, $alpha: 0.3);
+        color: rgba($color: #b6b6b6, $alpha: 0.3);
     }
 }
 

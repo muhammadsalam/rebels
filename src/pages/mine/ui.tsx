@@ -115,9 +115,11 @@ export const MinePage = () => {
                 </>
             );
         }
+
         if (mining_claimed_at === 0) {
             return "Start";
         }
+
         return "Wait";
     };
 
@@ -146,7 +148,10 @@ export const MinePage = () => {
                     <div className={styles.mine_row}>
                         <div className={styles.mine_item}>Time to fill</div>
                         <strong className={styles.mine_item}>
-                            {mining_claimed_at === 0 ? "0h 0m 0s" : timeToFill}
+                            {mining_claimed_at === 0 ||
+                            mining_balance === mining_max_points
+                                ? "0h 0m 0s"
+                                : timeToFill}
                         </strong>
                     </div>
                 </div>
@@ -171,7 +176,8 @@ export const MinePage = () => {
                 className={styles.button}
                 onClick={handleOnClickButton}
                 disabled={
-                    mining_balance > 0 && mining_balance < mining_max_points
+                    mining_claimed_at !== 0 &&
+                    mining_balance !== mining_max_points
                 }
             >
                 {getButtonText()}

@@ -58,8 +58,8 @@
     justify-content: center;
     flex-wrap: wrap;
     column-gap: 19px;
-    row-gap: 11px;
-    margin-top: 32px;
+    row-gap: 4px;
+    margin-top: 25px;
 }
 
 .card {
@@ -77,9 +77,10 @@
 }
 
 .card__active {
-    box-shadow: 3px 3px 9px -30px #000, -3px -3px 4px -30px #606060,
-        3px 3px 9px 1px #000 inset,
-        -3px -3px 4px -2px rgb(96, 96, 96, 0.9) inset;
+    // box-shadow: 3px 3px 9px -30px #000, -3px -3px 4px -30px #606060,
+    //     3px 3px 9px 1px #000 inset,
+    //     -3px -3px 4px -2px rgb(96, 96, 96, 0.9) inset;
+    box-shadow: 0 0 5px 6px rgba(235, 100, 42, 0.5);
 }
 
 .card_img {
@@ -91,13 +92,8 @@
     transition: scale 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
-.card__active .card_img {
-    scale: 0.98;
-    // border-color: var(--orange-2);
-}
-
 .skills {
-    margin-top: 44px;
+    margin-top: 15px;
     width: 100%;
 }
 
@@ -117,7 +113,7 @@
     padding: 14px 16px 17px;
 
     & + & {
-        margin-top: 32px;
+        margin-top: 19px;
     }
 }
 
@@ -151,14 +147,48 @@
     line-height: 16.72px;
 }
 
-.skill__knowledge .skill_value {
-    color: var(--orange-2);
+.skill__knowledge {
+    .line_inner {
+        background-color: var(--orange-2);
+    }
+
+    .skill_value {
+        color: var(--orange-2);
+    }
 }
-.skill__loyalty .skill_value {
-    color: var(--green);
+
+.skill__loyalty {
+    .line_inner {
+        background-color: var(--green);
+    }
+
+    .skill_value {
+        color: var(--green);
+    }
 }
-.skill__influence .skill_value {
-    color: var(--c-pink);
+
+.skill__influence {
+    .line_inner {
+        background-color: var(--c-pink);
+    }
+
+    .skill_value {
+        color: var(--c-pink);
+    }
+}
+
+.line {
+    box-shadow: var(--inner-shadow-1);
+    margin-top: 12px;
+    width: 100%;
+    border-radius: 25px;
+}
+
+.line_inner {
+    height: 2px;
+    background-color: var(--orange-2);
+    box-shadow: 0.63px 3px 11.7px 0px rgb(235, 100, 42, 0.58);
+    border-radius: 25px;
 }
 
 .skill_progress {
@@ -244,7 +274,7 @@
 .button {
     width: 190px;
     height: 60px;
-    margin-top: 44px;
+    margin-top: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -332,7 +362,7 @@
 }
 
 .accordeon_item {
-    border-top: 1px solid rgba($color: #fff, $alpha: 0.05);
+    border-top: 1px solid rgba($color: #b6b6b6, $alpha: 0.05);
     padding-top: 24px;
     display: flex;
     align-items: center;

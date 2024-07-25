@@ -12,7 +12,8 @@ export default async function () {
             mining_duration: data.mining_duration,
             mining_claimed_at: data.mining_claimed_at,
         })
-        useUserStore.setState({ balance: balance + data.balance });
+        console.log(data.balance);
+        useUserStore.setState({ balance: balance + data.mining_max_points });
     } catch (error) {
         console.error('Failed to claim mining:', error);
     }
