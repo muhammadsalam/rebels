@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, MouseEventHandler, useRef, useState } from "react";
+import { FC, HTMLAttributes, TouchEvent, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import useGameStatsStore from "entities/gameStats";
 import clickCharacter from "features/clickCharacter";
@@ -39,46 +39,54 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
         claimTimeoutRef.current = setTimeout(handleClaimTimeout, 5000);
     };
 
-    const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-        const isCritical =
-            seededRandom(seed + taps + 1) < critical_chance / 100;
-        const appliedDamage = isCritical ? damage * 2 : damage;
+    const handleClick = (e: TouchEvent<HTMLDivElement>) => {
+        Array.from(e.changedTouches).forEach((touch) => {
+            const isCritical =
+                seededRandom(seed + taps + 1) < critical_chance / 100;
+            const appliedDamage = isCritical ? damage * 2 : damage;
 
-        const condition = clickCharacter(appliedDamage, isCritical);
-        if (!condition) return;
+            const condition = clickCharacter(appliedDamage, isCritical);
+            if (!condition) return;
 
-        const target = e.target as HTMLDivElement;
+            const target = e.target as HTMLDivElement;
 
-        const rect = target.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const id = nextIdRef.current++;
+            const rect = target.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            const id = nextIdRef.current++;
 
-        setClickPositions((positions) => [
-            ...positions,
-            { x, y, id, damage: appliedDamage, isCritical },
-        ]);
+            setClickPositions((positions) => [
+                ...positions,
+                { x, y, id, damage: appliedDamage, isCritical },
+            ]);
 
-        setTimeout(() => {
-            setClickPositions((prev) => prev.filter((pos) => pos.id !== id));
-        }, 1000);
+            setTimeout(() => {
+                setClickPositions((prev) =>
+                    prev.filter((pos) => pos.id !== id)
+                );
+            }, 1000);
 
-        target.classList.add(styles.wrapper__active);
+            target.classList.add(styles.wrapper__active);
 
-        if (timeoutIdRef.current !== null) {
-            clearTimeout(timeoutIdRef.current);
-        }
+            if (timeoutIdRef.current !== null) {
+                clearTimeout(timeoutIdRef.current);
+            }
 
-        timeoutIdRef.current = window.setTimeout(() => {
-            target.classList.remove(styles.wrapper__active);
-            timeoutIdRef.current = null;
-        }, 200);
+            timeoutIdRef.current = window.setTimeout(() => {
+                target.classList.remove(styles.wrapper__active);
+                timeoutIdRef.current = null;
+            }, 200);
 
-        resetClaimTimeout();
+            resetClaimTimeout();
+        });
     };
 
     return (
-        <div {...props} className={styles.wrapper} onClick={handleClick}>
+        <div
+            {...props}
+            className={styles.wrapper}
+            onTouchStartCapture={handleClick}
+        >
             {clickPositions.map(({ x, y, id, isCritical, damage }) => (
                 <div
                     key={id}
