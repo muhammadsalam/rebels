@@ -1,8 +1,25 @@
 import clsx from "clsx";
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { tgApp } from "shared/libs";
 
 export const QuestsPage = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        tgApp.BackButton.show();
+        const backButtonClick = () => {
+            navigate("/");
+        };
+
+        tgApp.BackButton.onClick(backButtonClick);
+
+        return () => {
+            tgApp.BackButton.offClick(backButtonClick);
+        };
+    }, []);
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>

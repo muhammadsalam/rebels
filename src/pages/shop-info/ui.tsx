@@ -7,13 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { tgApp } from "shared/libs";
 
 export const ShopInfoPage = () => {
-    const fetchChests = useChestsStore((state) => state.fetchChests);
     const chests = useChestsStore((state) => state.chests);
 
     const navigate = useNavigate();
     useEffect(() => {
-        if (chests.length === 0) fetchChests();
-
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/shop");

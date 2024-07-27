@@ -11,12 +11,15 @@ import { tgApp } from "shared/libs";
 import { Loading } from "widgets/loading";
 import FontFaceObserver from "fontfaceobserver";
 import { QuestsPage } from "pages/quests";
+import useChestsStore from "entities/chests";
 
 function App() {
     const fetchToken = useUserStore((state) => state.fetchToken);
     const token = useUserStore((state) => state.token);
     const userId = useUserStore((state) => state.id);
     const addEnergy = useGameStatsStore((state) => state.addEnergy);
+    const fetchChest = useChestsStore((state) => state.fetchChests);
+    const chests = useChestsStore((state) => state.chests);
 
     const [isFontsLoading, setIsFontsLoading] = useState({
         PixelOperator: true,
@@ -33,7 +36,11 @@ function App() {
         (async () => {
             const tokenSuccess = await fetchToken();
             if (tokenSuccess) {
-                await fetchUser();
+                const userSuccess = await fetchUser();
+
+                if (userSuccess && chests.length === 0) {
+                    await fetchChest();
+                }
             }
         })();
 
