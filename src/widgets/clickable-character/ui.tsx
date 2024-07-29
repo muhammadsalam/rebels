@@ -75,7 +75,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
             timeoutIdRef.current = window.setTimeout(() => {
                 target.classList.remove(styles.wrapper__active);
                 timeoutIdRef.current = null;
-            }, 200);
+            }, 100);
 
             resetClaimTimeout();
         });
