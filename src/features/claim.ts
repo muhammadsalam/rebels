@@ -7,7 +7,7 @@ export default async function () {
     const { id } = useUserStore.getState();
 
     if (taps === 0 && critical_taps === 0) return;
-    if (+new Date() - 5000 <= seed) {
+    if (+new Date() - 2000 <= seed) {
         console.log('bad seed');
         return;
     }

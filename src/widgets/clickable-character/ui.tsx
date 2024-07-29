@@ -36,7 +36,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
         if (claimTimeoutRef.current) {
             clearTimeout(claimTimeoutRef.current);
         }
-        claimTimeoutRef.current = setTimeout(handleClaimTimeout, 5000);
+        claimTimeoutRef.current = setTimeout(handleClaimTimeout, 2000);
     };
 
     const handleClick = (e: TouchEvent<HTMLDivElement>) => {
