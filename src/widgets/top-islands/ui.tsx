@@ -6,6 +6,7 @@ import { CoinsIsland } from "widgets/coins-island";
 import { Menu } from "widgets/menu";
 import CloseIcon from "icons/close.svg?react";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     const [isAciveMenu, setIsActiveMenu] = useState(false);
@@ -31,9 +32,9 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
                 )}
             </div>
             <CoinsIsland className={styles.island} />
-            <div className={styles.island__icon}>
+            <Link to="/profile" className={styles.island__icon}>
                 <UserIcon />
-            </div>
+            </Link>
         </div>
     );
 };

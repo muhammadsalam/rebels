@@ -1,0 +1,103 @@
+.container {
+    padding: 20px 17px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heading {
+    width: 100%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    --action-color: var(--white);
+}
+
+.info_rank {
+    color: var(--action-color);
+}
+
+.info_rank_icon path {
+    fill: var(--action-color);
+}
+
+.info_level {
+    color: var(--action-color);
+}
+
+.info__bronze {
+    --action-color: #6e4217;
+}
+
+.info__silver {
+    --action-color: var(--white);
+}
+
+.info__gold {
+    --action-color: #ffcc00;
+}
+
+.info_title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 37.62px;
+}
+
+.info_rank {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 29.26px;
+}
+
+.info_level {
+    margin-top: 4px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18.81px;
+}
+
+.total_skills {
+    margin-top: 4.41vh;
+    width: 100%;
+
+    --action-color: var(--white);
+}
+
+.total_skills__bronze {
+    .total_skills_line_inner {
+        background-color: #6e4217;
+        box-shadow: 0.63px 3px 11.7px 0px #6e421794;
+    }
+}
+
+.total_skills_top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20.9px;
+}
+
+.total_skills_line {
+    box-shadow: var(--inner-shadow-1);
+    margin-top: 12px;
+    width: 100%;
+    border-radius: 25px;
+}
+
+.total_skills_line_inner {
+    height: 2px;
+    background-color: var(--white);
+    box-shadow: 0.63px 3px 11.7px 0px var(--white);
+    border-radius: 25px;
+}

@@ -2,6 +2,13 @@ import { axios } from 'shared/libs';
 import { create } from 'zustand';
 
 interface GameStatsState {
+    total_value: number;
+    total_value_next: number;
+    total_hero_values: {
+        knowledge: number;
+        loyalty: number;
+        influence: number;
+    };
     damage: number;
     critical_chance: number;
     energy_balance: number;
@@ -17,6 +24,14 @@ interface GameStatsState {
 }
 
 const useGameStatsStore = create<GameStatsState>((set) => ({
+    total_value: 0,
+    // изменить потом на 0
+    total_value_next: 300,
+    total_hero_values: {
+        knowledge: 0,
+        loyalty: 0,
+        influence: 0
+    },
     damage: 0,
     critical_chance: 5,
     energy_balance: 0,

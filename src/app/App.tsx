@@ -12,6 +12,7 @@ import { Loading } from "widgets/loading";
 import FontFaceObserver from "fontfaceobserver";
 import { QuestsPage } from "pages/quests";
 import useChestsStore from "entities/chests";
+import { ProfilePage } from "pages/profile";
 
 function App() {
     const fetchToken = useUserStore((state) => state.fetchToken);
@@ -81,6 +82,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/mine" element={<MinePage />} />
                 <Route path="/shop" element={<ShopPage />} />
                 <Route path="/shop/info" element={<ShopInfoPage />} />
