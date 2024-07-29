@@ -2,8 +2,9 @@ import { axios } from 'shared/libs';
 import { create } from 'zustand';
 
 interface GameStatsState {
+    isProfileLoading: boolean;
     total_value: number;
-    total_value_next: number;
+    next_level_value: number;
     total_hero_values: {
         knowledge: number;
         loyalty: number;
@@ -24,9 +25,9 @@ interface GameStatsState {
 }
 
 const useGameStatsStore = create<GameStatsState>((set) => ({
+    isProfileLoading: false,
     total_value: 0,
-    // изменить потом на 0
-    total_value_next: 300,
+    next_level_value: 0,
     total_hero_values: {
         knowledge: 0,
         loyalty: 0,

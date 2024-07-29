@@ -1,5 +1,5 @@
 .container {
-    padding: 20px 17px;
+    padding: 11.6vh 17px 8.97vh;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -79,6 +79,20 @@
     }
 }
 
+.total_skills__silver {
+    .total_skills_line_inner {
+        background-color: #b6b6b6;
+        box-shadow: 0.63px 3px 11.7px 0px #b6b6b694;
+    }
+}
+
+.total_skills__gold {
+    .total_skills_line_inner {
+        background-color: #ffcc00;
+        box-shadow: 0.63px 3px 11.7px 0px #ffcc0094;
+    }
+}
+
 .total_skills_top {
     display: flex;
     align-items: center;
@@ -86,6 +100,7 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 20.9px;
+    color: var(--gray);
 }
 
 .total_skills_line {
@@ -96,8 +111,118 @@
 }
 
 .total_skills_line_inner {
-    height: 2px;
+    height: 9px;
     background-color: var(--white);
     box-shadow: 0.63px 3px 11.7px 0px var(--white);
     border-radius: 25px;
+}
+
+.skills {
+    margin-top: 4.41vh;
+    width: 100%;
+}
+
+.skill {
+    background-color: var(--dark);
+    border-radius: 12px;
+    box-shadow: var(--shadow-1);
+    padding: 16px;
+
+    & + & {
+        margin-top: 4.41vh;
+    }
+}
+
+.skill_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.skill_top_left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18.81px;
+}
+
+.skill_value {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 25.08px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.skill_value span {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16.72px;
+}
+
+.skill__knowledge {
+    .line_inner {
+        background-color: var(--orange-2);
+        box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
+    }
+
+    .skill_value {
+        color: var(--orange-2);
+    }
+}
+
+.skill__loyalty {
+    .line_inner {
+        background-color: var(--green);
+        box-shadow: 0.63px 3px 11.7px 0px #c4eb2a94;
+    }
+
+    .skill_value {
+        color: var(--green);
+    }
+}
+
+.skill__influence {
+    .line_inner {
+        background-color: var(--c-pink);
+        box-shadow: 0.63px 3px 11.7px 0px #ff2d5594;
+    }
+
+    .skill_value {
+        color: var(--c-pink);
+    }
+}
+
+.line {
+    box-shadow: -2px -2px 4px 0px #ffffff14 inset,
+        2px 2px 4px 0px #000000cc inset;
+    margin-top: 12px;
+    width: 100%;
+    border-radius: 25px;
+}
+
+.line_inner {
+    height: 2px;
+    background-color: var(--orange-2);
+    box-shadow: 0.63px 3px 11.7px 0px rgb(235, 100, 42, 0.58);
+    border-radius: 25px;
+}
+
+.button {
+    margin-top: auto;
+    box-shadow: var(--shadow-1);
+    color: var(--white);
+    text-decoration: none;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 93px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 25.08px;
 }

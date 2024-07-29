@@ -1,0 +1,3 @@
+export const MAX_TOTAL_KNOWLEDGE_VALUE = 231;
+export const MAX_TOTAL_LOYALTY_VALUE = 228;
+export const MAX_TOTAL_INFLUENCE_VALUE = 220;
