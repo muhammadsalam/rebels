@@ -13,6 +13,7 @@ import { Modal } from "shared/ui";
 import { formatNumber, tgApp } from "shared/libs";
 import useUserStore from "entities/user";
 import useChestsStore from "entities/chests";
+import { CardsPage } from "pages/cards";
 
 export const TeamPage = () => {
     const cards = useHeroStore((state) => state.cards);
@@ -257,6 +258,7 @@ export const TeamPage = () => {
 
     return (
         <div className={styles.container}>
+            <CardsPage />
             <div className={styles.top}>
                 <div className={styles.top_left}>
                     <h2 className={styles.heading}>My team</h2>
