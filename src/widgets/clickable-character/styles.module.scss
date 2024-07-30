@@ -1,16 +1,16 @@
 .wrapper {
     background-color: var(--dark);
     border-radius: 165px;
-    padding: 20px;
-    width: 260px;
-    height: 260px;
+    padding: 23px;
+    width: 292px;
+    height: 292px;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    box-shadow: 2px 2px 4px 1px #000, -2px -2px 3px -2px #606060,
-        3px 3px 9px -30px #000 inset,
-        -3px -3px 4px -30px rgb(96, 96, 96, 0.9) inset;
+    box-shadow: 2px 2px 4px 0px #000, -2px -2px 3px -2px #606060,
+        3px 3px 4px -30px #000 inset,
+        -2px -2px 3px -30px rgb(96, 96, 96, 0.9) inset;
     transition: box-shadow 0.1s ease-in;
     position: relative;
 }

@@ -15,7 +15,7 @@ export const HomePage = () => {
     return (
         <div className={styles.container}>
             <TopIslands />
-            <CharacterInfo />
+            <CharacterInfo style={{ width: "calc(100% - 16px)" }} />
             <ClickableCharacter />
             <CharacterStatus />
             <Navigation />
