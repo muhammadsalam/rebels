@@ -8,12 +8,16 @@ import {
 } from "react";
 import styles from "./styles.module.scss";
 import CloseIcon from "icons/close.svg?react";
+import clsx from "clsx";
 
 interface ModalProps extends HTMLAttributes<HTMLDivElement> {
     isActive: boolean;
     setIsActive: Dispatch<SetStateAction<boolean>>;
-    heading: ReactNode;
+    heading?: ReactNode;
     subheading?: string;
+    paddingTop?: number;
+    paddingBottom?: number;
+    innerClassName?: string;
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -23,6 +27,9 @@ export const Modal: FC<ModalProps> = ({
     setIsActive,
     heading,
     subheading,
+    paddingTop = 32,
+    paddingBottom = 57,
+    innerClassName,
     ...props
 }) => {
     useEffect(() => {
@@ -45,10 +52,14 @@ export const Modal: FC<ModalProps> = ({
                 className={styles.modal_overlay}
                 onClick={handleModalHide}
             ></div>
-            <button className={styles.close} onClick={handleModalHide}>
-                <CloseIcon />
-            </button>
-            <div className={styles.modal_inner}>
+
+            <div
+                className={clsx(styles.modal_inner, innerClassName)}
+                style={{ paddingTop, paddingBottom }}
+            >
+                <button className={styles.close} onClick={handleModalHide}>
+                    <CloseIcon />
+                </button>
                 {heading && <h2 className={styles.heading}>{heading}</h2>}
                 {subheading && (
                     <p className={styles.subheading}>{subheading}</p>

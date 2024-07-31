@@ -38,11 +38,7 @@ function App() {
         (async () => {
             const tokenSuccess = await fetchToken();
             if (tokenSuccess) {
-                const userSuccess = await fetchUser();
-
-                if (userSuccess && chests.length === 0) {
-                    await fetchChest();
-                }
+                await fetchUser();
             }
         })();
 

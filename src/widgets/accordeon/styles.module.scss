@@ -1,0 +1,58 @@
+.accordeon {
+    box-shadow: var(--shadow-1);
+    border-radius: 12px;
+    background-color: var(--dark);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20.9px;
+
+    & + & {
+        margin-top: 32px;
+    }
+}
+
+.accordeon_button {
+    padding: 19px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.accordeon__disabled {
+    pointer-events: none;
+    color: var(--gray);
+}
+
+.accordeon_button_icon {
+    transition: rotate 0.123s ease-in;
+    transform-origin: center;
+}
+
+.accordeon__disabled .accordeon_button_icon {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.accordeon__active .accordeon_button_icon {
+    rotate: 180deg;
+}
+
+.accordeon_list {
+    padding: 0 20px 0;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.123s ease-in-out,
+        padding 0.123s ease-in-out;
+}
+
+.accordeon__active .accordeon_list {
+    padding: 0 20px 19px;
+    grid-template-rows: 1fr;
+    pointer-events: all;
+}
+
+.accordeon_list_wrapper {
+    overflow: hidden;
+    margin: 0 -20px;
+    padding: 0 20px;
+}

@@ -8,9 +8,16 @@ import { tgApp } from "shared/libs";
 
 export const ShopInfoPage = () => {
     const chests = useChestsStore((state) => state.chests);
+    const fetchChest = useChestsStore((state) => state.fetchChests);
 
     const navigate = useNavigate();
     useEffect(() => {
+        (async () => {
+            if (chests.length === 0) {
+                await fetchChest();
+            }
+        })();
+
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/shop");

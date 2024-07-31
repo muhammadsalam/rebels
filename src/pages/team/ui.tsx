@@ -12,7 +12,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "shared/ui";
 import { formatNumber, tgApp } from "shared/libs";
 import useUserStore from "entities/user";
-import useChestsStore from "entities/chests";
 import { CardsPage } from "pages/cards";
 
 export const TeamPage = () => {
@@ -20,7 +19,7 @@ export const TeamPage = () => {
     const team_skills = useHeroStore((state) => state.team_skills);
     const saveTeam = useHeroStore((state) => state.saveTeam);
     const upgradeCard = useHeroStore((state) => state.upgradeCard);
-    const [modalCard, setModalCard] = useState<Card | null>(null);
+    const [modalCard, setModalCard] = useState<Card | null>(cards[0]);
     const [activeChoosedCard, setActiveChoosedCard] = useState<Card | null>(
         null
     );
@@ -29,117 +28,6 @@ export const TeamPage = () => {
     );
     const [isCardUpdating, setIsCardUpdating] = useState(true);
     const balance = useUserStore.getState().balance;
-
-    const renderAccordeon = (
-        rarity: "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary"
-    ) => {
-        const [isActive, setIsActive] = useState(false);
-        const hasCards = cards.some((item) => item.rarity === rarity);
-
-        const handleAccordionClick = () => {
-            setIsActive((state) => !state);
-        };
-
-        return (
-            <div
-                className={clsx(
-                    styles.accordeon,
-                    !hasCards && styles.accordeon__disabled,
-                    isActive && styles.accordeon__active
-                )}
-            >
-                <div
-                    className={styles.accordeon_button}
-                    onClick={() => handleAccordionClick()}
-                >
-                    {rarity}
-                    <ArrowDownIcon className={styles.accordeon_button_icon} />
-                </div>
-                <div className={styles.accordeon_list}>
-                    <div className={styles.accordeon_list_wrapper}>
-                        {cards
-                            .filter((item) => item.rarity === rarity)
-                            .map((card) => (
-                                <div
-                                    className={styles.accordeon_item}
-                                    key={card.id}
-                                >
-                                    <div className={styles.accordeon_item_img}>
-                                        <img
-                                            src="/assets/card-item.png"
-                                            alt={card.name}
-                                        />
-                                    </div>
-                                    <div className={styles.accordeon_item_info}>
-                                        <div
-                                            className={clsx(
-                                                styles.accordeon_item_title,
-                                                activeChoosedCard &&
-                                                    choosedCards.find(
-                                                        (item) =>
-                                                            item.id === card.id
-                                                    ) &&
-                                                    styles.accordeon_item_title__used
-                                            )}
-                                        >
-                                            {card.name}
-                                        </div>
-                                        <div
-                                            className={
-                                                styles.accordeon_item_level
-                                            }
-                                        >
-                                            {`${card.level} lvl`}
-                                        </div>
-                                    </div>
-                                    {!activeChoosedCard && (
-                                        <div
-                                            className={
-                                                styles.accordeon_item_button
-                                            }
-                                            onClick={() =>
-                                                handleModalCard(card)
-                                            }
-                                        >
-                                            Details
-                                        </div>
-                                    )}
-                                    {activeChoosedCard &&
-                                        !choosedCards.find(
-                                            (item) => item.id === card.id
-                                        ) && (
-                                            <div
-                                                className={clsx(
-                                                    styles.accordeon_item_button,
-                                                    styles.accordeon_item_button__select
-                                                )}
-                                                onClick={() =>
-                                                    handleSelectClick(card)
-                                                }
-                                            >
-                                                Select
-                                            </div>
-                                        )}
-                                    {activeChoosedCard &&
-                                        choosedCards.find(
-                                            (item) => item.id === card.id
-                                        ) && (
-                                            <div
-                                                className={clsx(
-                                                    styles.accordeon_item_button,
-                                                    styles.accordeon_item_button__used
-                                                )}
-                                            >
-                                                Used
-                                            </div>
-                                        )}
-                                </div>
-                            ))}
-                    </div>
-                </div>
-            </div>
-        );
-    };
 
     const handleModalCard = (card: Card) => {
         setModalCard(card);
@@ -208,11 +96,6 @@ export const TeamPage = () => {
 
     const navigate = useNavigate();
     useEffect(() => {
-        const { chests, fetchChests } = useChestsStore.getState();
-        if (chests.length === 0) {
-            fetchChests();
-        }
-
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
@@ -384,213 +267,187 @@ export const TeamPage = () => {
                 Save
             </button>
 
-            <div className={styles.cards}>
-                <h2 className={styles.heading}>My team</h2>
-                <div className={styles.cards_content}>
-                    {renderAccordeon("Legendary")}
-                    {renderAccordeon("Epic")}
-                    {renderAccordeon("Rare")}
-                    {renderAccordeon("Uncommon")}
-                    {renderAccordeon("Common")}
-
-                    {isCardUpdating && modalCard && (
-                        <Modal
-                            isActive={isCardUpdating}
-                            setIsActive={setIsCardUpdating}
-                            heading="Epic card # 1"
-                            subheading="Choose your option"
+            {!isCardUpdating && modalCard && (
+                <Modal
+                    isActive={!isCardUpdating}
+                    setIsActive={setIsCardUpdating}
+                    heading="Epic card # 1"
+                    subheading="Choose your option"
+                >
+                    <div className={styles.modal_content}>
+                        <div
+                            className={clsx(
+                                styles.skill,
+                                styles.skill__knowledge
+                            )}
                         >
-                            <div className={styles.modal_content}>
-                                <div
-                                    className={clsx(
-                                        styles.skill,
-                                        styles.skill__knowledge
-                                    )}
-                                >
-                                    <div className={styles.skill_top}>
-                                        <div className={styles.skill_top_left}>
-                                            <SwordIcon />
-                                            Knowledge
-                                        </div>
-                                        <span className={styles.skill_value}>
-                                            {modalCard.knowledge}
-                                            <span>
-                                                {modalCard.knowledge_step &&
-                                                    `(+${modalCard.knowledge_step})`}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div
-                                        className={clsx(
-                                            styles.progress,
-                                            styles.skill_progress
-                                        )}
-                                    >
-                                        {new Array(20)
-                                            .fill(0)
-                                            .map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={clsx(
-                                                        styles.progress_item,
-                                                        index + 1 <=
-                                                            Math.max(
-                                                                Math.round(
-                                                                    modalCard.knowledge /
-                                                                        2.75
-                                                                ),
-                                                                1
-                                                            ) &&
-                                                            styles.progress_item__active,
-                                                        index + 1 <=
-                                                            Math.max(
-                                                                Math.round(
-                                                                    (modalCard.knowledge +
-                                                                        modalCard.knowledge_step) /
-                                                                        2.75
-                                                                ),
-                                                                1
-                                                            ) &&
-                                                            styles.progress_item__step
-                                                    )}
-                                                ></div>
-                                            ))}
-                                    </div>
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <SwordIcon />
+                                    Knowledge
                                 </div>
-                                <div
-                                    className={clsx(
-                                        styles.skill,
-                                        styles.skill__loyalty
-                                    )}
-                                >
-                                    <div className={styles.skill_top}>
-                                        <div className={styles.skill_top_left}>
-                                            <SwordIcon />
-                                            Loyalty
-                                        </div>
-                                        <span className={styles.skill_value}>
-                                            {modalCard.loyalty}
-                                            <span>
-                                                {modalCard.loyalty_step &&
-                                                    `(+${modalCard.loyalty_step})`}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div
-                                        className={clsx(
-                                            styles.progress,
-                                            styles.skill_progress
-                                        )}
-                                    >
-                                        {new Array(20)
-                                            .fill(0)
-                                            .map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={clsx(
-                                                        styles.progress_item,
-                                                        index + 1 <=
-                                                            Math.max(
-                                                                Math.round(
-                                                                    modalCard.loyalty /
-                                                                        2.75
-                                                                ),
-                                                                1
-                                                            ) &&
-                                                            styles.progress_item__active,
-                                                        index + 1 <=
-                                                            Math.max(
-                                                                Math.round(
-                                                                    (modalCard.loyalty +
-                                                                        modalCard.loyalty_step) /
-                                                                        2.75
-                                                                ),
-                                                                1
-                                                            ) &&
-                                                            styles.progress_item__step
-                                                    )}
-                                                ></div>
-                                            ))}
-                                    </div>
-                                </div>
-                                <div
-                                    className={clsx(
-                                        styles.skill,
-                                        styles.skill__influence
-                                    )}
-                                >
-                                    <div className={styles.skill_top}>
-                                        <div className={styles.skill_top_left}>
-                                            <SwordIcon />
-                                            Influence
-                                        </div>
-                                        <span className={styles.skill_value}>
-                                            {modalCard.influence}
-                                            <span>
-                                                {modalCard.influence_step &&
-                                                    `(+${modalCard.influence_step})`}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div
-                                        className={clsx(
-                                            styles.progress,
-                                            styles.skill_progress
-                                        )}
-                                    >
-                                        {new Array(20)
-                                            .fill(0)
-                                            .map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={clsx(
-                                                        styles.progress_item,
-                                                        index + 1 <=
-                                                            Math.max(
-                                                                Math.round(
-                                                                    modalCard.influence /
-                                                                        2.75
-                                                                ),
-                                                                1
-                                                            ) &&
-                                                            styles.progress_item__active,
-                                                        index + 1 <=
-                                                            Math.max(
-                                                                Math.round(
-                                                                    (modalCard.influence +
-                                                                        modalCard.influence_step) /
-                                                                        2.75
-                                                                ),
-                                                                1
-                                                            ) &&
-                                                            styles.progress_item__step
-                                                    )}
-                                                ></div>
-                                            ))}
-                                    </div>
-                                </div>
-
-                                <button
-                                    className={styles.upgradeButton}
-                                    disabled={balance < modalCard.upgrade_price}
-                                    onClick={() =>
-                                        handleUpgradeCard(modalCard.id)
-                                    }
-                                >
-                                    <CoinIcon />
-                                    {formatNumber(
-                                        modalCard.upgrade_price,
-                                        "ru-RU"
-                                    )}
-                                    <ArrowDownIcon
-                                        className={styles.upgradeButton_icon}
-                                    />
-                                </button>
+                                <span className={styles.skill_value}>
+                                    {modalCard.knowledge}
+                                    <span>
+                                        {modalCard.knowledge_step &&
+                                            `(+${modalCard.knowledge_step})`}
+                                    </span>
+                                </span>
                             </div>
-                        </Modal>
-                    )}
-                </div>
-            </div>
+                            <div
+                                className={clsx(
+                                    styles.progress,
+                                    styles.skill_progress
+                                )}
+                            >
+                                {new Array(20).fill(0).map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={clsx(
+                                            styles.progress_item,
+                                            index + 1 <=
+                                                Math.max(
+                                                    Math.round(
+                                                        modalCard.knowledge /
+                                                            2.75
+                                                    ),
+                                                    1
+                                                ) &&
+                                                styles.progress_item__active,
+                                            index + 1 <=
+                                                Math.max(
+                                                    Math.round(
+                                                        (modalCard.knowledge +
+                                                            modalCard.knowledge_step) /
+                                                            2.75
+                                                    ),
+                                                    1
+                                                ) && styles.progress_item__step
+                                        )}
+                                    ></div>
+                                ))}
+                            </div>
+                        </div>
+                        <div
+                            className={clsx(
+                                styles.skill,
+                                styles.skill__loyalty
+                            )}
+                        >
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <SwordIcon />
+                                    Loyalty
+                                </div>
+                                <span className={styles.skill_value}>
+                                    {modalCard.loyalty}
+                                    <span>
+                                        {modalCard.loyalty_step &&
+                                            `(+${modalCard.loyalty_step})`}
+                                    </span>
+                                </span>
+                            </div>
+                            <div
+                                className={clsx(
+                                    styles.progress,
+                                    styles.skill_progress
+                                )}
+                            >
+                                {new Array(20).fill(0).map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={clsx(
+                                            styles.progress_item,
+                                            index + 1 <=
+                                                Math.max(
+                                                    Math.round(
+                                                        modalCard.loyalty / 2.75
+                                                    ),
+                                                    1
+                                                ) &&
+                                                styles.progress_item__active,
+                                            index + 1 <=
+                                                Math.max(
+                                                    Math.round(
+                                                        (modalCard.loyalty +
+                                                            modalCard.loyalty_step) /
+                                                            2.75
+                                                    ),
+                                                    1
+                                                ) && styles.progress_item__step
+                                        )}
+                                    ></div>
+                                ))}
+                            </div>
+                        </div>
+                        <div
+                            className={clsx(
+                                styles.skill,
+                                styles.skill__influence
+                            )}
+                        >
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <SwordIcon />
+                                    Influence
+                                </div>
+                                <span className={styles.skill_value}>
+                                    {modalCard.influence}
+                                    <span>
+                                        {modalCard.influence_step &&
+                                            `(+${modalCard.influence_step})`}
+                                    </span>
+                                </span>
+                            </div>
+                            <div
+                                className={clsx(
+                                    styles.progress,
+                                    styles.skill_progress
+                                )}
+                            >
+                                {new Array(20).fill(0).map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={clsx(
+                                            styles.progress_item,
+                                            index + 1 <=
+                                                Math.max(
+                                                    Math.round(
+                                                        modalCard.influence /
+                                                            2.75
+                                                    ),
+                                                    1
+                                                ) &&
+                                                styles.progress_item__active,
+                                            index + 1 <=
+                                                Math.max(
+                                                    Math.round(
+                                                        (modalCard.influence +
+                                                            modalCard.influence_step) /
+                                                            2.75
+                                                    ),
+                                                    1
+                                                ) && styles.progress_item__step
+                                        )}
+                                    ></div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <button
+                            className={styles.upgradeButton}
+                            disabled={balance < modalCard.upgrade_price}
+                            onClick={() => handleUpgradeCard(modalCard.id)}
+                        >
+                            <CoinIcon />
+                            {formatNumber(modalCard.upgrade_price, "ru-RU")}
+                            <ArrowDownIcon
+                                className={styles.upgradeButton_icon}
+                            />
+                        </button>
+                    </div>
+                </Modal>
+            )}
         </div>
     );
 };

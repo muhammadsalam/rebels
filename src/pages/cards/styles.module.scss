@@ -1,14 +1,142 @@
 .container {
-    padding: 20px 17px;
-    height: calc(100vh - 20px);
+    width: 100%;
+}
+.modal {
+    height: 100vh;
+    overflow-y: scroll;
     display: flex;
-    flex-direction: column;
+    align-items: flex-end;
+}
+
+.modal_inner {
+    width: 100%;
+    height: calc(100vh - 20px);
+}
+
+.heading {
+    font-family: "Pixel Operator";
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 33px;
+}
+
+.cards {
+    margin-top: 24px;
+}
+
+.accordeon_button__Common {
+    color: var(--c-green);
+}
+
+.accordeon_button__Uncommon {
+    color: var(--c-cyan);
+}
+
+.accordeon_button__Rare {
+    color: var(--c-pink);
+}
+
+.accordeon_button__Epic {
+    color: var(--c-purple);
+}
+
+.accordeon_button__Legendary {
+    color: var(--orange-2);
+}
+
+.item {
+    border-top: 1px solid rgba($color: #b6b6b6, $alpha: 0.05);
+    padding-top: 24px;
+    display: flex;
     align-items: center;
-    top: 20px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 24px 24px 0 0;
+    gap: 16px;
+
+    & + & {
+        margin-top: 24px;
+    }
+}
+
+.item_img {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--dark);
-    position: fixed;
+    box-shadow: var(--shadow-1);
+    border-radius: 100px;
+
+    img {
+        width: 49px;
+        border: 0.22px solid #eb642a4d;
+        border-radius: 100px;
+    }
+}
+
+.item_info {
+    flex-grow: 1;
+}
+
+.item_title {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20.9px;
+}
+
+.item_title__used {
+    color: var(--gray);
+}
+
+.item_skills {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 25.08px;
+    color: #a6a6a6;
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.item_skills_block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.item_skills_block_icon__knowledge path {
+    fill: #672b12;
+}
+
+.item_skills_block_icon__loyalty path {
+    fill: #53650e;
+}
+
+.item_skills_block_icon__influence path {
+    fill: #6e0d0d;
+}
+
+.item_counter {
+    margin-left: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16.72px;
+    color: var(--gray);
+}
+
+.item_button {
+    margin-left: auto;
+    color: var(--green);
+}
+
+.item_button__select {
+    color: var(--orange-2);
+}
+
+.item_button__used {
+    color: var(--gray);
 }

@@ -12,9 +12,16 @@ import useUserStore from "entities/user";
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
     const balance = useUserStore((state) => state.balance);
+    const fetchChest = useChestsStore((state) => state.fetchChests);
 
     const navigate = useNavigate();
     useEffect(() => {
+        (async () => {
+            if (chests.length === 0) {
+                await fetchChest();
+            }
+        })();
+
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
