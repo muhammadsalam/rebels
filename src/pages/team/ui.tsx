@@ -1,6 +1,5 @@
 import useHeroStore, { Card } from "entities/heroes";
 import styles from "./styles.module.scss";
-import ChestIcon from "icons/chest.svg?react";
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
@@ -8,31 +7,27 @@ import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import ArrowDownIcon from "icons/arrow-down.svg?react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Modal } from "shared/ui";
 import { formatNumber, tgApp } from "shared/libs";
 import useUserStore from "entities/user";
 import { CardsPage } from "pages/cards";
+import fetchHeroes from "features/fetchHeroes";
+import { Loading } from "widgets/loading";
 
 export const TeamPage = () => {
     const cards = useHeroStore((state) => state.cards);
+    const team = useHeroStore((state) => state.team);
     const team_skills = useHeroStore((state) => state.team_skills);
     const saveTeam = useHeroStore((state) => state.saveTeam);
     const upgradeCard = useHeroStore((state) => state.upgradeCard);
-    const [modalCard, setModalCard] = useState<Card | null>(cards[0]);
+    const [modalCard] = useState<Card | null>(null);
     const [activeChoosedCard, setActiveChoosedCard] = useState<Card | null>(
         null
     );
-    const [choosedCards, setChoosedCards] = useState(
-        cards.filter((item) => item.changed)
-    );
+    const [choosedCards, setChoosedCards] = useState(team);
     const [isCardUpdating, setIsCardUpdating] = useState(true);
     const balance = useUserStore.getState().balance;
-
-    const handleModalCard = (card: Card) => {
-        setModalCard(card);
-        setIsCardUpdating(true);
-    };
 
     const handleCardClick = (card: Card) => {
         if (activeChoosedCard?.id === card.id) {
@@ -53,21 +48,7 @@ export const TeamPage = () => {
             }
         }
 
-        console.log(hasChange);
         return hasChange;
-    };
-
-    const handleSelectClick = (card: Card) => {
-        setChoosedCards((prevCards) => {
-            return prevCards.map((item) => {
-                if (item.id === activeChoosedCard?.id) {
-                    return { ...card, changed: true };
-                }
-
-                return { ...item, changed: false };
-            });
-        });
-        setActiveChoosedCard(null);
     };
 
     const handleSaveTeam = () => {
@@ -96,6 +77,12 @@ export const TeamPage = () => {
 
     const navigate = useNavigate();
     useEffect(() => {
+        if (cards.length === 0) {
+            fetchHeroes().then(() =>
+                setChoosedCards(useHeroStore.getState().team)
+            );
+        }
+
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
@@ -139,29 +126,15 @@ export const TeamPage = () => {
         }
     };
 
+    if (!cards.length) return <Loading />;
+
     return (
         <div className={styles.container}>
             <CardsPage />
             <div className={styles.top}>
                 <div className={styles.top_left}>
                     <h2 className={styles.heading}>My team</h2>
-                    <p className={styles.description}>
-                        {activeChoosedCard !== null
-                            ? "Select a card any card from My cards"
-                            : "Select the card you want to replace"}
-                    </p>
                 </div>
-                <Link
-                    to="/chests"
-                    className={clsx(
-                        styles.chest_icon,
-                        activeChoosedCard !== null &&
-                            !hasChanges() &&
-                            styles.chest_icon__disabled
-                    )}
-                >
-                    <ChestIcon />
-                </Link>
             </div>
 
             <div className={styles.choosed_cards}>

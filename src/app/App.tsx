@@ -11,7 +11,6 @@ import { tgApp } from "shared/libs";
 import { Loading } from "widgets/loading";
 import FontFaceObserver from "fontfaceobserver";
 import { QuestsPage } from "pages/quests";
-import useChestsStore from "entities/chests";
 import { ProfilePage } from "pages/profile";
 import { TeamPage } from "pages/team";
 
@@ -20,8 +19,6 @@ function App() {
     const token = useUserStore((state) => state.token);
     const userId = useUserStore((state) => state.id);
     const addEnergy = useGameStatsStore((state) => state.addEnergy);
-    const fetchChest = useChestsStore((state) => state.fetchChests);
-    const chests = useChestsStore((state) => state.chests);
 
     const [isFontsLoading, setIsFontsLoading] = useState({
         PixelOperator: true,

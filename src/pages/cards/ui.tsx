@@ -20,8 +20,6 @@ export const CardsPage: FC<CardProps> = ({
     const cards = useHeroStore((state) => state.cards);
     const choosedCards = useHeroStore((state) => state.team);
 
-    const handleCardClick = (card: Card) => {};
-
     const CardItem: FC<{ card: Card }> = ({ card, ...props }) => {
         return (
             <div {...props} className={styles.item} key={card.id}>

@@ -1,16 +1,13 @@
 import useGameStatsStore from "entities/gameStats";
-import useHeroStore from "entities/heroes";
 import useUserStore from "entities/user";
 import useVillainStore from "entities/villain";
 import { axios } from "shared/libs";
 
 export default async () => {
     try {
-        const { data: { user, villain, heroes, team_values }, status } = await axios.get('/user');
+        const { data: { user, villain }, status } = await axios.get('/user');
 
         if (status !== 200) return false
-
-        useUserStore.setState({ id: user.id, balance: user.balance, username: user.username });
 
         const game_stats = {
             damage: user.damage,
@@ -24,9 +21,9 @@ export default async () => {
             mining_claimed_at: user.mining_claimed_at,
         };
 
+        useUserStore.setState({ id: user.id, balance: user.balance, username: user.username });
         useGameStatsStore.setState(game_stats);
         useVillainStore.setState(villain);
-        useHeroStore.setState({ cards: heroes, team_skills: team_values, team: heroes.filter((card: { changed: boolean }) => card.changed) });
 
         return true;
     } catch (err) {
