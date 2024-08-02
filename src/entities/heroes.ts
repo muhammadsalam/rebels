@@ -40,7 +40,7 @@ const useHeroStore = create<HeroState>((set, get) => ({
         try {
             const prevTeam = get().team;
 
-            const { status } = await axios.post('/user/heroes/change', tempTeam.reduce<{ hero_id: number, new_hero_id: number }[]>((newTeam, item, index) => {
+            const payload = tempTeam.reduce<{ hero_id: number, new_hero_id: number }[]>((newTeam, item, index) => {
                 if (item.id !== prevTeam[index]?.id) {
                     newTeam.push({
                         hero_id: prevTeam[index]?.id as number, new_hero_id: item.id
@@ -48,13 +48,16 @@ const useHeroStore = create<HeroState>((set, get) => ({
                 }
 
                 return newTeam;
-            }, []));
+            }, []);
+
+            const { status, data } = await axios.post('/user/heroes/change', payload);
 
             if (status === 200) {
-                set({ team: tempTeam });
+                set({ team: data.filter((item: Card) => item.changed), cards: data });
             }
         } catch (e) {
             console.log(e);
+            alert(e);
         }
     },
     upgradeCard: async (hero_id) => {

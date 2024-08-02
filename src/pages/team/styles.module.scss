@@ -23,7 +23,7 @@
     font-family: "Pixel Operator";
     font-size: 32px;
     font-weight: 700;
-    line-height: 33.44px;
+    line-height: 33px;
 }
 
 .description {
@@ -31,7 +31,7 @@
     font-family: "Pixel Operator";
     font-size: 16px;
     font-weight: 400;
-    line-height: 16.72px;
+    line-height: 16px;
 }
 
 .chest_icon {
@@ -63,6 +63,8 @@
 }
 
 .card {
+    font-size: 64px;
+    line-height: 0;
     width: 101px;
     height: 101px;
     border-radius: 50%;
@@ -98,7 +100,7 @@
     font-family: "Pixel Operator";
     font-size: 24px;
     font-weight: 400;
-    line-height: 25.08px;
+    line-height: 25px;
     text-align: left;
     margin-bottom: 24px;
 }
@@ -126,13 +128,13 @@
     gap: 8px;
     font-size: 18px;
     font-weight: 400;
-    line-height: 18.81px;
+    line-height: 18px;
 }
 
 .skill_value {
     font-size: 24px;
     font-weight: 700;
-    line-height: 25.08px;
+    line-height: 25px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -141,7 +143,7 @@
 .skill_value span {
     font-size: 16px;
     font-weight: 700;
-    line-height: 16.72px;
+    line-height: 16px;
 }
 
 .skill__knowledge {
@@ -176,6 +178,7 @@
 
 .line {
     box-shadow: var(--inner-shadow-1);
+    background-color: #262626;
     margin-top: 12px;
     width: 100%;
     border-radius: 25px;
@@ -268,8 +271,16 @@
     }
 }
 
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+
 .button {
-    width: 190px;
+    width: 100%;
+    max-width: 190px;
     height: 60px;
     margin-top: 15px;
     display: flex;
@@ -283,9 +294,10 @@
     font-family: "Pixel Operator";
     font-size: 24px;
     font-weight: 700;
-    line-height: 25.08px;
+    line-height: 25px;
 
     &:disabled {
+        opacity: 0.7;
         color: var(--gray);
         pointer-events: none;
     }
@@ -303,145 +315,27 @@
     gap: 32px;
 }
 
-.accordeon {
-    box-shadow: var(--shadow-1);
-    border-radius: 12px;
-    background-color: var(--dark);
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 20.9px;
-}
-
-.accordeon_button {
-    padding: 19px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.accordeon__disabled {
-    pointer-events: none;
-    color: var(--gray);
-}
-
-.accordeon_button_icon {
-    transition: rotate 0.123s ease-in;
-    transform-origin: center;
-}
-
-.accordeon__disabled .accordeon_button_icon {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.accordeon__active .accordeon_button_icon {
-    rotate: 180deg;
-}
-
-.accordeon_list {
-    padding: 0 20px 0;
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.123s ease-in-out,
-        padding 0.123s ease-in-out;
-}
-
-.accordeon__active .accordeon_list {
-    padding: 0 20px 19px;
-    grid-template-rows: 1fr;
-    pointer-events: all;
-}
-
-.accordeon_list_wrapper {
-    overflow: hidden;
-    margin: 0 -20px;
-    padding: 0 20px;
-}
-
-.accordeon_item {
-    border-top: 1px solid rgba($color: #b6b6b6, $alpha: 0.05);
-    padding-top: 24px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
-    & + & {
-        margin-top: 24px;
-    }
-}
-
-.accordeon_item_img {
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    background-color: var(--dark);
-    box-shadow: var(--shadow-1);
-    border-radius: 12px;
-
-    img {
-        width: 40px;
-    }
-}
-
-.accordeon_item_info {
-    margin-left: 16px;
-}
-
-.accordeon_item_title {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 20.9px;
-}
-
-.accordeon_item_title__used {
-    color: var(--gray);
-}
-
-.accordeon_item_level {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 16.72px;
-    color: var(--gray);
-    margin-top: 4px;
-}
-
-.accordeon_item_button {
-    margin-left: auto;
-    color: var(--green);
-}
-
-.accordeon_item_button__select {
-    color: var(--orange-2);
-}
-
-.accordeon_item_button__used {
-    color: var(--gray);
-}
-
 .modal_content {
     margin-top: 32px;
 }
 
 .upgradeButton {
-    padding: 0 32px;
+    padding: 0 12px;
     height: 60px;
-    color: var(--wite);
+    color: var(--white);
     display: flex;
     align-items: center;
+    gap: 8px;
+    justify-content: center;
     background-color: var(--dark);
     box-shadow: var(--shadow-1);
     border: 0;
     border-radius: 93px;
     width: 100%;
-    margin-top: 44px;
-    gap: 8px;
-    font-family: "Pixel Operator";
+    margin-top: 3.72vh;
     font-size: 24px;
     font-weight: 700;
-    line-height: 25.08px;
-    text-align: center;
+    line-height: 25px;
 
     &:disabled {
         opacity: 0.7;
@@ -450,12 +344,24 @@
 }
 
 .upgradeButton_icon {
-    margin-left: auto;
-    rotate: 180deg;
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
+}
 
-    path {
-        fill: var(--green);
-    }
+.changeButton {
+    padding: 0 12px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 25px;
+    background-color: var(--dark);
+    box-shadow: var(--shadow-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 100px;
+    border: 0;
+    height: 60px;
+    margin-top: 20px;
+    color: var(--white);
 }

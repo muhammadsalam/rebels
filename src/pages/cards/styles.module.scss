@@ -56,6 +56,11 @@
     }
 }
 
+.item__disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
 .item_img {
     width: 56px;
     height: 56px;

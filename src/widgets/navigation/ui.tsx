@@ -9,9 +9,9 @@ import FriendsIcon from "icons/friends.svg?react";
 export const Navigation: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
     return (
         <nav {...props} className={styles.navigation}>
-            <Link className={styles.link} to="/mine">
+            <Link className={styles.link} to="/team">
                 <MineIcon />
-                <strong>Mine</strong>
+                <strong>Team</strong>
             </Link>
             <Link className={styles.link} to="/shop">
                 <ItemsIcon />

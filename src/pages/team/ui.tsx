@@ -5,7 +5,6 @@ import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
-import ArrowDownIcon from "icons/arrow-down.svg?react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "shared/ui";
@@ -14,25 +13,38 @@ import useUserStore from "entities/user";
 import { CardsPage } from "pages/cards";
 import fetchHeroes from "features/fetchHeroes";
 import { Loading } from "widgets/loading";
+import {
+    MAX_CARD_INFLUENCE,
+    MAX_CARD_KNOWLEDGE,
+    MAX_CARD_LOYALTY,
+    MAX_TEAM_INFLUENCE,
+    MAX_TEAM_KNOWLEDGE,
+    MAX_TEAM_LOYALTY,
+} from "shared/CONSTANT";
 
 export const TeamPage = () => {
     const cards = useHeroStore((state) => state.cards);
     const team = useHeroStore((state) => state.team);
-    const team_skills = useHeroStore((state) => state.team_skills);
+    const [team_skills, setTeamSkills] = useState(
+        useHeroStore((state) => state.team_skills)
+    );
     const saveTeam = useHeroStore((state) => state.saveTeam);
     const upgradeCard = useHeroStore((state) => state.upgradeCard);
-    const [modalCard] = useState<Card | null>(null);
     const [activeChoosedCard, setActiveChoosedCard] = useState<Card | null>(
         null
     );
     const [choosedCards, setChoosedCards] = useState(team);
-    const [isCardUpdating, setIsCardUpdating] = useState(true);
     const balance = useUserStore.getState().balance;
 
+    const [isCardsGalleryActive, setIsCardsGalleryActive] = useState(false);
+    // const handleCardsGalleryPage = () => {};
+
     const handleCardClick = (card: Card) => {
-        if (activeChoosedCard?.id === card.id) {
-            return setActiveChoosedCard(null);
+        if (card.id !== 0) {
+            return setActiveChoosedCard(card);
         }
+
+        setIsCardsGalleryActive(true);
         setActiveChoosedCard(card);
     };
 
@@ -78,9 +90,10 @@ export const TeamPage = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (cards.length === 0) {
-            fetchHeroes().then(() =>
-                setChoosedCards(useHeroStore.getState().team)
-            );
+            fetchHeroes().then(() => {
+                setChoosedCards(useHeroStore.getState().team);
+                setTeamSkills(useHeroStore.getState().team_skills);
+            });
         }
 
         tgApp.BackButton.show();
@@ -95,29 +108,6 @@ export const TeamPage = () => {
         };
     }, []);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            const target = event.target as Element;
-            if (
-                target.closest(`.${styles.card}`) ||
-                target.closest(`.${styles.button}`) ||
-                target.closest(`.${styles.accordeon_button}`) ||
-                target.closest(`.${styles.cards_content}`)
-            ) {
-                return;
-            }
-            setActiveChoosedCard(null);
-        };
-
-        if (activeChoosedCard !== null) {
-            document.addEventListener("click", handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, [activeChoosedCard]);
-
     const handleUpgradeCard = async (hero_id: number) => {
         const isUpdgraded = await upgradeCard(hero_id);
 
@@ -130,7 +120,6 @@ export const TeamPage = () => {
 
     return (
         <div className={styles.container}>
-            <CardsPage />
             <div className={styles.top}>
                 <div className={styles.top_left}>
                     <h2 className={styles.heading}>My team</h2>
@@ -138,31 +127,49 @@ export const TeamPage = () => {
             </div>
 
             <div className={styles.choosed_cards}>
-                {choosedCards.slice(0, 5).map((hero) => (
-                    <div
-                        className={clsx(
-                            styles.card,
-                            activeChoosedCard?.id === hero.id &&
-                                styles.card__active
-                        )}
-                        key={hero.id}
-                        onClick={() => handleCardClick(hero)}
-                    >
-                        <img
-                            src="/assets/card-item.png"
-                            alt={hero.name}
-                            className={styles.card_img}
-                        />
-                    </div>
-                ))}
+                {choosedCards
+                    .concat(
+                        new Array(5).fill({
+                            id: 0,
+                            level: 0,
+                            knowledge_step: 0,
+                            loyalty_step: 0,
+                            influence_step: 0,
+                            changed: true,
+                            influence: 0,
+                            knowledge: 0,
+                            loyalty: 0,
+                            name: "",
+                            rarity: "Common",
+                            upgrade_price: 0,
+                        })
+                    )
+                    .slice(0, 5)
+                    .map((hero, index) => (
+                        <div
+                            className={clsx(
+                                styles.card,
+                                activeChoosedCard?.id === hero.id &&
+                                    styles.card__active
+                            )}
+                            key={hero.id + index}
+                            onClick={() => handleCardClick(hero)}
+                        >
+                            {hero.id === 0 ? (
+                                "+"
+                            ) : (
+                                <img
+                                    src={`/assets/card-item-${hero.rarity.toLowerCase()}.png`}
+                                    alt={hero.name}
+                                    className={styles.card_img}
+                                />
+                            )}
+                        </div>
+                    ))}
             </div>
 
             <div className={styles.skills}>
-                <h3 className={styles.skills_heading}>
-                    {activeChoosedCard !== null
-                        ? `${activeChoosedCard.name} values:`
-                        : "Team values:"}
-                </h3>
+                <h3 className={styles.skills_heading}>Team values:</h3>
                 <div className={clsx(styles.skill, styles.skill__knowledge)}>
                     <div className={styles.skill_top}>
                         <div className={styles.skill_top_left}>
@@ -170,9 +177,7 @@ export const TeamPage = () => {
                             Knowledge
                         </div>
                         <span className={styles.skill_value}>
-                            {activeChoosedCard === null
-                                ? team_skills.knowledge
-                                : activeChoosedCard.knowledge}
+                            {team_skills.knowledge}
                         </span>
                     </div>
                     <div className={styles.line}>
@@ -180,7 +185,9 @@ export const TeamPage = () => {
                             className={clsx(styles.line_inner)}
                             style={{
                                 width: `${
-                                    (team_skills.knowledge / 231) * 100
+                                    (team_skills.knowledge /
+                                        MAX_TEAM_KNOWLEDGE) *
+                                    100
                                 }%`,
                             }}
                         ></div>
@@ -193,16 +200,17 @@ export const TeamPage = () => {
                             Loyalty
                         </div>
                         <span className={styles.skill_value}>
-                            {activeChoosedCard === null
-                                ? team_skills.loyalty
-                                : activeChoosedCard.loyalty}
+                            {team_skills.loyalty}
                         </span>
                     </div>
                     <div className={styles.line}>
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${(team_skills.loyalty / 228) * 100}%`,
+                                width: `${
+                                    (team_skills.loyalty / MAX_TEAM_LOYALTY) *
+                                    100
+                                }%`,
                             }}
                         ></div>
                     </div>
@@ -214,9 +222,7 @@ export const TeamPage = () => {
                             Influence
                         </div>
                         <span className={styles.skill_value}>
-                            {activeChoosedCard === null
-                                ? team_skills.influence
-                                : activeChoosedCard.influence}
+                            {team_skills.influence}
                         </span>
                     </div>
                     <div className={styles.line}>
@@ -224,7 +230,9 @@ export const TeamPage = () => {
                             className={clsx(styles.line_inner)}
                             style={{
                                 width: `${
-                                    (team_skills.knowledge / 220) * 100
+                                    (team_skills.influence /
+                                        MAX_TEAM_INFLUENCE) *
+                                    100
                                 }%`,
                             }}
                         ></div>
@@ -232,20 +240,27 @@ export const TeamPage = () => {
                 </div>
             </div>
 
-            <button
-                className={styles.button}
-                disabled={!hasChanges()}
-                onClick={handleSaveTeam}
-            >
-                Save
-            </button>
+            <div className={styles.buttons}>
+                <button
+                    className={styles.button}
+                    onClick={() => setIsCardsGalleryActive(true)}
+                >
+                    My cards
+                </button>
+                <button
+                    className={styles.button}
+                    disabled={!hasChanges()}
+                    onClick={handleSaveTeam}
+                >
+                    Save
+                </button>
+            </div>
 
-            {!isCardUpdating && modalCard && (
+            {activeChoosedCard && activeChoosedCard.id !== 0 && (
                 <Modal
-                    isActive={!isCardUpdating}
-                    setIsActive={setIsCardUpdating}
-                    heading="Epic card # 1"
-                    subheading="Choose your option"
+                    isActive={!activeChoosedCard}
+                    setIsActive={() => setActiveChoosedCard(null)}
+                    heading={activeChoosedCard.name}
                 >
                     <div className={styles.modal_content}>
                         <div
@@ -260,45 +275,24 @@ export const TeamPage = () => {
                                     Knowledge
                                 </div>
                                 <span className={styles.skill_value}>
-                                    {modalCard.knowledge}
+                                    {activeChoosedCard.knowledge}
                                     <span>
-                                        {modalCard.knowledge_step &&
-                                            `(+${modalCard.knowledge_step})`}
+                                        (+{activeChoosedCard.knowledge_step})
                                     </span>
                                 </span>
                             </div>
-                            <div
-                                className={clsx(
-                                    styles.progress,
-                                    styles.skill_progress
-                                )}
-                            >
-                                {new Array(20).fill(0).map((_, index) => (
-                                    <div
-                                        key={index}
-                                        className={clsx(
-                                            styles.progress_item,
-                                            index + 1 <=
-                                                Math.max(
-                                                    Math.round(
-                                                        modalCard.knowledge /
-                                                            2.75
-                                                    ),
-                                                    1
-                                                ) &&
-                                                styles.progress_item__active,
-                                            index + 1 <=
-                                                Math.max(
-                                                    Math.round(
-                                                        (modalCard.knowledge +
-                                                            modalCard.knowledge_step) /
-                                                            2.75
-                                                    ),
-                                                    1
-                                                ) && styles.progress_item__step
-                                        )}
-                                    ></div>
-                                ))}
+                            <div className={styles.line}>
+                                <div
+                                    className={clsx(styles.line_inner)}
+                                    style={{
+                                        width: `${
+                                            ((activeChoosedCard.knowledge +
+                                                activeChoosedCard.knowledge_step) /
+                                                MAX_CARD_KNOWLEDGE) *
+                                            100
+                                        }%`,
+                                    }}
+                                ></div>
                             </div>
                         </div>
                         <div
@@ -309,48 +303,28 @@ export const TeamPage = () => {
                         >
                             <div className={styles.skill_top}>
                                 <div className={styles.skill_top_left}>
-                                    <SwordIcon />
+                                    <FlashIcon />
                                     Loyalty
                                 </div>
                                 <span className={styles.skill_value}>
-                                    {modalCard.loyalty}
+                                    {activeChoosedCard.loyalty}
                                     <span>
-                                        {modalCard.loyalty_step &&
-                                            `(+${modalCard.loyalty_step})`}
+                                        (+{activeChoosedCard.loyalty_step})
                                     </span>
                                 </span>
                             </div>
-                            <div
-                                className={clsx(
-                                    styles.progress,
-                                    styles.skill_progress
-                                )}
-                            >
-                                {new Array(20).fill(0).map((_, index) => (
-                                    <div
-                                        key={index}
-                                        className={clsx(
-                                            styles.progress_item,
-                                            index + 1 <=
-                                                Math.max(
-                                                    Math.round(
-                                                        modalCard.loyalty / 2.75
-                                                    ),
-                                                    1
-                                                ) &&
-                                                styles.progress_item__active,
-                                            index + 1 <=
-                                                Math.max(
-                                                    Math.round(
-                                                        (modalCard.loyalty +
-                                                            modalCard.loyalty_step) /
-                                                            2.75
-                                                    ),
-                                                    1
-                                                ) && styles.progress_item__step
-                                        )}
-                                    ></div>
-                                ))}
+                            <div className={styles.line}>
+                                <div
+                                    className={clsx(styles.line_inner)}
+                                    style={{
+                                        width: `${
+                                            ((activeChoosedCard.loyalty +
+                                                activeChoosedCard.loyalty_step) /
+                                                MAX_CARD_LOYALTY) *
+                                            100
+                                        }%`,
+                                    }}
+                                ></div>
                             </div>
                         </div>
                         <div
@@ -361,65 +335,67 @@ export const TeamPage = () => {
                         >
                             <div className={styles.skill_top}>
                                 <div className={styles.skill_top_left}>
-                                    <SwordIcon />
+                                    <SkullIcon />
                                     Influence
                                 </div>
                                 <span className={styles.skill_value}>
-                                    {modalCard.influence}
+                                    {activeChoosedCard.influence}
                                     <span>
-                                        {modalCard.influence_step &&
-                                            `(+${modalCard.influence_step})`}
+                                        (+{activeChoosedCard.influence_step})
                                     </span>
                                 </span>
                             </div>
-                            <div
-                                className={clsx(
-                                    styles.progress,
-                                    styles.skill_progress
-                                )}
-                            >
-                                {new Array(20).fill(0).map((_, index) => (
-                                    <div
-                                        key={index}
-                                        className={clsx(
-                                            styles.progress_item,
-                                            index + 1 <=
-                                                Math.max(
-                                                    Math.round(
-                                                        modalCard.influence /
-                                                            2.75
-                                                    ),
-                                                    1
-                                                ) &&
-                                                styles.progress_item__active,
-                                            index + 1 <=
-                                                Math.max(
-                                                    Math.round(
-                                                        (modalCard.influence +
-                                                            modalCard.influence_step) /
-                                                            2.75
-                                                    ),
-                                                    1
-                                                ) && styles.progress_item__step
-                                        )}
-                                    ></div>
-                                ))}
+                            <div className={styles.line}>
+                                <div
+                                    className={clsx(styles.line_inner)}
+                                    style={{
+                                        width: `${
+                                            ((activeChoosedCard.influence +
+                                                activeChoosedCard.influence_step) /
+                                                MAX_CARD_INFLUENCE) *
+                                            100
+                                        }%`,
+                                    }}
+                                ></div>
                             </div>
                         </div>
 
                         <button
                             className={styles.upgradeButton}
-                            disabled={balance < modalCard.upgrade_price}
-                            onClick={() => handleUpgradeCard(modalCard.id)}
+                            disabled={balance < activeChoosedCard.upgrade_price}
+                            onClick={() =>
+                                handleUpgradeCard(activeChoosedCard.id)
+                            }
                         >
-                            <CoinIcon />
-                            {formatNumber(modalCard.upgrade_price, "ru-RU")}
-                            <ArrowDownIcon
-                                className={styles.upgradeButton_icon}
-                            />
+                            <span>
+                                Upgrade {}
+                                {formatNumber(
+                                    activeChoosedCard.upgrade_price,
+                                    "ru-RU"
+                                )}
+                            </span>
+                            <CoinIcon className={styles.upgradeButton_icon} />
+                        </button>
+                        <button
+                            className={styles.changeButton}
+                            onClick={() => setIsCardsGalleryActive(true)}
+                        >
+                            Change
                         </button>
                     </div>
                 </Modal>
+            )}
+
+            {isCardsGalleryActive && (
+                <CardsPage
+                    isActive={isCardsGalleryActive}
+                    setIsActive={setIsCardsGalleryActive}
+                    activeChoosedCard={activeChoosedCard}
+                    setActiveChoosedCard={setActiveChoosedCard}
+                    setChoosedCards={setChoosedCards}
+                    tempCards={activeChoosedCard ? choosedCards : undefined}
+                    setTeamSkills={setTeamSkills}
+                />
             )}
         </div>
     );

@@ -1,6 +1,6 @@
 import { Modal } from "shared/ui";
 import styles from "./styles.module.scss";
-import { FC, HTMLAttributes, useState } from "react";
+import { Dispatch, FC, HTMLAttributes, SetStateAction } from "react";
 import { Accordeon } from "widgets/accordeon";
 import useHeroStore, { Card } from "entities/heroes";
 import clsx from "clsx";
@@ -10,35 +10,94 @@ import SkullIcon from "icons/skull.svg?react";
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
     activeChoosedCard?: Card | null;
+    setActiveChoosedCard: Dispatch<SetStateAction<Card | null>>;
+    isActive: boolean;
+    setIsActive: Dispatch<SetStateAction<boolean>>;
+    tempCards?: Card[];
+    setChoosedCards?: Dispatch<SetStateAction<Card[]>>;
+    setTeamSkills?: Dispatch<
+        SetStateAction<{
+            knowledge: number;
+            loyalty: number;
+            influence: number;
+        }>
+    >;
 }
 export const CardsPage: FC<CardProps> = ({
     activeChoosedCard = null,
+    isActive,
+    setIsActive,
+    tempCards,
+    setActiveChoosedCard,
+    setChoosedCards,
+    setTeamSkills,
     ...props
 }) => {
-    const [isActive, setisActive] = useState(true);
-
     const cards = useHeroStore((state) => state.cards);
-    const choosedCards = useHeroStore((state) => state.team);
+    const choosedCards = tempCards || useHeroStore((state) => state.team);
+
+    const handleCardClick = (card: Card) => {
+        if (activeChoosedCard === null) {
+            console.log("null");
+            return;
+        }
+
+        // проверяется нажатая карточка такая же как активная или нет И поверяется есть ли карточка в выбранных
+        if (
+            (activeChoosedCard.name === card.name &&
+                activeChoosedCard.level === card.level) ||
+            choosedCards.find(
+                (item) => item.name === card.name && item.level === card.level
+            )
+        ) {
+            return;
+        } else {
+            const tempArr = choosedCards.map((item) =>
+                item.id === activeChoosedCard.id ? card : item
+            );
+            setChoosedCards && setChoosedCards(tempArr);
+            const team_skills = {
+                knowledge: tempArr.reduce(
+                    (summ, item) => summ + item.knowledge,
+                    0
+                ),
+                loyalty: tempArr.reduce((summ, item) => summ + item.loyalty, 0),
+                influence: tempArr.reduce(
+                    (summ, item) => summ + item.influence,
+                    0
+                ),
+            };
+            setTeamSkills && setTeamSkills(team_skills);
+            setIsActive(false);
+            setActiveChoosedCard(null);
+        }
+    };
 
     const CardItem: FC<{ card: Card }> = ({ card, ...props }) => {
         return (
-            <div {...props} className={styles.item} key={card.id}>
+            <div
+                {...props}
+                className={clsx(
+                    styles.item,
+                    activeChoosedCard &&
+                        choosedCards.find(
+                            (item) =>
+                                item.name === card.name &&
+                                item.level === card.level
+                        ) &&
+                        styles.item__disabled
+                )}
+                key={card.id}
+                onClick={() => handleCardClick(card)}
+            >
                 <div className={styles.item_img}>
-                    <img src="/assets/card-item.png" alt={card.name} />
+                    <img
+                        src={`/assets/card-item-${card.rarity.toLowerCase()}.png`}
+                        alt={card.name}
+                    />
                 </div>
                 <div className={styles.item_info}>
-                    <div
-                        className={clsx(
-                            styles.item_title,
-                            activeChoosedCard &&
-                                choosedCards.find(
-                                    (item) => item.id === card.id
-                                ) &&
-                                styles.item_title__used
-                        )}
-                    >
-                        {card.name}
-                    </div>
+                    <div className={styles.item_title}>{card.name}</div>
                     <div className={styles.item_skills}>
                         <div className={styles.item_skills_block}>
                             <SwordIcon
@@ -72,7 +131,8 @@ export const CardsPage: FC<CardProps> = ({
                     </div>
                     <div className={styles.item_count}>
                         {`${
-                            cards.filter((item) => item.id === card.id).length
+                            cards.filter((item) => item.name === card.name)
+                                .length
                         } pcs`}
                     </div>
                 </div>
@@ -80,156 +140,80 @@ export const CardsPage: FC<CardProps> = ({
         );
     };
 
+    function getUniqueCardsByRarity(rarity: string) {
+        return cards
+            .filter((item) => item.rarity === rarity)
+            .reduce<Card[]>(
+                (items, item) =>
+                    items.some((card) => card.name === item.name)
+                        ? items
+                        : items.concat([item]),
+                []
+            )
+            .map((card) => <CardItem key={card.id} card={card} />);
+    }
+
     return (
         <div {...props} className={styles.container}>
-            {isActive && (
-                <Modal
-                    isActive={isActive}
-                    setIsActive={setisActive}
-                    className={styles.modal}
-                    innerClassName={styles.modal_inner}
-                    paddingTop={20}
-                    paddingBottom={20}
-                >
-                    <h2 className={styles.heading}>My cards</h2>
-                    <div className={styles.cards}>
-                        <Accordeon
-                            title="Legendary"
-                            buttonClassName={
-                                styles[`accordeon_button__${"Legendary"}`]
-                            }
-                            disabled={
-                                !cards.some(
-                                    (item) => item.rarity === "Legendary"
-                                )
-                            }
-                        >
-                            {cards
-                                .filter((item) => item.rarity === "Legendary")
-                                .reduce<Card[]>(
-                                    (items, item) =>
-                                        items.some(
-                                            (card) =>
-                                                card.id === item.id &&
-                                                card.level === item.level
-                                        )
-                                            ? items
-                                            : items.concat([item]),
-                                    []
-                                )
-                                .map((card) => (
-                                    <CardItem key={card.id} card={card} />
-                                ))}
-                        </Accordeon>
-                        <Accordeon
-                            title="Epic"
-                            buttonClassName={
-                                styles[`accordeon_button__${"Epic"}`]
-                            }
-                            disabled={
-                                !cards.some((item) => item.rarity === "Epic")
-                            }
-                        >
-                            {cards
-                                .filter((item) => item.rarity === "Epic")
-                                .reduce<Card[]>(
-                                    (items, item) =>
-                                        items.some(
-                                            (card) =>
-                                                card.id === item.id &&
-                                                card.level === item.level
-                                        )
-                                            ? items
-                                            : items.concat([item]),
-                                    []
-                                )
-                                .map((card) => (
-                                    <CardItem key={card.id} card={card} />
-                                ))}
-                        </Accordeon>
-                        <Accordeon
-                            title="Rare"
-                            buttonClassName={
-                                styles[`accordeon_button__${"Rare"}`]
-                            }
-                            disabled={
-                                !cards.some((item) => item.rarity === "Rare")
-                            }
-                        >
-                            {cards
-                                .filter((item) => item.rarity === "Rare")
-                                .reduce<Card[]>(
-                                    (items, item) =>
-                                        items.some(
-                                            (card) =>
-                                                card.id === item.id &&
-                                                card.level === item.level
-                                        )
-                                            ? items
-                                            : items.concat([item]),
-                                    []
-                                )
-                                .map((card) => (
-                                    <CardItem key={card.id} card={card} />
-                                ))}
-                        </Accordeon>
-                        <Accordeon
-                            title="Uncommon"
-                            buttonClassName={
-                                styles[`accordeon_button__${"Uncommon"}`]
-                            }
-                            disabled={
-                                !cards.some(
-                                    (item) => item.rarity === "Uncommon"
-                                )
-                            }
-                        >
-                            {cards
-                                .filter((item) => item.rarity === "Uncommon")
-                                .reduce<Card[]>(
-                                    (items, item) =>
-                                        items.some(
-                                            (card) =>
-                                                card.id === item.id &&
-                                                card.level === item.level
-                                        )
-                                            ? items
-                                            : items.concat([item]),
-                                    []
-                                )
-                                .map((card) => (
-                                    <CardItem key={card.id} card={card} />
-                                ))}
-                        </Accordeon>
-                        <Accordeon
-                            title="Common"
-                            buttonClassName={
-                                styles[`accordeon_button__${"Common"}`]
-                            }
-                            disabled={
-                                !cards.some((item) => item.rarity === "Common")
-                            }
-                        >
-                            {cards
-                                .filter((item) => item.rarity === "Common")
-                                .reduce<Card[]>(
-                                    (items, item) =>
-                                        items.some(
-                                            (card) =>
-                                                card.id === item.id &&
-                                                card.level === item.level
-                                        )
-                                            ? items
-                                            : items.concat([item]),
-                                    []
-                                )
-                                .map((card) => (
-                                    <CardItem key={card.id} card={card} />
-                                ))}
-                        </Accordeon>
-                    </div>
-                </Modal>
-            )}
+            <Modal
+                isActive={isActive}
+                setIsActive={setIsActive}
+                className={styles.modal}
+                innerClassName={styles.modal_inner}
+                paddingTop={20}
+                paddingBottom={20}
+            >
+                <h2 className={styles.heading}>My cards</h2>
+                <div className={styles.cards}>
+                    <Accordeon
+                        title="Legendary"
+                        buttonClassName={
+                            styles[`accordeon_button__${"Legendary"}`]
+                        }
+                        disabled={
+                            !cards.some((item) => item.rarity === "Legendary")
+                        }
+                    >
+                        {getUniqueCardsByRarity("Legendary")}
+                    </Accordeon>
+                    <Accordeon
+                        title="Epic"
+                        buttonClassName={styles[`accordeon_button__${"Epic"}`]}
+                        disabled={!cards.some((item) => item.rarity === "Epic")}
+                    >
+                        {getUniqueCardsByRarity("Epic")}
+                    </Accordeon>
+                    <Accordeon
+                        title="Rare"
+                        buttonClassName={styles[`accordeon_button__${"Rare"}`]}
+                        disabled={!cards.some((item) => item.rarity === "Rare")}
+                    >
+                        {getUniqueCardsByRarity("Rare")}
+                    </Accordeon>
+                    <Accordeon
+                        title="Uncommon"
+                        buttonClassName={
+                            styles[`accordeon_button__${"Uncommon"}`]
+                        }
+                        disabled={
+                            !cards.some((item) => item.rarity === "Uncommon")
+                        }
+                    >
+                        {getUniqueCardsByRarity("Uncommon")}
+                    </Accordeon>
+                    <Accordeon
+                        title="Common"
+                        buttonClassName={
+                            styles[`accordeon_button__${"Common"}`]
+                        }
+                        disabled={
+                            !cards.some((item) => item.rarity === "Common")
+                        }
+                    >
+                        {getUniqueCardsByRarity("Common")}
+                    </Accordeon>
+                </div>
+            </Modal>
         </div>
     );
 };
