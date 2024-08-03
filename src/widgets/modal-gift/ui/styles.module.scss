@@ -1,0 +1,17 @@
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 44px;
+    max-width: 292px;
+    margin: 40px auto 0;
+}
+
+.card {
+    padding: 34px;
+    background-color: var(--dark);
+    box-shadow: var(--shadow-1);
+    border-radius: 12px;
+    font-size: 0;
+}

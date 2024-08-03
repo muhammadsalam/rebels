@@ -1,18 +1,10 @@
-import {
-    Dispatch,
-    FC,
-    HTMLAttributes,
-    ReactNode,
-    SetStateAction,
-    useEffect,
-} from "react";
+import { FC, HTMLAttributes, ReactNode, useEffect } from "react";
 import styles from "./styles.module.scss";
 import CloseIcon from "icons/close.svg?react";
 import clsx from "clsx";
 
 interface ModalProps extends HTMLAttributes<HTMLDivElement> {
-    isActive: boolean;
-    setIsActive: Dispatch<SetStateAction<boolean>>;
+    onModalHide: () => void;
     heading?: ReactNode;
     subheading?: string;
     paddingTop?: number;
@@ -21,10 +13,9 @@ interface ModalProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Modal: FC<ModalProps> = ({
-    isActive,
     className,
     children,
-    setIsActive,
+    onModalHide,
     heading,
     subheading,
     paddingTop = 32,
@@ -42,29 +33,24 @@ export const Modal: FC<ModalProps> = ({
         };
     }, []);
 
-    const handleModalHide = () => {
-        setIsActive(false);
-    };
-
     return (
         <div className={`${styles.modal} ${className}`} {...props}>
-            <div
-                className={styles.modal_overlay}
-                onClick={handleModalHide}
-            ></div>
+            <div className={styles.modal_overlay} onClick={onModalHide}></div>
 
-            <div
-                className={clsx(styles.modal_inner, innerClassName)}
-                style={{ paddingTop, paddingBottom }}
-            >
-                <button className={styles.close} onClick={handleModalHide}>
-                    <CloseIcon />
-                </button>
-                {heading && <h2 className={styles.heading}>{heading}</h2>}
-                {subheading && (
-                    <p className={styles.subheading}>{subheading}</p>
-                )}
-                {children}
+            <div className={clsx(styles.modal_inner, innerClassName)}>
+                <div
+                    className={styles.wrapper}
+                    style={{ paddingTop, paddingBottom }}
+                >
+                    <button className={styles.close} onClick={onModalHide}>
+                        <CloseIcon />
+                    </button>
+                    {heading && <h2 className={styles.heading}>{heading}</h2>}
+                    {subheading && (
+                        <p className={styles.subheading}>{subheading}</p>
+                    )}
+                    {children}
+                </div>
             </div>
         </div>
     );

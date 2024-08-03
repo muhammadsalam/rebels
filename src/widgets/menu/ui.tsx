@@ -4,7 +4,9 @@ import InstagramIcon from "icons/social/instagram.svg?react";
 import TelegramIcon from "icons/social/telegram.svg?react";
 import TwitterIcon from "icons/social/twitter.svg?react";
 import DiscordIcon from "icons/social/discord.svg?react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ModalGift } from "widgets/modal-gift";
+import { ModalReward } from "widgets/modal-reward";
 
 export const Menu = () => {
     useEffect(() => {
@@ -17,14 +19,28 @@ export const Menu = () => {
         };
     }, []);
 
+    const [reward, setReward] = useState<
+        { name: string; rarity: string } | null | number
+    >(null);
+    const [isDailyGiftActive, setIsDailyGiftActive] = useState(false);
+    const [isRewardModalActive, setIsRewardModalActive] = useState(false);
+
+    const onClaim = () => {
+        setIsRewardModalActive(false);
+        setIsDailyGiftActive(false);
+        setReward(null);
+    };
+
+    const handleDailyGift = () => {
+        setIsDailyGiftActive(true);
+    };
+
     return (
         <div className={styles.menu}>
             <nav className={styles.nav}>
-                <Link
-                    className={styles.link}
-                    to="/profile"
-                    children="Daily gift"
-                />
+                <button className={styles.link} onClick={handleDailyGift}>
+                    Daily gift
+                </button>
                 <Link className={styles.link} to="/about" children="About" />
                 <Link className={styles.link} to="/faq" children="FAQ" />
             </nav>
@@ -48,6 +64,18 @@ export const Menu = () => {
                     <DiscordIcon />
                 </a>
             </div>
+
+            {isDailyGiftActive && (
+                <ModalGift
+                    onModalHide={onClaim}
+                    setReward={setReward}
+                    setIsRewardModalActive={setIsRewardModalActive}
+                    setIsDailyGiftActive={setIsDailyGiftActive}
+                />
+            )}
+            {isRewardModalActive && (
+                <ModalReward reward={reward} handleClaimChest={onClaim} />
+            )}
         </div>
     );
 };

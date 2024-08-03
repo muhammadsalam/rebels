@@ -156,8 +156,7 @@ export const CardsPage: FC<CardProps> = ({
     return (
         <div {...props} className={styles.container}>
             <Modal
-                isActive={isActive}
-                setIsActive={setIsActive}
+                onModalHide={() => setIsActive(false)}
                 className={styles.modal}
                 innerClassName={styles.modal_inner}
                 paddingTop={20}

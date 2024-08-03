@@ -258,8 +258,7 @@ export const TeamPage = () => {
 
             {activeChoosedCard && activeChoosedCard.id !== 0 && (
                 <Modal
-                    isActive={!activeChoosedCard}
-                    setIsActive={() => setActiveChoosedCard(null)}
+                    onModalHide={() => setActiveChoosedCard(null)}
                     heading={activeChoosedCard.name}
                 >
                     <div className={styles.modal_content}>

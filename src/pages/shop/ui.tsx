@@ -5,9 +5,10 @@ import ChestIcon from "icons/chest.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import { axios, formatNumber, tgApp } from "shared/libs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useChestsStore from "entities/chests";
 import useUserStore from "entities/user";
+import { ModalReward } from "widgets/modal-reward";
 
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
@@ -34,15 +35,27 @@ export const ShopPage = () => {
         };
     }, []);
 
+    const [isRewardModalActive, setIsRewardModalActive] = useState(false);
+    const [reward, setReward] = useState<{
+        name: string;
+        rarity: string;
+    } | null>(null);
+
     const handleBuyChest = async (id: number) => {
+        setIsRewardModalActive(true);
         const { status, data } = await axios.post(`/shop/buy/box/${id}`);
 
-        if (status === 200) {
-            console.log("bought");
-            return console.log(data);
+        if (status !== 200) {
+            setIsRewardModalActive(false);
+            return alert("Failed to buy chest. Please try again later.");
         }
 
-        console.log(data);
+        setReward(data.reward[0]);
+    };
+
+    const handleClaimChest = () => {
+        setIsRewardModalActive(false);
+        setReward(null);
     };
 
     return (
@@ -88,6 +101,13 @@ export const ShopPage = () => {
                     </div>
                 ))}
             </div>
+
+            {isRewardModalActive && (
+                <ModalReward
+                    reward={reward}
+                    handleClaimChest={handleClaimChest}
+                />
+            )}
         </div>
     );
 };

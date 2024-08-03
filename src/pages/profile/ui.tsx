@@ -14,7 +14,8 @@ import {
     MAX_TOTAL_KNOWLEDGE_VALUE,
     MAX_TOTAL_LOYALTY_VALUE,
 } from "shared/CONSTANT";
-import { Link } from "react-router-dom";
+import { tgApp } from "shared/libs";
+import { useNavigate } from "react-router-dom";
 
 export const ProfilePage = () => {
     const user_rank = useUserStore((state) => state.level_name);
@@ -30,8 +31,20 @@ export const ProfilePage = () => {
         (state) => state.total_hero_values
     );
 
+    const navigate = useNavigate();
     useEffect(() => {
         fetchProfile();
+
+        tgApp.BackButton.show();
+        const backButtonClick = () => {
+            navigate("/");
+        };
+
+        tgApp.BackButton.onClick(backButtonClick);
+
+        return () => {
+            tgApp.BackButton.offClick(backButtonClick);
+        };
     }, []);
 
     if (isProfileLoading) return <Loading />;
@@ -144,8 +157,6 @@ export const ProfilePage = () => {
                     </div>
                 </div>
             </div>
-
-            <Link className={styles.button} to="/team" children="My team" />
         </div>
     );
 };

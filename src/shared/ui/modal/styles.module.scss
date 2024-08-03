@@ -33,11 +33,15 @@
 }
 
 .modal_inner {
+    height: 100%;
+    position: relative;
+}
+
+.wrapper {
     background-color: var(--dark);
     padding: 0 17px;
     border-radius: 24px 24px 0px 0px;
-    height: 100%;
-    position: relative;
+    min-height: 100%;
 }
 
 .heading {
