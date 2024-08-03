@@ -13,6 +13,7 @@ import FontFaceObserver from "fontfaceobserver";
 import { QuestsPage } from "pages/quests";
 import { ProfilePage } from "pages/profile";
 import { TeamPage } from "pages/team";
+import { FriendsPage } from "pages/friends";
 
 function App() {
     const fetchToken = useUserStore((state) => state.fetchToken);
@@ -82,6 +83,7 @@ function App() {
                 <Route path="/shop" element={<ShopPage />} />
                 <Route path="/shop/info" element={<ShopInfoPage />} />
                 <Route path="/quests" element={<QuestsPage />} />
+                <Route path="/friends" element={<FriendsPage />} />
             </Routes>
         </Router>
     );
