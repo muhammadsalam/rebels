@@ -3,11 +3,18 @@ import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { tgApp } from "shared/libs";
+import { axios, formatNumber, tgApp } from "shared/libs";
+import useQuestsStore, { Quest } from "entities/quests";
+import useUserStore from "entities/user";
 
 export const QuestsPage = () => {
+    const quests = useQuestsStore((state) => state.quests);
+    const fetchquests = useQuestsStore((state) => state.fetchQuests);
+
     const navigate = useNavigate();
     useEffect(() => {
+        fetchquests();
+
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
@@ -20,6 +27,40 @@ export const QuestsPage = () => {
         };
     }, []);
 
+    const handleQuestClick = async (e: any, quest: Quest) => {
+        try {
+            if (quest.status !== "Start") e.preventDefault();
+
+            const { status, data } = await axios.post(
+                `task/${quest.status.toLowerCase()}`,
+                { task_id: quest.id }
+            );
+
+            if (status !== 200) {
+                return alert("Something went wrong. Please try again later");
+            }
+
+            if (data.status && data.new_status === "Done") {
+                useUserStore.setState({
+                    balance: useUserStore.getState().balance + quest.reward,
+                });
+            }
+
+            if (data.status) {
+                useQuestsStore.setState({
+                    quests: quests.map((item) =>
+                        item.id === quest.id
+                            ? { ...item, status: data.new_status }
+                            : item
+                    ),
+                });
+            }
+        } catch (e) {
+            console.log(e);
+            alert("Something went wrong. Please try again later");
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -27,102 +68,30 @@ export const QuestsPage = () => {
             </div>
 
             <div className={styles.inner}>
-                <div className={styles.quest}>
-                    <div className={styles.quest_info}>
-                        <p className={styles.quest_title}>Follow X</p>
-                        <p className={styles.quest_price}>
-                            <CoinIcon width={16} height={16} /> 120 000
-                        </p>
+                {quests.map((quest) => (
+                    <div key={quest.id} className={styles.quest}>
+                        <div className={styles.quest_info}>
+                            <p className={styles.quest_title}>{quest.name}</p>
+                            <p className={styles.quest_price}>
+                                <CoinIcon width={16} height={16} />{" "}
+                                {formatNumber(quest.reward, "ru-RU")}
+                            </p>
+                        </div>
+                        <a
+                            target="_blank"
+                            href={quest.url}
+                            onClick={(e) => handleQuestClick(e, quest)}
+                            className={clsx(
+                                styles.quest_button,
+                                styles[
+                                    `quest_button__${quest.status.toLowerCase()}`
+                                ]
+                            )}
+                        >
+                            {quest.status}
+                        </a>
                     </div>
-                    <button
-                        className={clsx(
-                            styles.quest_button,
-                            styles.quest_button__start
-                        )}
-                    >
-                        Start
-                    </button>
-                </div>
-                <div className={styles.quest}>
-                    <div className={styles.quest_info}>
-                        <p className={styles.quest_title}>Follow X</p>
-                        <p className={styles.quest_price}>
-                            <CoinIcon width={16} height={16} /> 120 000
-                        </p>
-                    </div>
-                    <button
-                        className={clsx(
-                            styles.quest_button,
-                            styles.quest_button__check
-                        )}
-                    >
-                        Check
-                    </button>
-                </div>
-                <div className={styles.quest}>
-                    <div className={styles.quest_info}>
-                        <p className={styles.quest_title}>Join Discord</p>
-                        <p className={styles.quest_price}>
-                            <CoinIcon width={16} height={16} /> 120 000
-                        </p>
-                    </div>
-                    <button
-                        className={clsx(
-                            styles.quest_button,
-                            styles.quest_button__claim
-                        )}
-                    >
-                        Claim
-                    </button>
-                </div>
-                <div className={styles.quest}>
-                    <div className={styles.quest_info}>
-                        <p className={styles.quest_title}>Follow Instagram</p>
-                        <p className={styles.quest_price}>
-                            <CoinIcon width={16} height={16} /> 120 000
-                        </p>
-                    </div>
-                    <button
-                        className={clsx(
-                            styles.quest_button,
-                            styles.quest_button__done
-                        )}
-                    >
-                        Done
-                    </button>
-                </div>
-                <div className={styles.quest}>
-                    <div className={styles.quest_info}>
-                        <p className={styles.quest_title}>Follow X</p>
-                        <p className={styles.quest_price}>
-                            <CoinIcon width={16} height={16} /> 120 000
-                        </p>
-                    </div>
-                    <button
-                        className={clsx(
-                            styles.quest_button,
-                            styles.quest_button__start
-                        )}
-                    >
-                        Start
-                    </button>
-                </div>
-                <div className={styles.quest}>
-                    <div className={styles.quest_info}>
-                        <p className={styles.quest_title}>Follow X</p>
-                        <p className={styles.quest_price}>
-                            <CoinIcon width={16} height={16} /> 120 000
-                        </p>
-                    </div>
-                    <button
-                        className={clsx(
-                            styles.quest_button,
-                            styles.quest_button__start
-                        )}
-                    >
-                        Start
-                    </button>
-                </div>
+                ))}
             </div>
         </div>
     );

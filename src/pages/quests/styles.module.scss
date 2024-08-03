@@ -51,6 +51,7 @@
 }
 
 .quest_button {
+    text-decoration: none;
     background-color: transparent;
     border: 0;
     font-size: 20px;
@@ -70,6 +71,7 @@
     }
 
     &__done {
+        pointer-events: none;
         color: var(--gray);
     }
 }
