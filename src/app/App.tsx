@@ -2,7 +2,7 @@ import useGameStatsStore from "entities/gameStats";
 import useUserStore from "entities/user";
 import fetchUser from "features/fetchUser";
 import { ShopPage } from "pages/shop";
-import { ShopInfoPage } from "pages/shop-info/ui";
+import { ShopInfoPage } from "pages/shop-info";
 import { HomePage } from "pages/home";
 import { MinePage } from "pages/mine";
 import { useEffect, useState } from "react";
