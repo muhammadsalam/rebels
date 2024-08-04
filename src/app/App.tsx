@@ -14,6 +14,7 @@ import { QuestsPage } from "pages/quests";
 import { ProfilePage } from "pages/profile";
 import { TeamPage } from "pages/team";
 import { FriendsPage } from "pages/friends";
+import { FriendsInfoPage } from "pages/friends-info";
 
 function App() {
     const fetchToken = useUserStore((state) => state.fetchToken);
@@ -84,6 +85,7 @@ function App() {
                 <Route path="/shop/info" element={<ShopInfoPage />} />
                 <Route path="/quests" element={<QuestsPage />} />
                 <Route path="/friends" element={<FriendsPage />} />
+                <Route path="/friends/info" element={<FriendsInfoPage />} />
             </Routes>
         </Router>
     );

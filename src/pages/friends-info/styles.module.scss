@@ -1,0 +1,107 @@
+.container {
+    padding: 26px 17px 46px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top {
+    width: 100%;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 33.44px;
+}
+
+.cards {
+    width: 100%;
+    margin-top: 29px;
+}
+
+.card {
+    padding: 25px 20px;
+    box-shadow: var(--shadow-1);
+    border-radius: 12px;
+    background-color: var(--dark);
+    border: 1px solid #000;
+
+    & + & {
+        margin-top: 20px;
+    }
+}
+
+.card__common {
+    .card_title {
+        color: var(--c-green);
+    }
+}
+
+.card__uncommon {
+    .card_title {
+        color: var(--c-cyan);
+    }
+}
+
+.card__rare {
+    .card_title {
+        color: var(--c-pink);
+    }
+}
+
+.card__epic {
+    .card_title {
+        color: var(--c-purple);
+    }
+}
+
+.card__legendary {
+    .card_title {
+        color: var(--orange-2);
+    }
+}
+
+.card_title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 26px;
+    margin-bottom: 17px;
+    display: inline-block;
+}
+
+.card_info_top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card_info_bottom {
+    margin-top: 27px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.card_info_block {
+    display: flex;
+    flex-direction: column;
+    color: var(--gray);
+
+    &:nth-child(even) {
+        text-align: right;
+    }
+
+    strong {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 34px;
+    }
+
+    p {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 19px;
+        margin-top: 8px;
+    }
+}
