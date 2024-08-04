@@ -4,7 +4,7 @@ import fetchUser from "features/fetchUser";
 import { ShopPage } from "pages/shop";
 import { ShopInfoPage } from "pages/shop-info";
 import { HomePage } from "pages/home";
-import { MinePage } from "pages/mine";
+import { Mine } from "widgets/mine";
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { tgApp } from "shared/libs";
@@ -80,7 +80,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/team" element={<TeamPage />} />
-                <Route path="/mine" element={<MinePage />} />
+                <Route path="/mine" element={<Mine />} />
                 <Route path="/shop" element={<ShopPage />} />
                 <Route path="/shop/info" element={<ShopInfoPage />} />
                 <Route path="/quests" element={<QuestsPage />} />

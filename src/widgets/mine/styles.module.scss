@@ -1,19 +1,10 @@
-.container {
-    padding: 78px 17px 66px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .miner {
     width: 100%;
 }
 
 .mine {
     background: var(--dark);
-    box-shadow: var(--inner-shadow-1);
+    box-shadow: var(--inner-shadow);
     padding: 24px;
     border-radius: 16px;
 
@@ -21,6 +12,8 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    position: relative;
+    overflow: hidden;
 }
 
 .mine_row {
@@ -43,7 +36,7 @@
 }
 
 .line {
-    box-shadow: var(--inner-shadow-1);
+    box-shadow: var(--inner-shadow);
     margin-top: 24px;
     width: 100%;
     border-radius: 25px;
@@ -51,7 +44,7 @@
 
 .line_inner {
     width: 21%;
-    height: 9px;
+    height: 18px;
     background-color: var(--orange-2);
     box-shadow: 0.63px 3px 11.7px 0px rgb(235, 100, 42, 0.58);
     border-radius: 25px;
@@ -63,23 +56,27 @@
 }
 
 .button {
-    box-shadow: var(--shadow-1);
-    width: 190px;
-    height: 60px;
-    border-radius: 93px;
+    box-shadow: var(--inner-shadow);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 16px;
     background-color: var(--dark);
     border: 0;
     color: var(--white);
     font-weight: 700;
-    font-size: 24px;
-    font-family: "Pixel Operator", sans-serif;
+    font-size: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 25.08px;
+    position: absolute;
+    transition: left 0.123s ease-in-out;
 
     &:disabled {
         color: rgba($color: #b6b6b6, $alpha: 0.3);
+        left: -120%;
     }
 }
 

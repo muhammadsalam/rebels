@@ -5,4 +5,28 @@
     justify-content: space-between;
     padding: 42px 16px 34px;
     min-height: 100vh;
+    overflow: hidden;
+}
+
+.slider {
+    width: 100%;
+}
+
+.slider_content {
+    display: flex;
+    translate: 0% 0;
+    transition: translate 0.2s ease-in-out;
+    gap: 20px;
+}
+
+.slider_content__active {
+    translate: calc(-100% - 20px) 0 0;
+}
+
+.slider_item {
+    width: calc(100%);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
