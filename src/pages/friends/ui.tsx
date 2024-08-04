@@ -105,7 +105,7 @@ export const FriendsPage = () => {
             </div>
 
             <button className={styles.claim_button} disabled={true}>
-                wait
+                Wait
             </button>
         </div>
     );
