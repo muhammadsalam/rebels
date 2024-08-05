@@ -9,6 +9,8 @@ interface AccordeonProps extends HTMLAttributes<HTMLDivElement> {
     disabled?: boolean;
     children: ReactNode;
     buttonClassName?: string;
+    arrowStyles?: React.CSSProperties;
+    textStyles?: React.CSSProperties;
 }
 
 export const Accordeon: FC<AccordeonProps> = ({
@@ -17,6 +19,8 @@ export const Accordeon: FC<AccordeonProps> = ({
     disabled = false,
     children,
     buttonClassName,
+    arrowStyles,
+    textStyles,
     ...props
 }) => {
     const [isActive, setIsActive] = useState(isAccordActive);
@@ -39,10 +43,18 @@ export const Accordeon: FC<AccordeonProps> = ({
                 onClick={() => handleAccordionClick()}
             >
                 {title}
-                <ArrowDownIcon className={styles.accordeon_button_icon} />
+                <ArrowDownIcon
+                    style={arrowStyles}
+                    className={styles.accordeon_button_icon}
+                />
             </div>
             <div className={styles.accordeon_list}>
-                <div className={styles.accordeon_list_wrapper}>{children}</div>
+                <div
+                    style={textStyles}
+                    className={styles.accordeon_list_wrapper}
+                >
+                    {children}
+                </div>
             </div>
         </div>
     );
