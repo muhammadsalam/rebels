@@ -12,7 +12,7 @@ export type Card = {
     knowledge: number;
     loyalty: number;
     name: string;
-    rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary';
+    rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legend';
     upgrade_price: number;
 }
 

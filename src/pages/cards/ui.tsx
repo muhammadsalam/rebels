@@ -170,10 +170,10 @@ export const CardsPage: FC<CardProps> = ({
                             styles[`accordeon_button__${"Legendary"}`]
                         }
                         disabled={
-                            !cards.some((item) => item.rarity === "Legendary")
+                            !cards.some((item) => item.rarity === "Legend")
                         }
                     >
-                        {getUniqueCardsByRarity("Legendary")}
+                        {getUniqueCardsByRarity("Legend")}
                     </Accordeon>
                     <Accordeon
                         title="Epic"
