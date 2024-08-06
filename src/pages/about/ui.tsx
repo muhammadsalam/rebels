@@ -20,6 +20,7 @@ export const AboutPage = () => {
 
     return (
         <div className={styles.about}>
+            <style>{"* {user-select: auto}"}</style>
             <h2 className={styles.heading}>About</h2>
             <div className={styles.inner}>
                 <p className={styles.intro}>

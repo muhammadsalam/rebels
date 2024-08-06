@@ -21,6 +21,7 @@ export const FAQPage = () => {
 
     return (
         <div className={styles.faq}>
+            <style>{"* {user-select: auto}"}</style>
             <h2 className={styles.heading}>FAQ</h2>
             <Accordeon
                 title="How to start playing?"

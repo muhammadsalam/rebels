@@ -85,7 +85,13 @@ export const ShopPage = () => {
                             <strong className={styles.chest_title}>
                                 {chest.rarity} chest
                             </strong>
-                            <p className={styles.chest_price}>
+                            <p
+                                className={clsx(
+                                    styles.chest_price,
+                                    balance < chest.price &&
+                                        styles.chest_price__disabled
+                                )}
+                            >
                                 <CoinIcon className={styles.chest_coin} />
                                 {formatNumber(chest.price, "ru-RU")}
                             </p>

@@ -113,6 +113,14 @@
     line-height: 20.9px;
 }
 
+.chest_price__disabled {
+    color: var(--gray);
+
+    path {
+        fill: var(--gray);
+    }
+}
+
 .chest__available .chest_price {
     opacity: 0.3;
 }
