@@ -16,7 +16,8 @@ export default async () => {
             energy_usage: user.energy_usage,
             max_energy: user.max_energy,
             mining_balance: user.mining_balance,
-            mining_max_points: user.mining_max_points,
+            mining_speed: user.mining_speed,
+            mining_max_points: user.mining_duration * user.mining_speed,
             mining_duration: user.mining_duration,
             mining_claimed_at: user.mining_claimed_at,
         };

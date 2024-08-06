@@ -33,6 +33,7 @@ export const Mine = () => {
         (state) => state.mining_max_points
     );
     const mining_duration = useGameStatsStore((state) => state.mining_duration);
+    const mining_speed = useGameStatsStore((state) => state.mining_speed);
     const mining_claimed_at = useGameStatsStore(
         (state) => state.mining_claimed_at
     );
@@ -55,12 +56,6 @@ export const Mine = () => {
     const [timeToFill, setTimeToFill] = useState("");
 
     useEffect(() => {
-        console.log(
-            "useEffect mining_claimed_at",
-            mining_claimed_at,
-            Math.ceil(Date.now() / 1000),
-            Date.now()
-        );
         const updateTimeToFill = () => {
             if (
                 (mining_claimed_at === 0 && mining_balance === 0) ||
@@ -78,12 +73,14 @@ export const Mine = () => {
 
             setTimeToFill(time);
 
-            const elapsedTime =
-                Math.floor(Date.now() / 1000) - mining_claimed_at;
             const newBalance = Math.min(
-                (mining_max_points / (mining_duration * 3600)) * elapsedTime,
+                ((+new Date() / 1000 - mining_claimed_at) / 3600) *
+                    mining_speed,
                 mining_max_points
             );
+
+            console.log(newBalance);
+
             useGameStatsStore.setState({
                 mining_balance: newBalance,
             });
@@ -105,22 +102,22 @@ export const Mine = () => {
         }
     };
 
-    // const getButtonText = () => {
-    //     if (mining_balance === mining_max_points) {
-    //         return (
-    //             <>
-    //                 Claim {mining_max_points}
-    //                 <CoinIcon className={styles.button_icon} />
-    //             </>
-    //         );
-    //     }
+    const getButtonText = () => {
+        if (mining_balance === mining_max_points) {
+            return (
+                <>
+                    CLAIM {mining_max_points}
+                    <CoinIcon className={styles.button_icon} />
+                </>
+            );
+        }
 
-    //     if (mining_claimed_at === 0) {
-    //         return "Start";
-    //     }
+        if (mining_claimed_at === 0) {
+            return "START";
+        }
 
-    //     return "Wait";
-    // };
+        return "WAIT";
+    };
 
     return (
         <div className={styles.miner}>
@@ -133,7 +130,7 @@ export const Mine = () => {
                         mining_balance !== mining_max_points
                     }
                 >
-                    CLAIM
+                    {getButtonText()}
                 </button>
                 <div className={styles.mine_row}>
                     <div className={styles.mine_item}>

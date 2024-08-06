@@ -16,6 +16,7 @@ interface GameStatsState {
     energy_usage: number;
     max_energy: number;
     mining_balance: number;
+    mining_speed: number;
     mining_max_points: number;
     mining_duration: number;
     mining_claimed_at: number;
@@ -39,6 +40,7 @@ const useGameStatsStore = create<GameStatsState>((set) => ({
     energy_usage: 0,
     max_energy: 0,
     mining_balance: 0,
+    mining_speed: 0,
     mining_max_points: 0,
     mining_duration: 0,
     mining_claimed_at: 0,
@@ -54,7 +56,8 @@ const useGameStatsStore = create<GameStatsState>((set) => ({
             set(state => ({
                 ...state,
                 mining_balance: data.mining_balance,
-                mining_max_points: data.mining_max_points,
+                mining_max_points: data.mining_speed * data.mining_duration,
+                mining_speed: data.mining_speed,
                 mining_duration: data.mining_duration,
                 mining_claimed_at: data.mining_claimed_at,
             }));
