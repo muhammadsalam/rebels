@@ -21,6 +21,7 @@ export const ProfilePage = () => {
     const user_rank = useUserStore((state) => state.level_name);
     const level = useUserStore((state) => state.level);
     const total_value = useGameStatsStore((state) => state.total_value);
+    const username = useUserStore((state) => state.username);
     const total_value_next = useGameStatsStore(
         (state) => state.next_level_value
     );
@@ -57,7 +58,7 @@ export const ProfilePage = () => {
                     styles[`info__${user_rank.toLowerCase()}`]
                 )}
             >
-                <h2 className={styles.info_title}>dkhstt</h2>
+                <h2 className={styles.info_title}>{username}</h2>
                 <div className={styles.info_rank}>
                     <TrophyIcon className={styles.info_rank_icon} /> {level}
                 </div>
