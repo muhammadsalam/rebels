@@ -31,15 +31,15 @@
 }
 
 .info__bronze {
-    --action-color: #6e4217;
+    --action-color: #503317;
 }
 
 .info__silver {
-    --action-color: var(--white);
+    --action-color: #686868;
 }
 
 .info__gold {
-    --action-color: #ffcc00;
+    --action-color: #a86d0f;
 }
 
 .info_title {
@@ -74,21 +74,21 @@
 
 .total_skills__bronze {
     .total_skills_line_inner {
-        background-color: #6e4217;
+        background-color: #503317;
         box-shadow: 0.63px 3px 11.7px 0px #6e421794;
     }
 }
 
 .total_skills__silver {
     .total_skills_line_inner {
-        background-color: #b6b6b6;
+        background-color: #686868;
         box-shadow: 0.63px 3px 11.7px 0px #b6b6b694;
     }
 }
 
 .total_skills__gold {
     .total_skills_line_inner {
-        background-color: #ffcc00;
+        background-color: #a86d0f;
         box-shadow: 0.63px 3px 11.7px 0px #ffcc0094;
     }
 }
