@@ -30,12 +30,12 @@ export const AboutPage = () => {
                     master at managing your team. Study and enjoy the game!
                 </p>
                 <br />
-                <h3>1. Getting Started</h3>
+                <h3 className={styles.h3}>1. Getting Started</h3>
                 <br />
                 Characters and Cards
                 <br />
                 <br />
-                <ul>
+                <ul className={styles.ul}>
                     <li>
                         Characters: the game features 30 unique characters, each
                         of whom has contributed to the world of cryptocurrency.
@@ -54,7 +54,7 @@ export const AboutPage = () => {
                 Starting team
                 <br />
                 <br />
-                <ul>
+                <ul className={styles.ul}>
                     <li>
                         New players start with 5 identical level 1 Common cards.
                         You can upgrade them, obtain new cards, and create your
@@ -62,12 +62,12 @@ export const AboutPage = () => {
                     </li>
                 </ul>
                 <br />
-                <h3>2. Energy and battle</h3>
+                <h3 className={styles.h3}>2. Energy and battle</h3>
                 <br />
                 Energy
                 <br />
                 <br />
-                <ul>
+                <ul className={styles.ul}>
                     <li>
                         Base energy consumption: each action in the game
                         requires 100 energy units, which you spend with each
@@ -84,7 +84,7 @@ export const AboutPage = () => {
                 Damage and tap
                 <br />
                 <br />
-                <ul>
+                <ul className={styles.ul}>
                     <li>Base damage per tap depends on the card rarity:</li>
                     <ul>
                         <li>Common: 10 damage.</li>
@@ -95,12 +95,12 @@ export const AboutPage = () => {
                     </ul>
                 </ul>
                 <br />
-                <h3>3. Chests and rewards</h3>
+                <h3 className={styles.h3}>3. Chests and rewards</h3>
                 <br />
                 Types of chests
                 <br />
                 <br />
-                <ul>
+                <ul className={styles.ul}>
                     <li>Initial chest costs:</li>
                     <ul>
                         <li>Common: 20.000 points</li>
@@ -111,7 +111,7 @@ export const AboutPage = () => {
                     </ul>
                 </ul>
                 <br />
-                <ul>
+                <ul className={styles.ul}>
                     <li>Chest price increase:</li>
                     <ul>
                         <li>Level 1 Chest - 10%</li>
@@ -125,13 +125,15 @@ export const AboutPage = () => {
                 Opening chests
                 <br />
                 <br />
-                <ul>
+                <ul className={styles.ul}>
                     <li>
                         Players earn points in battles and can spend them to
                         purchase chests. With each opening, the cost of the next
                         chest increases, so choose wisely!
                     </li>
                 </ul>
+                <br />
+                <h3 className={styles.h3}>4. Card Upgrades</h3>
                 <br />
                 Upgrading
                 <br />
@@ -151,7 +153,7 @@ export const AboutPage = () => {
                 <br />
                 <br />
                 Common
-                <ul>
+                <ul className={styles.ul}>
                     <li>Level 1 -{">"} Level 2: 15.000 points</li>
                     <li>Level 2 -{">"} Level 3: 18.750 points</li>
                     <li>Level 3 -{">"} Level 4: 23.500 points </li>
@@ -161,7 +163,7 @@ export const AboutPage = () => {
                 </ul>
                 <br />
                 Uncommon
-                <ul>
+                <ul className={styles.ul}>
                     <li>Level 1 -{">"} Level 2: 37.500 points</li>
                     <li>Level 2 -{">"} Level 3: 46.900 points</li>
                     <li>Level 3 -{">"} Level 4: 58.600 points</li>
@@ -171,7 +173,7 @@ export const AboutPage = () => {
                 </ul>
                 <br />
                 Rare
-                <ul>
+                <ul className={styles.ul}>
                     <li>Level 1 -{">"} Level 2: 75.000 points</li>
                     <li>Level 2 -{">"} Level 3: 93.750 points</li>
                     <li>Level 3 -{">"} Level 4: 117.100 points</li>
@@ -181,7 +183,7 @@ export const AboutPage = () => {
                 </ul>
                 <br />
                 Epic
-                <ul>
+                <ul className={styles.ul}>
                     <li>Level 1 -{">"} Level 2: 112.500 points</li>
                     <li>Level 2 -{">"} Level 3: 140.700 points</li>
                     <li>Level 3 -{">"} Level 4: 175.800 points</li>
@@ -191,7 +193,7 @@ export const AboutPage = () => {
                 </ul>
                 <br />
                 Legendary
-                <ul>
+                <ul className={styles.ul}>
                     <li>Level 1 -{">"} Level 2: 150.000 points</li>
                     <li>Level 2 -{">"} Level 3: 187.500 points</li>
                     <li>Level 3 -{">"} Level 4: 234.400 points</li>
@@ -200,7 +202,7 @@ export const AboutPage = () => {
                     <li>Level 6 -{">"} Level 7: 458.000 points</li>
                 </ul>
                 <br />
-                <h3>5. Account development</h3>
+                <h3 className={styles.h3}>5. Account development</h3>
                 <br />
                 Account level
                 <br />
@@ -210,7 +212,7 @@ export const AboutPage = () => {
                 <br />
                 <br />
                 Levels and their characteristics:
-                <ul>
+                <ul className={styles.ul}>
                     <li>
                         Level 1: 0-95 experience, 12 units per second, 20.000
                         energy
@@ -253,9 +255,9 @@ export const AboutPage = () => {
                     </li>
                 </ul>
                 <br />
-                <h3>6. Strategies and tips</h3>
+                <h3 className={styles.h3}>6. Strategies and tips</h3>
                 <br />
-                <ul>
+                <ul className={styles.ul}>
                     <li>
                         Balanced team: choose characters with different skills
                         and levels.

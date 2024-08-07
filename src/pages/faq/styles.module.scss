@@ -24,33 +24,3 @@
     color: var(--gray);
     font-weight: 700;
 }
-
-h3 {
-    color: var(--orange-2);
-    font-weight: 700;
-    font-size: inherit;
-}
-
-ul {
-    list-style: none;
-    padding-left: 16px;
-
-    ul {
-        list-style: none;
-    }
-
-    li {
-        position: relative;
-
-        &::before {
-            content: "";
-            width: 2px;
-            height: 2px;
-            margin-left: -12px;
-            margin-right: 9px;
-            display: inline-block;
-            vertical-align: middle;
-            background-color: var(--white);
-        }
-    }
-}
