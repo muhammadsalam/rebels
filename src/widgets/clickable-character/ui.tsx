@@ -1,10 +1,21 @@
-import { FC, HTMLAttributes, TouchEvent, useRef, useState } from "react";
+import {
+    FC,
+    HTMLAttributes,
+    TouchEvent,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import styles from "./styles.module.scss";
 import useGameStatsStore from "entities/gameStats";
 import clickCharacter from "features/clickCharacter";
 import { seededRandom } from "shared/libs/seed-random";
 import useTapsCounterStore from "entities/tapsCounter";
 import claim from "features/claim";
+import clsx from "clsx";
+import useVillainStore from "entities/villain";
+import useSound from "use-sound";
+import wastedSound from "/assets/wasted.mp3";
 
 interface ClickPosition {
     x: number;
@@ -25,6 +36,8 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
     const critical_chance = useGameStatsStore((state) => state.critical_chance);
     const taps = useTapsCounterStore((state) => state.taps);
     const seed = useTapsCounterStore((state) => state.seed);
+    const person_image = useVillainStore((state) => state.image);
+    const current_health = useVillainStore((state) => state.current_health);
 
     const handleClaimTimeout = () => {
         claim().then(() => {
@@ -81,12 +94,28 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
         });
     };
 
+    const isVillainDead = current_health <= 0;
+
+    const [play] = useSound(wastedSound);
+    useEffect(() => {
+        isVillainDead && play();
+    }, [current_health]);
+
     return (
         <div
             {...props}
-            className={styles.wrapper}
+            className={clsx(
+                styles.wrapper,
+                isVillainDead && styles.wrapper__wasted
+            )}
             onTouchStartCapture={handleClick}
         >
+            <img
+                src="/assets/wasted.png"
+                alt="WASTED"
+                width={291}
+                className={styles.wasted}
+            />
             {clickPositions.map(({ x, y, id, isCritical, damage }) => (
                 <div
                     key={id}
@@ -104,8 +133,8 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
                 </div>
             ))}
             <img
-                src="/assets/character.jpg"
-                alt="asd"
+                src={person_image}
+                alt="I AM VILLAIN"
                 className={styles.person}
             />
         </div>

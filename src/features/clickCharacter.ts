@@ -6,7 +6,7 @@ import useVillainStore from "entities/villain";
 export default function (damage: number, isCritical: boolean) {
     const { energy_balance, energy_usage } = useGameStatsStore.getState();
     const { balance } = useUserStore.getState();
-    const { level, current_health } = useVillainStore.getState();
+    const { current_health } = useVillainStore.getState();
     const { addTap } = useTapsCounterStore.getState();
 
     const newHealth = current_health - damage;
@@ -15,13 +15,15 @@ export default function (damage: number, isCritical: boolean) {
 
     if (newEnergy < 0) return false;
 
+    if (current_health === 0) return false;
+
     useGameStatsStore.setState({ energy_balance: newEnergy });
     useUserStore.setState({ balance: newBalance })
 
     addTap(isCritical)
 
-    if (newHealth < 0) {
-        useVillainStore.setState({ level: level + 1, current_health: 25000 });
+    if (newHealth <= 0) {
+        useVillainStore.setState({ current_health: 0 });
         return true;
     }
 

@@ -1,5 +1,7 @@
+import useGameStatsStore from "entities/gameStats";
 import useTapsCounterStore from "entities/tapsCounter";
 import useUserStore from "entities/user";
+import useVillainStore from "entities/villain";
 import { axios } from "shared/libs";
 
 export default async function () {
@@ -20,8 +22,23 @@ export default async function () {
 
     try {
         useTapsCounterStore.setState({ taps: 0, critical_taps: 0, seed: +new Date() });
-        const { data } = await axios.post('/tap', item);
-        console.log(data);
+        const { status, data } = await axios.post('/tap', item);
+
+        if (status !== 200) return alert('Something is wrong, try again later.')
+
+        if (data.is_new_level) {
+            const game_stats = {
+                damage: data.user.damage,
+                critical_chance: data.user.critical_chance,
+                energy_balance: data.user.energy_balance,
+                energy_usage: data.user.energy_usage,
+            };
+
+            useUserStore.setState({ balance: data.user.balance })
+            useGameStatsStore.setState(game_stats)
+            useVillainStore.setState(data.villain)
+        }
+
     } catch (error) {
         console.error('Error sending taps:', error);
     }

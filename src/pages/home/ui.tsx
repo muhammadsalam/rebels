@@ -9,6 +9,7 @@ import { tgApp } from "shared/libs";
 import { Switcher } from "shared/ui";
 import { Mine } from "widgets/mine";
 import clsx from "clsx";
+import useVillainStore from "entities/villain";
 
 export const HomePage = () => {
     useEffect(() => {
@@ -19,6 +20,9 @@ export const HomePage = () => {
     const handleSwitch = () => {
         setActive((state) => !state);
     };
+
+    const current_health = useVillainStore((state) => state.current_health);
+    const isVillainDead = current_health <= 0;
 
     return (
         <div className={styles.container}>
@@ -44,7 +48,11 @@ export const HomePage = () => {
                     style={{ marginLeft: "auto", marginTop: "-19px" }}
                 />
             </div>
-            <CharacterStatus />
+            {isVillainDead ? (
+                <button className={styles.button__wasted}>Next rogue</button>
+            ) : (
+                <CharacterStatus />
+            )}
             <Navigation />
         </div>
     );
