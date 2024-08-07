@@ -9,6 +9,7 @@ interface VillainState {
     current_image: string,
     level: number;
     current_health: number;
+    wasted: boolean;
 }
 
 const useVillainStore = create<VillainState>(() => ({
@@ -20,6 +21,7 @@ const useVillainStore = create<VillainState>(() => ({
     current_image: '/assets/character.jpg',
     level: 0,
     current_health: 0,
+    wasted: false,
 }));
 
 export default useVillainStore;

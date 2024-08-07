@@ -22,12 +22,14 @@ export const HomePage = () => {
     };
 
     const current_health = useVillainStore((state) => state.current_health);
-    const current_image = useVillainStore((state) => state.current_image);
     const person_image = useVillainStore((state) => state.image);
-    const isVillainDead = current_health <= 0 || current_image !== person_image;
+    const wasted = useVillainStore((state) => state.wasted);
 
     const handleNextVillainClick = () => {
-        useVillainStore.setState({ current_image: person_image });
+        useVillainStore.setState({
+            current_image: person_image,
+            wasted: false,
+        });
     };
 
     return (
@@ -54,7 +56,7 @@ export const HomePage = () => {
                     style={{ marginLeft: "auto", marginTop: "-19px" }}
                 />
             </div>
-            {isVillainDead ? (
+            {wasted ? (
                 <button
                     className={styles.button__wasted}
                     onClick={handleNextVillainClick}

@@ -36,9 +36,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
     const critical_chance = useGameStatsStore((state) => state.critical_chance);
     const taps = useTapsCounterStore((state) => state.taps);
     const seed = useTapsCounterStore((state) => state.seed);
-    const person_image = useVillainStore((state) => state.image);
     const current_image = useVillainStore((state) => state.current_image);
-    const current_health = useVillainStore((state) => state.current_health);
 
     const handleClaimTimeout = () => {
         claim().then(() => {
@@ -99,20 +97,20 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
         console.log("image changed");
     }, [useVillainStore((state) => state.image)]);
 
-    const isVillainDead = current_health <= 0 || current_image !== person_image;
+    const wasted = useVillainStore((state) => state.wasted);
 
     const [play] = useSound(wastedSound);
     useEffect(() => {
-        current_health <= 0 && isVillainDead && play();
-    }, [current_health]);
+        wasted && play();
+    }, [wasted]);
 
     return (
         <div
             {...props}
             className={clsx(
                 styles.wrapper,
-                isVillainDead && styles.wrapper__wasted,
-                isVillainDead && styles.wrapper__active
+                wasted && styles.wrapper__wasted,
+                wasted && styles.wrapper__active
             )}
             onTouchStartCapture={handleClick}
         >
