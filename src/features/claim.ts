@@ -26,7 +26,7 @@ export default async function () {
 
         if (status !== 200) return alert('Something is wrong, try again later.')
 
-        if (data.is_new_level) {
+        if (data.is_new_level || true) {
             const game_stats = {
                 damage: data.user.damage,
                 critical_chance: data.user.critical_chance,
@@ -36,7 +36,8 @@ export default async function () {
 
             useUserStore.setState({ balance: data.user.balance })
             useGameStatsStore.setState(game_stats)
-            useVillainStore.setState(data.villain)
+            // изменить image потом
+            useVillainStore.setState({ ...data.villain, image: '/assets/card-item-common.png' })
         }
 
     } catch (error) {

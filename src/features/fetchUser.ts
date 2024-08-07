@@ -24,7 +24,7 @@ export default async () => {
 
         useUserStore.setState({ id: user.id, balance: user.balance, username: user.username });
         useGameStatsStore.setState(game_stats);
-        useVillainStore.setState({ ...villain, current_health: 100 });
+        useVillainStore.setState({ ...villain, current_health: 600 });
 
         return true;
     } catch (err) {

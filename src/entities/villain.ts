@@ -6,7 +6,7 @@ interface VillainState {
     name: string;
     next_name: string,
     image: string,
-    next_image: string,
+    current_image: string,
     level: number;
     current_health: number;
 }
@@ -17,7 +17,7 @@ const useVillainStore = create<VillainState>(() => ({
     name: '',
     next_name: '',
     image: '/assets/character.jpg',
-    next_image: '',
+    current_image: '/assets/character.jpg',
     level: 0,
     current_health: 0,
 }));

@@ -37,6 +37,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
     const taps = useTapsCounterStore((state) => state.taps);
     const seed = useTapsCounterStore((state) => state.seed);
     const person_image = useVillainStore((state) => state.image);
+    const current_image = useVillainStore((state) => state.current_image);
     const current_health = useVillainStore((state) => state.current_health);
 
     const handleClaimTimeout = () => {
@@ -94,11 +95,15 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
         });
     };
 
-    const isVillainDead = current_health <= 0;
+    useEffect(() => {
+        console.log("image changed");
+    }, [useVillainStore((state) => state.image)]);
+
+    const isVillainDead = current_health <= 0 || current_image !== person_image;
 
     const [play] = useSound(wastedSound);
     useEffect(() => {
-        isVillainDead && play();
+        current_health <= 0 && isVillainDead && play();
     }, [current_health]);
 
     return (
@@ -106,7 +111,8 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
             {...props}
             className={clsx(
                 styles.wrapper,
-                isVillainDead && styles.wrapper__wasted
+                isVillainDead && styles.wrapper__wasted,
+                isVillainDead && styles.wrapper__active
             )}
             onTouchStartCapture={handleClick}
         >
@@ -133,7 +139,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
                 </div>
             ))}
             <img
-                src={person_image}
+                src={current_image}
                 alt="I AM VILLAIN"
                 className={styles.person}
             />

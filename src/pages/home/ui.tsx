@@ -22,7 +22,13 @@ export const HomePage = () => {
     };
 
     const current_health = useVillainStore((state) => state.current_health);
-    const isVillainDead = current_health <= 0;
+    const current_image = useVillainStore((state) => state.current_image);
+    const person_image = useVillainStore((state) => state.image);
+    const isVillainDead = current_health <= 0 || current_image !== person_image;
+
+    const handleNextVillainClick = () => {
+        useVillainStore.setState({ current_image: person_image });
+    };
 
     return (
         <div className={styles.container}>
@@ -49,7 +55,13 @@ export const HomePage = () => {
                 />
             </div>
             {isVillainDead ? (
-                <button className={styles.button__wasted}>Next rogue</button>
+                <button
+                    className={styles.button__wasted}
+                    onClick={handleNextVillainClick}
+                    disabled={current_health === 0}
+                >
+                    Next rogue
+                </button>
             ) : (
                 <CharacterStatus />
             )}
