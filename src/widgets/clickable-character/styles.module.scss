@@ -21,6 +21,7 @@
     pointer-events: none;
     scale: 1.5;
     z-index: 1;
+    translate: 0 -8px;
 }
 
 .wrapper__active {
@@ -71,9 +72,8 @@
     z-index: 1;
     pointer-events: none;
     font-size: 32px;
+    font-weight: 700;
     translate: -50% -50%;
     animation: point 1s ease-out forwards;
-    font-weight: 500;
     color: var(--white);
-    rotate: -10deg;
 }

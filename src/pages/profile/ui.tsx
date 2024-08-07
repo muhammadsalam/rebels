@@ -72,7 +72,7 @@ export const ProfilePage = () => {
             >
                 <div className={styles.total_skills_top}>
                     <div className={styles.total_skills_title}>
-                        Total values:
+                        Total power:
                     </div>
                     <span>
                         {total_value} / {total_value_next}

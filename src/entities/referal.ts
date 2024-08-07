@@ -19,7 +19,7 @@ const useReferalStore = create<ReferalState>((set, _) => ({
     balance: 0,
     claim_time: 0,
     fetchReferals: async () => {
-        const { status, data } = await axios.get('/user/referal');
+        const { status, data } = await axios.get('/user/referal/stats');
 
         if (status !== 200) {
             return alert('something went wrong');

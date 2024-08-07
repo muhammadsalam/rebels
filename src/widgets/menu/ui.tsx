@@ -34,29 +34,34 @@ export const Menu = () => {
     };
 
     return (
-        <div className={styles.menu}>
-            <nav className={styles.nav}>
-                <button className={styles.link} onClick={handleDailyGift}>
-                    Daily gift
-                </button>
-                <Link className={styles.link} to="/about" children="About" />
-                <Link className={styles.link} to="/faq" children="FAQ" />
-            </nav>
-            <div className={styles.links}>
-                <a
-                    className={styles.link__icon}
-                    href="https://t.me/rebelscommunity"
-                >
-                    <TelegramIcon />
-                </a>
-                <a
-                    className={styles.link__icon}
-                    href="https://x.com/gameoftherebels"
-                >
-                    <TwitterIcon />
-                </a>
+        <>
+            <div className={styles.menu}>
+                <nav className={styles.nav}>
+                    <button className={styles.link} onClick={handleDailyGift}>
+                        Daily gift
+                    </button>
+                    <Link
+                        className={styles.link}
+                        to="/about"
+                        children="About"
+                    />
+                    <Link className={styles.link} to="/faq" children="FAQ" />
+                </nav>
+                <div className={styles.links}>
+                    <a
+                        className={styles.link__icon}
+                        href="https://t.me/rebelscommunity"
+                    >
+                        <TelegramIcon />
+                    </a>
+                    <a
+                        className={styles.link__icon}
+                        href="https://x.com/gameoftherebels"
+                    >
+                        <TwitterIcon />
+                    </a>
+                </div>
             </div>
-
             {isDailyGiftActive && (
                 <ModalGift
                     onModalHide={onClaim}
@@ -68,6 +73,6 @@ export const Menu = () => {
             {isRewardModalActive && (
                 <ModalReward reward={reward} handleClaimChest={onClaim} />
             )}
-        </div>
+        </>
     );
 };

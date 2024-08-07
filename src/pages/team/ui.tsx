@@ -169,7 +169,7 @@ export const TeamPage = () => {
             </div>
 
             <div className={styles.skills}>
-                <h3 className={styles.skills_heading}>Team values:</h3>
+                <h3 className={styles.skills_heading}>Team power:</h3>
                 <div className={clsx(styles.skill, styles.skill__knowledge)}>
                     <div className={styles.skill_top}>
                         <div className={styles.skill_top_left}>

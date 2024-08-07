@@ -27,7 +27,7 @@ const useChestsStore = create<ChestsState>(() => ({
     chests: [],
     fetchChests: async () => {
         try {
-            const { status, data } = await axios.get('/user/boxes');
+            const { status, data } = await axios.get('/shop/boxes');
 
             if (status === 200) {
                 useChestsStore.setState({ chests: data });

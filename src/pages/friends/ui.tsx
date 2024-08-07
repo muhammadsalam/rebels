@@ -39,7 +39,7 @@ export const FriendsPage = () => {
                 </Link>
             </div>
 
-            <div className={styles.tag}>Legendary referrer</div>
+            <div className={styles.tag}>{refState.level} referrer</div>
 
             <div className={styles.progress}>
                 <div className={styles.progress_top}>

@@ -117,7 +117,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
             <img
                 src="/assets/wasted.png"
                 alt="WASTED"
-                width={291}
+                width={300}
                 className={styles.wasted}
             />
             {clickPositions.map(({ x, y, id, isCritical, damage }) => (

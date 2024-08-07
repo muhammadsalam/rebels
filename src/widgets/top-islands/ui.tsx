@@ -17,7 +17,6 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 
     return (
         <div {...props} className={styles.wrapper}>
-            {isAciveMenu && <Menu />}
             <div
                 className={clsx(
                     styles.island__icon,
@@ -31,6 +30,7 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
                     <AlignCenterIcon />
                 )}
             </div>
+            {isAciveMenu && <Menu />}
             <CoinsIsland className={styles.island} />
             <Link to="/profile" className={styles.island__icon}>
                 <UserIcon />
