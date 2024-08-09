@@ -19,6 +19,10 @@
 .chests {
     width: 100%;
     margin-top: 29px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
 }
 
 .chest {
@@ -27,18 +31,21 @@
     border-radius: 12px;
     background-color: var(--dark);
 
-    & + & {
-        margin-top: 36px;
+    &:last-child {
+        grid-column: span 2;
+
+        .chest_title {
+            text-align: left;
+        }
     }
 }
 
 .chest_title {
-    display: flex;
-    align-items: center;
     gap: 8px;
     font-size: 24px;
     font-weight: 700;
     line-height: 25.08px;
+    text-align: center;
 }
 
 .chest_icon {
@@ -46,28 +53,28 @@
     height: 24px;
 }
 
-.chest__common .chest_icon path {
-    fill: var(--c-green);
+.chest__common .chest_title {
+    color: var(--c-green);
 }
 
-.chest__uncommon .chest_icon path {
-    fill: var(--c-cyan);
+.chest__uncommon .chest_title {
+    color: var(--c-cyan);
 }
 
-.chest__rare .chest_icon path {
-    fill: var(--c-pink);
+.chest__rare .chest_title {
+    color: var(--c-pink);
 }
 
-.chest__epic .chest_icon path {
-    fill: var(--c-purple);
+.chest__epic .chest_title {
+    color: var(--c-purple);
 }
 
-.chest__legendary .chest_icon path {
-    fill: var(--orange-2);
+.chest__legendary .chest_title {
+    color: var(--orange-2);
 }
 
 .chest_info {
-    margin-top: 16px;
+    margin-top: 15px;
 }
 
 .chest_info_row {

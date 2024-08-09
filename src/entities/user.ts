@@ -8,6 +8,7 @@ interface UserState {
     username: string;
     level: number;
     level_name: string;
+    uci_id: number,
     fetchToken: () => Promise<boolean>,
 }
 
@@ -18,6 +19,7 @@ const useUserStore = create<UserState>((set) => ({
     username: '',
     level: 0,
     level_name: '',
+    uci_id: 0,
     fetchToken: async () => {
         try {
             const response = await axios.post('/auth', { initdata: import.meta.env.VITE_INITDATA || tgApp.initData });

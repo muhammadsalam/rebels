@@ -1,7 +1,6 @@
 import useChestsStore from "entities/chests";
 import styles from "./styles.module.scss";
 import { useEffect } from "react";
-import ChestIcon from "icons/chest.svg?react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import { tgApp } from "shared/libs";
@@ -45,10 +44,7 @@ export const ShopInfoPage = () => {
                             styles[`chest__${chest.rarity.toLowerCase()}`]
                         )}
                     >
-                        <h3 className={styles.chest_title}>
-                            <ChestIcon className={styles.chest_icon} />
-                            {chest.rarity} chest
-                        </h3>
+                        <h3 className={styles.chest_title}>{chest.rarity}</h3>
 
                         <div className={styles.chest_info}>
                             {chest.reward.map((reward, index) => (
@@ -56,8 +52,8 @@ export const ShopInfoPage = () => {
                                     key={index}
                                     className={styles.chest_info_row}
                                 >
-                                    <span>{reward.percent}</span>
                                     <p>{reward.rarity[0]}</p>
+                                    <span>{reward.percent}</span>
                                 </div>
                             ))}
                         </div>

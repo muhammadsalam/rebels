@@ -22,7 +22,7 @@ export default async () => {
             mining_claimed_at: user.mining_claimed_at,
         };
 
-        useUserStore.setState({ id: user.id, balance: user.balance, username: user.username });
+        useUserStore.setState({ id: user.id, balance: user.balance, uci_id: user.telegram_id });
         useGameStatsStore.setState(game_stats);
         useVillainStore.setState(villain);
 

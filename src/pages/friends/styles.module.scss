@@ -53,7 +53,28 @@
     font-size: 24px;
     font-weight: 700;
     line-height: 25.08px;
-    box-shadow: -3px -3px 10px -2px #983e18, 2px 2px 4px 1px #000000;
+    border: 1px solid #000000;
+    box-shadow: -3px -3px 10px -2px var(--white), 2px 2px 4px 1px #000000;
+}
+
+.tag__common {
+    box-shadow: -3px -3px 10px -2px #289944, 3px 3px 9px 1px #000000;
+}
+
+.tag__uncommon {
+    box-shadow: -3px -3px 10px -2px #217399, 3px 3px 9px 1px #000000;
+}
+
+.tag__uncommon {
+    box-shadow: -3px -3px 10px -2px #991b33, 3px 3px 9px 1px #000000;
+}
+
+.tag__uncommon {
+    box-shadow: -3px -3px 10px -2px #793999, 3px 3px 9px 1px #000000;
+}
+
+.tag__uncommon {
+    box-shadow: -3px -3px 10px -2px #983e18, 3px 3px 9px 1px #000000;
 }
 
 .progress {

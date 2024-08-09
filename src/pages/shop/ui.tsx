@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import useChestsStore from "entities/chests";
 import useUserStore from "entities/user";
 import { ModalReward } from "widgets/modal-reward";
+import useHeroStore, { Card } from "entities/heroes";
 
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
@@ -50,6 +51,12 @@ export const ShopPage = () => {
             return alert("Failed to buy chest. Please try again later.");
         }
 
+        useUserStore.setState({ balance: data.balance });
+        useHeroStore.setState({
+            cards: data.heroes,
+            team: data.heroes.filter((item: Card) => item.changed),
+        });
+
         setReward(data.reward[0]);
     };
 
@@ -70,7 +77,7 @@ export const ShopPage = () => {
             </div>
 
             <div className={styles.chests}>
-                {chests.map((chest) => (
+                {[...chests].reverse().map((chest) => (
                     <div
                         key={chest.id}
                         className={clsx(

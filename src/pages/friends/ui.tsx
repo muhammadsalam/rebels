@@ -6,6 +6,7 @@ import { formatNumber, tgApp } from "shared/libs";
 import useReferalStore from "entities/referal";
 import { Loading } from "widgets/loading";
 import CoinIcon from "icons/coin.svg?react";
+import clsx from "clsx";
 
 export const FriendsPage = () => {
     const { fetchReferals, ...refState } = useReferalStore((state) => state);
@@ -26,7 +27,7 @@ export const FriendsPage = () => {
         };
     }, []);
 
-    if (refState.level === 0) return <Loading />;
+    if (refState.level === "") return <Loading />;
 
     return (
         <div className={styles.container}>
@@ -39,7 +40,14 @@ export const FriendsPage = () => {
                 </Link>
             </div>
 
-            <div className={styles.tag}>{refState.level} referrer</div>
+            <div
+                className={clsx(
+                    styles.tag,
+                    styles[`tag__${refState.level.toLowerCase()}`]
+                )}
+            >
+                {refState.level} referrer
+            </div>
 
             <div className={styles.progress}>
                 <div className={styles.progress_top}>
@@ -74,7 +82,9 @@ export const FriendsPage = () => {
                     <span></span>
                     <a
                         target="_blank"
-                        href="https://t.me/share/url?url=Hi,How Are You ?"
+                        href="https://t.me/share/url?url=Join the ranks of the REBELS through my link and fight for our common victory!
+                            
+                        http://t.me/d_rebels_bot/app?startapp=1234567890"
                         className={styles.progress_button}
                     >
                         Send

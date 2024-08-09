@@ -42,7 +42,7 @@ export const QuestsPage = () => {
 
             if (data.status && data.new_status === "Done") {
                 useUserStore.setState({
-                    balance: useUserStore.getState().balance + quest.reward,
+                    balance: data.user_balance,
                 });
             }
 

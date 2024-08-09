@@ -2,7 +2,7 @@ import { axios } from 'shared/libs';
 import { create } from 'zustand';
 
 interface ReferalState {
-    level: number,
+    level: string,
     ref_count: number,
     next_level: number,
     ref_percent: number,
@@ -12,7 +12,7 @@ interface ReferalState {
 }
 
 const useReferalStore = create<ReferalState>((set, _) => ({
-    level: 0,
+    level: '',
     ref_count: 0,
     next_level: 0,
     ref_percent: 0,
