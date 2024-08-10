@@ -69,7 +69,15 @@ export const QuestsPage = () => {
 
             <div className={styles.inner}>
                 {quests.map((quest) => (
-                    <div key={quest.id} className={styles.quest}>
+                    <div
+                        key={quest.id}
+                        className={clsx(
+                            styles.quest,
+                            styles[
+                            `quest__${quest.status.toLowerCase()}`
+                            ]
+                        )}
+                    >
                         <div className={styles.quest_info}>
                             <p className={styles.quest_title}>{quest.name}</p>
                             <p className={styles.quest_price}>
@@ -81,12 +89,7 @@ export const QuestsPage = () => {
                             target="_blank"
                             href={quest.url}
                             onClick={(e) => handleQuestClick(e, quest)}
-                            className={clsx(
-                                styles.quest_button,
-                                styles[
-                                    `quest_button__${quest.status.toLowerCase()}`
-                                ]
-                            )}
+                            className={styles.quest_button}
                         >
                             {quest.status}
                         </a>

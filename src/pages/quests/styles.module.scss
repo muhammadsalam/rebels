@@ -20,6 +20,9 @@
 .inner {
     margin-top: 26px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .quest {
@@ -29,9 +32,27 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: order 0.123s ease-in;
 
-    & + & {
-        margin-top: 16px;
+    &__start .quest_button {
+        color: var(--orange-2);
+    }
+
+    &__check .quest_button {
+        color: var(--white);
+    }
+
+    &__claim .quest_button {
+        color: var(--green);
+    }
+
+    &__done {
+        order: 1;
+
+        .quest_button {
+            pointer-events: none;
+            color: var(--gray);
+        }
     }
 }
 
@@ -57,21 +78,4 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 21px;
-
-    &__start {
-        color: var(--orange-2);
-    }
-
-    &__check {
-        color: var(--white);
-    }
-
-    &__claim {
-        color: var(--green);
-    }
-
-    &__done {
-        pointer-events: none;
-        color: var(--gray);
-    }
 }

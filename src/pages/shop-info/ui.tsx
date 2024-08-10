@@ -53,7 +53,7 @@ export const ShopInfoPage = () => {
                                     className={styles.chest_info_row}
                                 >
                                     <p>{reward.rarity[0]}</p>
-                                    <span>{reward.percent}</span>
+                                    <span>{reward.percent}%</span>
                                 </div>
                             ))}
                         </div>
