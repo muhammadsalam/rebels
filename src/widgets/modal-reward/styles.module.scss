@@ -13,6 +13,48 @@
     max-width: 450px;
 }
 
+.reward_info__legend {
+    box-shadow: 2px 2px 4px 1px #000 inset, -2px -2px 3px -2px #983e18e5 inset;
+
+    .reward_img {
+        box-shadow: 2px 2px 4px 1px #000, -2px -2px 3px -2px #983e18e5;
+    }
+}
+
+.reward_info__epic {
+    box-shadow: 2px 2px 4px 1px #000 inset,
+        -2px -2px 3px -2px rgba(121, 57, 153, 0.9) inset;
+
+    .reward_img {
+        box-shadow: 2px 2px 4px 1px #000,
+            -2px -2px 3px -2px rgba(121, 57, 153, 0.9);
+    }
+}
+
+.reward_info__rare {
+    box-shadow: 2px 2px 4px 1px #000 inset, -2px -2px 3px -2px #991b33e5 inset;
+
+    .reward_img {
+        box-shadow: 2px 2px 4px 1px #000, -2px -2px 3px -2px #991b33e5;
+    }
+}
+
+.reward_info__uncommon {
+    box-shadow: 2px 2px 4px 1px #000 inset, -2px -2px 3px -2px #217399e5 inset;
+
+    .reward_img {
+        box-shadow: 2px 2px 4px 1px #000, -2px -2px 3px -2px #217399e5;
+    }
+}
+
+.reward_info__common {
+    box-shadow: 2px 2px 4px 1px #000 inset, -2px -2px 3px -2px #289944e5 inset;
+
+    .reward_img {
+        box-shadow: 2px 2px 4px 1px #000, -2px -2px 3px -2px #289944e5;
+    }
+}
+
 .reward_img {
     width: 100%;
     flex-grow: 1;

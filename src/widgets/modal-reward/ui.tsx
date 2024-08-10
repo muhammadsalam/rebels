@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { Modal } from "shared/ui";
 import CoinIcon from "icons/coin.svg?react";
 import { formatNumber } from "shared/libs";
+import clsx from "clsx";
 
 type Reward =
     | {
@@ -17,7 +18,14 @@ export const ModalReward: FC<{
 }> = ({ reward, handleClaimChest }) => {
     return (
         <Modal onModalHide={handleClaimChest} heading="Your reward">
-            <div className={styles.reward_info}>
+            <div
+                className={clsx(
+                    styles.reward_info,
+                    reward &&
+                        typeof reward !== "number" &&
+                        styles[`reward_info__${reward.rarity.toLowerCase()}`]
+                )}
+            >
                 {reward ? (
                     typeof reward === "number" ? (
                         <strong className={styles.reward_title__points}>
@@ -28,7 +36,7 @@ export const ModalReward: FC<{
                             <div className={styles.reward_img}>
                                 <img
                                     src={`/assets/card-item-${reward.rarity.toLowerCase()}.png`}
-                                    alt=""
+                                    alt={reward.name}
                                 />
                             </div>
                             <strong className={styles.reward_title}>
@@ -40,7 +48,6 @@ export const ModalReward: FC<{
                     <strong className={styles.reward_title}>Загрузка...</strong>
                 )}
             </div>
-
             <button
                 onClick={handleClaimChest}
                 className={styles.reward_button}
