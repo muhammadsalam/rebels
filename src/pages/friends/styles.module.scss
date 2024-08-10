@@ -65,15 +65,15 @@
     box-shadow: -3px -3px 10px -2px #217399, 3px 3px 9px 1px #000000;
 }
 
-.tag__uncommon {
+.tag__rare {
     box-shadow: -3px -3px 10px -2px #991b33, 3px 3px 9px 1px #000000;
 }
 
-.tag__uncommon {
+.tag__epic {
     box-shadow: -3px -3px 10px -2px #793999, 3px 3px 9px 1px #000000;
 }
 
-.tag__uncommon {
+.tag__legendary {
     box-shadow: -3px -3px 10px -2px #983e18, 3px 3px 9px 1px #000000;
 }
 
@@ -85,6 +85,14 @@
     padding: 25px 20px;
     border-radius: 12px;
     width: 100%;
+}
+
+.textarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .progress_top {

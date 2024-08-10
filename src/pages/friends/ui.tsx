@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { formatNumber, tgApp } from "shared/libs";
 import useReferalStore from "entities/referal";
 import { Loading } from "widgets/loading";
@@ -9,7 +9,12 @@ import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 
 export const FriendsPage = () => {
+    const link = 'http://t.me/d_rebels_bot/app?startapp=1234567890';
+    const refLink = useRef<HTMLTextAreaElement>(null);
+
     const { fetchReferals, ...refState } = useReferalStore((state) => state);
+
+    // const [isCopied, setIsCopied] = useState(false);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -28,6 +33,37 @@ export const FriendsPage = () => {
     }, []);
 
     if (refState.level === "") return <Loading />;
+
+    const handleCopy = () => {
+        try {
+            navigator.clipboard.writeText(link);
+
+            (async function () {
+                const type = "text/plain";
+                const blob = new Blob(
+                    [link],
+                    { type }
+                );
+
+                const clipboardItem = new ClipboardItem({
+                    [type]: blob,
+                });
+
+                navigator.clipboard.write([clipboardItem]).catch(function (error) {
+                    throw new Error('Failed to copy: ' + error);
+                });
+            })();
+
+            refLink.current && refLink.current.select();
+            document.execCommand("copy");
+
+            refLink.current && refLink.current.blur();
+
+        } catch (e) {
+            alert(e);
+            console.log(e);
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -50,11 +86,17 @@ export const FriendsPage = () => {
             </div>
 
             <div className={styles.progress}>
+                <textarea className={styles.textarea} ref={refLink}>{link}</textarea>
                 <div className={styles.progress_top}>
                     <div className={styles.progress_top_left}>
                         <div className={styles.progress_top_title}>
-                            <span>{refState.ref_count}</span> /{" "}
-                            {refState.next_level}
+                            <span>{refState.ref_count}</span>
+                            {
+                                refState.level.toLowerCase() !== 'legendary' && <>
+                                    {" / "}
+                                    {refState.next_level}
+                                </>
+                            }
                         </div>
                         <p className={styles.progress_top_ph}>
                             friends invited
@@ -71,20 +113,19 @@ export const FriendsPage = () => {
                     <div
                         className={styles.progress_line_inner}
                         style={{
-                            width: `${
-                                (refState.ref_count / refState.next_level) * 100
-                            }%`,
+                            width: `${(refState.ref_count / refState.next_level) * 100
+                                }%`,
                         }}
                     ></div>
                 </div>
                 <div className={styles.progress_bottom}>
-                    <button className={styles.progress_button}>Copy</button>
+                    <button className={styles.progress_button} onClick={handleCopy}>Copy</button>
                     <span></span>
                     <a
                         target="_blank"
-                        href="https://t.me/share/url?url=Join the ranks of the REBELS through my link and fight for our common victory!
+                        href={`https://t.me/share/url?url=Join the ranks of the REBELS through my link and fight for our common victory!
                             
-                        http://t.me/d_rebels_bot/app?startapp=1234567890"
+                        ${link}`}
                         className={styles.progress_button}
                     >
                         Send
@@ -96,7 +137,7 @@ export const FriendsPage = () => {
                 <div className={styles.claim_row}>
                     <div className={styles.claim_coins}>
                         <CoinIcon width={24} height={24} />
-                        {formatNumber(100000, "ru-RU")}
+                        {formatNumber(refState.balance, "ru-RU")}
                     </div>
                     <div className={styles.claim_time}>3h 12m</div>
                 </div>
