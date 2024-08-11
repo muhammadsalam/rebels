@@ -86,7 +86,7 @@ export const FriendsPage = () => {
             </div>
 
             <div className={styles.progress}>
-                <textarea className={styles.textarea} ref={refLink}>{link}</textarea>
+                <textarea defaultValue={link} className={styles.textarea} ref={refLink}></textarea>
                 <div className={styles.progress_top}>
                     <div className={styles.progress_top_left}>
                         <div className={styles.progress_top_title}>
