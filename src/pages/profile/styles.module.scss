@@ -30,16 +30,44 @@
     color: var(--action-color);
 }
 
-.info__bronze {
-    --action-color: #503317;
+.info__recruit {
+    --action-color: #34c759;
 }
 
-.info__silver {
-    --action-color: #686868;
+.info__rookie {
+    --action-color: #34c759;
 }
 
-.info__gold {
-    --action-color: #a86d0f;
+.info__mercenary {
+    --action-color: #32ade6;
+}
+
+.info__warrior {
+    --action-color: #32ade6;
+}
+
+.info__commander {
+    --action-color: #e21515;
+}
+
+.info__guardian {
+    --action-color: #e21515;
+}
+
+.info__veteran {
+    --action-color: #af52de;
+}
+
+.info__hero {
+    --action-color: #af52de;
+}
+
+.info__legend {
+    --action-color: #eb642a;
+}
+
+.info__rebel {
+    --action-color: #eb642a;
 }
 
 .info_title {
@@ -72,24 +100,73 @@
     --action-color: var(--white);
 }
 
-.total_skills__bronze {
+.total_skills__recruit {
     .total_skills_line_inner {
-        background-color: #503317;
-        box-shadow: 0.63px 3px 11.7px 0px #6e421794;
+        background-color: #34c759;
+        box-shadow: none;
     }
 }
 
-.total_skills__silver {
+.total_skills__rookie {
     .total_skills_line_inner {
-        background-color: #686868;
-        box-shadow: 0.63px 3px 11.7px 0px #b6b6b694;
+        background-color: #34c759;
+        box-shadow: 0.63px 3px 11.7px 0px #34c75994;
     }
 }
 
-.total_skills__gold {
+.total_skills__mercenary {
     .total_skills_line_inner {
-        background-color: #a86d0f;
-        box-shadow: 0.63px 3px 11.7px 0px #ffcc0094;
+        background-color: #32ade6;
+        box-shadow: none;
+    }
+}
+
+.total_skills__warrior {
+    .total_skills_line_inner {
+        background-color: #32ade6;
+        box-shadow: 0.63px 3px 11.7px 0px #32ade694;
+    }
+}
+
+.total_skills__commander {
+    .total_skills_line_inner {
+        background-color: #e21515;
+        box-shadow: none;
+    }
+}
+
+.total_skills__guardian {
+    .total_skills_line_inner {
+        background-color: #e21515;
+        box-shadow: 0.63px 3px 11.7px 0px #e2151594;
+    }
+}
+
+.total_skills__veteran {
+    .total_skills_line_inner {
+        background-color: #af52de;
+        box-shadow: none;
+    }
+}
+
+.total_skills__hero {
+    .total_skills_line_inner {
+        background-color: #af52de;
+        box-shadow: 0.63px 3px 11.7px 0px #af52de94;
+    }
+}
+
+.total_skills__legend {
+    .total_skills_line_inner {
+        background-color: var(--orange-2);
+        box-shadow: none;
+    }
+}
+
+.total_skills__rebel {
+    .total_skills_line_inner {
+        background-color: var(--orange-2);
+        box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
     }
 }
 

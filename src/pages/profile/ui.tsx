@@ -62,7 +62,7 @@ export const ProfilePage = () => {
                 <div className={styles.info_rank}>
                     <TrophyIcon className={styles.info_rank_icon} /> {level}
                 </div>
-                <p className={styles.info_level}>{user_rank} level</p>
+                <p className={styles.info_level}>{user_rank}</p>
             </div>
             <div
                 className={clsx(
@@ -102,11 +102,10 @@ export const ProfilePage = () => {
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${
-                                    (total_hero_values.knowledge /
-                                        MAX_TOTAL_KNOWLEDGE_VALUE) *
+                                width: `${(total_hero_values.knowledge /
+                                    MAX_TOTAL_KNOWLEDGE_VALUE) *
                                     100
-                                }%`,
+                                    }%`,
                             }}
                         ></div>
                     </div>
@@ -125,11 +124,10 @@ export const ProfilePage = () => {
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${
-                                    (total_hero_values.loyalty /
-                                        MAX_TOTAL_LOYALTY_VALUE) *
+                                width: `${(total_hero_values.loyalty /
+                                    MAX_TOTAL_LOYALTY_VALUE) *
                                     100
-                                }%`,
+                                    }%`,
                             }}
                         ></div>
                     </div>
@@ -148,11 +146,10 @@ export const ProfilePage = () => {
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${
-                                    (total_hero_values.influence /
-                                        MAX_TOTAL_INFLUENCE_VALUE) *
+                                width: `${(total_hero_values.influence /
+                                    MAX_TOTAL_INFLUENCE_VALUE) *
                                     100
-                                }%`,
+                                    }%`,
                             }}
                         ></div>
                     </div>
