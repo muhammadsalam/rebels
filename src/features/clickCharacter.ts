@@ -20,6 +20,8 @@ export default function (damage: number, isCritical: boolean) {
 
     addTap(isCritical)
 
+    if ("vibrate" in navigator) navigator.vibrate(5);
+
     if (newHealth <= 0) {
         useVillainStore.setState({ current_health: 0, wasted: true });
         return true;
