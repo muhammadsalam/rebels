@@ -2,6 +2,9 @@ import { tgApp, axios } from 'shared/libs';
 import { create } from 'zustand';
 
 interface UserState {
+    settings: {
+        vibro: boolean;
+    };
     token: string | null;
     id: number | null;
     balance: number;
@@ -13,6 +16,9 @@ interface UserState {
 }
 
 const useUserStore = create<UserState>((set) => ({
+    settings: {
+        vibro: true,
+    },
     token: null,
     id: null,
     balance: 0,

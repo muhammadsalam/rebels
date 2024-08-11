@@ -120,6 +120,14 @@ export interface IWebApp {
     MainButton: IMainButton;
     HapticFeedback: IHapticFeedback;
     isVerticalSwipesEnabled: boolean;
+    CloudStorage: {
+        getItem: (key: string, callback: function) => void;
+        getItems: (keys: string[], callback: function) => void;
+        getKeys: (callback: function) => void;
+        removeItem: (key: string, callback: function) => void;
+        removeItems: (keys: string[], callback: function) => void;
+        setItem: (key: string, value: any, callback?: function) => void;
+    };
     isVersionAtLeast: (version: string) => boolean;
     setHeaderColor: (color: string) => void;
     setBackgroundColor: (color: string) => void;

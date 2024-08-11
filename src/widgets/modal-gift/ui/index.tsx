@@ -18,50 +18,51 @@ export const ModalGift: FC<{
     setIsRewardModalActive,
     setIsDailyGiftActive,
 }) => {
-    const onCardClick = async (index: number) => {
-        try {
-            setIsRewardModalActive(true);
-            setIsDailyGiftActive(false);
-            const { status, data } = await axios.get(`/spin/run?${index}`);
-
-            if (status !== 200) {
+        const onCardClick = async (index: number) => {
+            try {
                 setIsRewardModalActive(true);
-                setIsRewardModalActive(false);
+                setIsDailyGiftActive(false);
+                const { status, data } = await axios.get(`/spin/run?${index}`);
+
+                if (status !== 200) {
+                    setIsRewardModalActive(true);
+                    setIsRewardModalActive(false);
+                    alert("Something went wrong. Please try again later");
+                }
+
+                if (data.prize.toLowerCase() === "points") {
+                    setReward(data.points);
+                    useUserStore.setState({
+                        balance: useUserStore.getState().balance + data.points,
+                    });
+                }
+
+                if (data.prize.toLowerCase() === "hero") {
+                    setReward(data.hero);
+                }
+            } catch (e) {
+                console.log(e);
                 alert("Something went wrong. Please try again later");
             }
+        };
 
-            if (data.prize.toLowerCase() === "points") {
-                setReward(data.points);
-                useUserStore.setState({
-                    balance: useUserStore.getState().balance + data.points,
-                });
-            }
-
-            if (data.prize.toLowerCase() === "hero") {
-                setReward(data.hero);
-            }
-        } catch (e) {
-            console.log(e);
-            alert("Something went wrong. Please try again later");
-        }
+        return (
+            <Modal
+                heading="Daily gift"
+                subheading="Choose your option"
+                onModalHide={onModalHide}
+            >
+                <div className={styles.cards}>
+                    {new Array(4).fill(0).map((_, index) => (
+                        <div
+                            key={index}
+                            className={styles.card}
+                            onClick={() => onCardClick(index + 1)}
+                        >
+                            <GiftIcon />
+                        </div>
+                    ))}
+                </div>
+            </Modal>
+        );
     };
-
-    return (
-        <Modal
-            heading="Daily gift"
-            subheading="Choose your option"
-            onModalHide={onModalHide}
-        >
-            <div className={styles.cards}>
-                {new Array(4).fill(0).map((_, index) => (
-                    <div
-                        className={styles.card}
-                        onClick={() => onCardClick(index + 1)}
-                    >
-                        <GiftIcon />
-                    </div>
-                ))}
-            </div>
-        </Modal>
-    );
-};

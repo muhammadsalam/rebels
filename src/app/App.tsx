@@ -36,6 +36,20 @@ function App() {
         tgApp.expand();
         tgApp.disableVerticalSwipes();
 
+        if (parseFloat(tgApp.version) > 6.9) {
+            tgApp.CloudStorage.getItem('vibro', (_: any, value: any) => {
+                useUserStore.setState((state) => ({
+                    ...state,
+                    settings: { ...state.settings, vibro: value }
+                }))
+            });
+        } else {
+            useUserStore.setState((state) => ({
+                ...state,
+                settings: { ...state.settings, vibro: localStorage.getItem('vibro') === 'true' }
+            }))
+        }
+
         (async () => {
             const tokenSuccess = await fetchToken();
             if (tokenSuccess) {
