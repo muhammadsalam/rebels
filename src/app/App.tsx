@@ -74,7 +74,7 @@ function App() {
         if (userId === null) return;
 
         const intervalAddEnergy = setInterval(() => {
-            addEnergy(12);
+            addEnergy();
         }, 1000);
 
         return () => {

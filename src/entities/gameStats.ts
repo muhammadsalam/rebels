@@ -2,30 +2,35 @@ import { axios } from 'shared/libs';
 import { create } from 'zustand';
 
 interface GameStatsState {
-    isProfileLoading: boolean;
-    total_value: number;
-    next_level_value: number;
     total_hero_values: {
         knowledge: number;
         loyalty: number;
         influence: number;
     };
+
+    isProfileLoading: boolean;
+    total_value: number;
+    next_level_value: number;
     damage: number;
     critical_chance: number;
+
     energy_balance: number;
+    energy_update: number;
     energy_usage: number;
     max_energy: number;
+    addEnergy: () => void;
+
     mining_balance: number;
     mining_speed: number;
     mining_max_points: number;
     mining_duration: number;
     mining_claimed_at: number;
-    setGameStats: (stats: Partial<GameStatsState>) => void;
-    addEnergy: (amount: number) => void;
     startMining: () => void;
+
+    setGameStats: (stats: Partial<GameStatsState>) => void;
 }
 
-const useGameStatsStore = create<GameStatsState>((set) => ({
+const useGameStatsStore = create<GameStatsState>((set, get) => ({
     isProfileLoading: false,
     total_value: 0,
     next_level_value: 0,
@@ -35,20 +40,24 @@ const useGameStatsStore = create<GameStatsState>((set) => ({
         influence: 0
     },
     damage: 0,
-    critical_chance: 5,
+    critical_chance: 0,
+
     energy_balance: 0,
+    energy_update: 0,
     energy_usage: 0,
     max_energy: 0,
+
     mining_balance: 0,
     mining_speed: 0,
     mining_max_points: 0,
     mining_duration: 0,
     mining_claimed_at: 0,
     setGameStats: (stats) => set(stats),
-    addEnergy: (amount: number) => {
+    addEnergy: () => {
         set((state) => ({
-            energy_balance: Math.min(state.energy_balance + amount, state.max_energy),
-        }));
+            energy_balance: Math.min(state.energy_balance + get().energy_update, state.max_energy),
+        })
+        );
     },
     startMining: async () => {
         try {

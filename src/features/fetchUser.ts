@@ -13,6 +13,7 @@ export default async () => {
             damage: user.damage,
             critical_chance: user.critical_chance,
             energy_balance: user.energy_balance,
+            energy_update: user.energy_update,
             energy_usage: user.energy_usage,
             max_energy: user.max_energy,
             mining_balance: user.mining_balance,
