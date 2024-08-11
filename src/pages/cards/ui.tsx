@@ -80,12 +80,12 @@ export const CardsPage: FC<CardProps> = ({
                 className={clsx(
                     styles.item,
                     activeChoosedCard &&
-                        choosedCards.find(
-                            (item) =>
-                                item.name === card.name &&
-                                item.level === card.level
-                        ) &&
-                        styles.item__disabled
+                    choosedCards.find(
+                        (item) =>
+                            item.name === card.name &&
+                            item.level === card.level
+                    ) &&
+                    styles.item__disabled
                 )}
                 key={card.id}
                 onClick={() => handleCardClick(card)}
@@ -130,10 +130,7 @@ export const CardsPage: FC<CardProps> = ({
                         {`${card.level} lvl`}
                     </div>
                     <div className={styles.item_count}>
-                        {`${
-                            cards.filter((item) => item.name === card.name)
-                                .length
-                        } pcs`}
+                        {card.count} pcs
                     </div>
                 </div>
             </div>
@@ -143,13 +140,6 @@ export const CardsPage: FC<CardProps> = ({
     function getUniqueCardsByRarity(rarity: string) {
         return cards
             .filter((item) => item.rarity === rarity)
-            .reduce<Card[]>(
-                (items, item) =>
-                    items.some((card) => card.name === item.name)
-                        ? items
-                        : items.concat([item]),
-                []
-            )
             .map((card) => <CardItem key={card.id} card={card} />);
     }
 

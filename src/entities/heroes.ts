@@ -14,6 +14,7 @@ export type Card = {
     name: string;
     rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legend';
     upgrade_price: number;
+    count: number;
 }
 
 interface HeroState {

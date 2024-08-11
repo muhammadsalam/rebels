@@ -1,5 +1,5 @@
 .container {
-    padding: 20px 17px 66px;
+    padding: 20px 17px 6.35vh;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -26,40 +26,13 @@
     line-height: 33px;
 }
 
-.description {
-    color: var(--gray);
-    font-family: "Pixel Operator";
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 16px;
-}
-
-.chest_icon {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 77px;
-    background: var(--dark);
-    box-shadow: var(--shadow-1);
-}
-
-.chest_icon__disabled {
-    pointer-events: none;
-}
-
-.chest_icon__disabled path {
-    fill: var(--gray);
-}
-
 .choosed_cards {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
-    column-gap: 19px;
     row-gap: 4px;
-    margin-top: 25px;
+    margin-top: 23px;
+    max-width: 342px;
 }
 
 .card {
@@ -76,9 +49,21 @@
         3px 3px 9px -30px #000 inset,
         -3px -3px 4px -30px rgb(96, 96, 96, 0.9) inset;
     transition: box-shadow 0.3s ease-in-out;
+    position: relative;
 
     &:active {
         box-shadow: 0 0 5px 6px rgba(235, 100, 42, 0.5);
+        z-index: 1;
+    }
+
+    &:nth-child(4) {
+        margin-left: auto;
+        margin-right: 8px;
+    }
+
+    &:nth-child(5) {
+        margin-left: 8px;
+        margin-right: auto;
     }
 }
 
@@ -91,7 +76,8 @@
 }
 
 .skills {
-    margin-top: 15px;
+    margin-top: 4.41vh;
+    margin-bottom: 5px;
     width: 100%;
 }
 
@@ -101,7 +87,7 @@
     font-weight: 400;
     line-height: 25px;
     text-align: left;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     color: var(--gray);
 }
 
@@ -109,7 +95,7 @@
     background-color: var(--dark);
     border-radius: 12px;
     box-shadow: var(--shadow-1);
-    padding: 14px 16px 17px;
+    padding: 10px 16px;
 
     & + & {
         margin-top: 19px;
@@ -177,7 +163,8 @@
 }
 
 .line {
-    box-shadow: var(--inner-shadow);
+    box-shadow: -2px -2px 4px 0px #ffffff14 inset,
+        2px 2px 4px 0px #000000cc inset;
     background-color: #262626;
     margin-top: 12px;
     width: 100%;
@@ -277,13 +264,13 @@
     justify-content: center;
     gap: 24px;
     width: 100%;
+    margin-top: auto;
 }
 
 .button {
     width: 100%;
     max-width: 190px;
     height: 60px;
-    margin-top: 15px;
     display: flex;
     align-items: center;
     justify-content: center;

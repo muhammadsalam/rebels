@@ -150,7 +150,7 @@ export const TeamPage = () => {
                             className={clsx(
                                 styles.card,
                                 activeChoosedCard?.id === hero.id &&
-                                    styles.card__active
+                                styles.card__active
                             )}
                             key={hero.id + index}
                             onClick={() => handleCardClick(hero)}
@@ -184,11 +184,10 @@ export const TeamPage = () => {
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${
-                                    (team_skills.knowledge /
-                                        MAX_TEAM_KNOWLEDGE) *
+                                width: `${(team_skills.knowledge /
+                                    MAX_TEAM_KNOWLEDGE) *
                                     100
-                                }%`,
+                                    }%`,
                             }}
                         ></div>
                     </div>
@@ -207,10 +206,9 @@ export const TeamPage = () => {
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${
-                                    (team_skills.loyalty / MAX_TEAM_LOYALTY) *
+                                width: `${(team_skills.loyalty / MAX_TEAM_LOYALTY) *
                                     100
-                                }%`,
+                                    }%`,
                             }}
                         ></div>
                     </div>
@@ -229,11 +227,10 @@ export const TeamPage = () => {
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${
-                                    (team_skills.influence /
-                                        MAX_TEAM_INFLUENCE) *
+                                width: `${(team_skills.influence /
+                                    MAX_TEAM_INFLUENCE) *
                                     100
-                                }%`,
+                                    }%`,
                             }}
                         ></div>
                     </div>
@@ -284,12 +281,11 @@ export const TeamPage = () => {
                                 <div
                                     className={clsx(styles.line_inner)}
                                     style={{
-                                        width: `${
-                                            ((activeChoosedCard.knowledge +
-                                                activeChoosedCard.knowledge_step) /
-                                                MAX_CARD_KNOWLEDGE) *
+                                        width: `${((activeChoosedCard.knowledge +
+                                            activeChoosedCard.knowledge_step) /
+                                            MAX_CARD_KNOWLEDGE) *
                                             100
-                                        }%`,
+                                            }%`,
                                     }}
                                 ></div>
                             </div>
@@ -316,12 +312,11 @@ export const TeamPage = () => {
                                 <div
                                     className={clsx(styles.line_inner)}
                                     style={{
-                                        width: `${
-                                            ((activeChoosedCard.loyalty +
-                                                activeChoosedCard.loyalty_step) /
-                                                MAX_CARD_LOYALTY) *
+                                        width: `${((activeChoosedCard.loyalty +
+                                            activeChoosedCard.loyalty_step) /
+                                            MAX_CARD_LOYALTY) *
                                             100
-                                        }%`,
+                                            }%`,
                                     }}
                                 ></div>
                             </div>
@@ -348,12 +343,11 @@ export const TeamPage = () => {
                                 <div
                                     className={clsx(styles.line_inner)}
                                     style={{
-                                        width: `${
-                                            ((activeChoosedCard.influence +
-                                                activeChoosedCard.influence_step) /
-                                                MAX_CARD_INFLUENCE) *
+                                        width: `${((activeChoosedCard.influence +
+                                            activeChoosedCard.influence_step) /
+                                            MAX_CARD_INFLUENCE) *
                                             100
-                                        }%`,
+                                            }%`,
                                     }}
                                 ></div>
                             </div>
@@ -367,7 +361,7 @@ export const TeamPage = () => {
                             }
                         >
                             <span>
-                                Upgrade {}
+                                Upgrade { }
                                 {formatNumber(
                                     activeChoosedCard.upgrade_price,
                                     "ru-RU"
