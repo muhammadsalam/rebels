@@ -3,19 +3,19 @@ import { FC, useEffect } from "react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import { formatNumber, tgApp } from "shared/libs";
-
-type TRarity = "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary";
-
-interface CardProps {
-    rarity: TRarity;
-    invited: number;
-    percent: number;
-    bonus: number;
-}
+import useReferalStore, { ReferalInfoCard } from "entities/referal";
+import { Loading } from "widgets/loading";
 
 export const FriendsInfoPage = () => {
+    const fetchReferalsInfo = useReferalStore((state) => state.fetchReferalsInfo);
+    const infoItems = useReferalStore((state) => state.info);
+
     const navigate = useNavigate();
     useEffect(() => {
+        if (infoItems.length === 0) {
+            fetchReferalsInfo();
+        }
+
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/friends");
@@ -28,11 +28,13 @@ export const FriendsInfoPage = () => {
         };
     }, []);
 
-    const Card: FC<CardProps> = ({
-        rarity,
-        invited,
+    if (infoItems.length === 0) return <Loading />;
+
+    const Card: FC<ReferalInfoCard> = ({
+        level,
+        reward,
+        referrals,
         percent,
-        bonus,
         ...props
     }) => {
         return (
@@ -40,24 +42,22 @@ export const FriendsInfoPage = () => {
                 {...props}
                 className={clsx(
                     styles.card,
-                    styles[`card__${rarity.toLowerCase()}`]
+                    styles[`card__${level.toLowerCase()}`]
                 )}
             >
-                <strong className={styles.card_title}>{rarity}</strong>
-                <div className={styles.card_info_top}>
-                    <div className={styles.card_info_block}>
-                        <strong>{invited}</strong>
-                        <p>friends invited</p>
+                <strong className={styles.card_title}>{level}</strong>
+                <p className={styles.card_description}>
+                    {referrals === 0 ? 'by default' : `friends needed ${referrals}`}
+                </p>
+                <div className={styles.card_list}>
+                    <div className={styles.card_row}>
+                        <strong>Earnings</strong>
+                        <span>{percent}%</span>
                     </div>
-                    <div className={styles.card_info_block}>
-                        <strong>{percent} %</strong>
-                        <p>from friends</p>
-                    </div>
-                </div>
-                <div className={styles.card_info_bottom}>
-                    <div className={styles.card_info_block}>
-                        <strong>{formatNumber(bonus)}</strong>
-                        <p>level bonus</p>
+
+                    <div className={styles.card_row}>
+                        <strong>Bonus</strong>
+                        <span>{formatNumber(reward)}</span>
                     </div>
                 </div>
             </div>
@@ -71,21 +71,15 @@ export const FriendsInfoPage = () => {
             </div>
 
             <div className={styles.cards}>
-                <Card rarity="Common" invited={16} percent={2} bonus={100000} />
-                <Card
-                    rarity="Uncommon"
-                    invited={24}
-                    percent={4}
-                    bonus={100000}
-                />
-                <Card rarity="Rare" invited={32} percent={6} bonus={100000} />
-                <Card rarity="Epic" invited={40} percent={8} bonus={100000} />
-                <Card
-                    rarity="Legendary"
-                    invited={16}
-                    percent={2}
-                    bonus={100000}
-                />
+                {infoItems.map((item) => (
+                    <Card
+                        key={item.level}
+                        level={item.level}
+                        referrals={item.referrals}
+                        percent={item.percent}
+                        reward={item.reward}
+                    />
+                ))}
             </div>
         </div>
     );

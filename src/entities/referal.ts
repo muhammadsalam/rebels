@@ -1,6 +1,13 @@
 import { axios } from 'shared/libs';
 import { create } from 'zustand';
 
+export type ReferalInfoCard = {
+    reward: number,
+    level: string,
+    referrals: number,
+    percent: number
+};
+
 interface ReferalState {
     level: string,
     ref_count: number,
@@ -8,10 +15,13 @@ interface ReferalState {
     ref_percent: number,
     balance: number,
     claim_time: number,
-    fetchReferals: () => void
+    info: ReferalInfoCard[],
+    fetchReferals: () => void,
+    fetchReferalsInfo: () => void
 }
 
 const useReferalStore = create<ReferalState>((set, _) => ({
+    info: [],
     level: '',
     ref_count: 0,
     next_level: 0,
@@ -26,7 +36,16 @@ const useReferalStore = create<ReferalState>((set, _) => ({
         }
 
         set({ ...data })
-    }
+    },
+    fetchReferalsInfo: async () => {
+        const { status, data } = await axios.get('/user/referal');
+
+        if (status !== 200) {
+            return alert('something went wrong');
+        }
+
+        set({ info: data })
+    },
 }));
 
 export default useReferalStore;
