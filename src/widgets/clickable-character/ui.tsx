@@ -137,7 +137,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
                 </div>
             ))}
             <img
-                src={current_image}
+                src={`${import.meta.env.VITE_API_BACK}/villain/${current_image}`}
                 alt="I AM VILLAIN"
                 className={styles.person}
             />

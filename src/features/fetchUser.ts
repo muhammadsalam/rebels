@@ -24,7 +24,7 @@ export default async () => {
 
         useUserStore.setState({ id: user.id, balance: user.balance, uci_id: user.telegram_id });
         useGameStatsStore.setState(game_stats);
-        useVillainStore.setState(villain);
+        useVillainStore.setState({ ...villain, image: villain.photo, current_image: villain.photo, current_name: villain.name, current_level: villain.level });
 
         return true;
     } catch (err) {
