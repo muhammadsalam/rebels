@@ -2,8 +2,8 @@ import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import useGameStatsStore from "entities/gameStats";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
-import { tgApp } from "shared/libs";
+import { MouseEvent, useEffect, useRef, useState } from "react";
+import { formatNumber, tgApp } from "shared/libs";
 import claimMining from "features/claimMining";
 import { useNavigate } from "react-router-dom";
 
@@ -75,7 +75,7 @@ export const Mine = () => {
 
             const newBalance = Math.min(
                 ((+new Date() / 1000 - mining_claimed_at) / 3600) *
-                    mining_speed,
+                mining_speed,
                 mining_max_points
             );
 
@@ -90,7 +90,22 @@ export const Mine = () => {
         return () => clearInterval(interval);
     }, [mining_claimed_at]);
 
-    const handleOnClickButton = () => {
+    const timeoutIdRef = useRef<number | null>(null);
+
+    const handleOnClickButton = (e: MouseEvent<HTMLButtonElement>) => {
+        const target = e.target as HTMLButtonElement;
+
+        target.classList.add(styles.button__active);
+
+        if (timeoutIdRef.current !== null) {
+            clearTimeout(timeoutIdRef.current);
+        }
+
+        timeoutIdRef.current = window.setTimeout(() => {
+            target.classList.remove(styles.button__active);
+            timeoutIdRef.current = null;
+        }, 200);
+
         if (mining_claimed_at === 0) {
             return useGameStatsStore.getState().startMining();
         }
@@ -104,17 +119,20 @@ export const Mine = () => {
         if (mining_balance === mining_max_points) {
             return (
                 <>
-                    CLAIM {mining_max_points}
-                    <CoinIcon className={styles.button_icon} />
+                    Claim
+                    <span className={styles.button_count}>
+                        {formatNumber(mining_max_points, "en-EN")}
+                        <CoinIcon width={22} height={22} />
+                    </span>
                 </>
             );
         }
 
         if (mining_claimed_at === 0) {
-            return "START";
+            return "Start";
         }
 
-        return "WAIT";
+        return "Wait";
     };
 
     return (
@@ -122,7 +140,7 @@ export const Mine = () => {
             <div className={styles.mine}>
                 <button
                     className={styles.button}
-                    onClick={handleOnClickButton}
+                    onClick={(e) => handleOnClickButton(e)}
                     disabled={
                         mining_claimed_at !== 0 &&
                         mining_balance !== mining_max_points
@@ -151,7 +169,7 @@ export const Mine = () => {
                     <div className={styles.mine_item}>Time to fill</div>
                     <strong className={styles.mine_item}>
                         {mining_claimed_at === 0 ||
-                        mining_balance === mining_max_points
+                            mining_balance === mining_max_points
                             ? "0h 0m 0s"
                             : timeToFill}
                     </strong>
@@ -162,14 +180,13 @@ export const Mine = () => {
                     className={clsx(
                         styles.line_inner,
                         mining_max_points === mining_balance &&
-                            styles.line_inner__full
+                        styles.line_inner__full
                     )}
                     style={{
-                        width: `${
-                            mining_claimed_at === 0
-                                ? 0
-                                : (mining_balance / mining_max_points) * 100
-                        }%`,
+                        width: `${mining_claimed_at === 0
+                            ? 0
+                            : (mining_balance / mining_max_points) * 100
+                            }%`,
                     }}
                 ></div>
             </div>
