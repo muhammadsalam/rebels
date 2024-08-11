@@ -40,14 +40,14 @@ export const AboutPage = () => {
                         Characters: the game features 30 unique characters, each
                         of whom has contributed to the world of cryptocurrency.
                         Characters are divided into 5 rarities: Common,
-                        Uncommon, Rare, Epic, and Legendary.
+                        Uncommon, Rare, Epic, and Legendary
                     </li>
                     <br />
                     <li>
                         Cards: each character is represented as a card that can
                         be upgraded to enhance the character's abilities. Card
                         upgrades are done by merging identical cards and using
-                        game points.
+                        game points
                     </li>
                 </ul>
                 <br />
@@ -58,7 +58,7 @@ export const AboutPage = () => {
                     <li>
                         New players start with 5 identical level 1 Common cards.
                         You can upgrade them, obtain new cards, and create your
-                        ideal team.
+                        ideal team
                     </li>
                 </ul>
                 <br />
@@ -77,7 +77,7 @@ export const AboutPage = () => {
                     <li>
                         Loyalty influence: the higher the Loyalty of the
                         character, the less energy is required for their
-                        actions.
+                        actions
                     </li>
                 </ul>
                 <br />
@@ -87,11 +87,11 @@ export const AboutPage = () => {
                 <ul className={styles.ul}>
                     <li>Base damage per tap depends on the card rarity:</li>
                     <ul>
-                        <li>Common: 10 damage.</li>
-                        <li>Uncommon: 20 damage.</li>
-                        <li>Rare: 30 damage.</li>
-                        <li>Epic: 40 damage.</li>
-                        <li>Legendary: 50 damage.</li>
+                        <li>Common: 10 damage</li>
+                        <li>Uncommon: 20 damage</li>
+                        <li>Rare: 30 damage</li>
+                        <li>Epic: 40 damage</li>
+                        <li>Legendary: 50 damage</li>
                     </ul>
                 </ul>
                 <br />
@@ -140,13 +140,13 @@ export const AboutPage = () => {
                 <br />
                 To upgrade a card, you need to combine it with another identical
                 card. For example, if you have a level 3 Epic card and a level 1
-                Epic card, combining them will give you a level 4 Epic card.
+                Epic card, combining them will give you a level 4 Epic card
                 <br />
                 <br />
                 Upgrading cards of level 7: if you have a level 7 Common card
                 and a level 1 Common card, they can be burned for free to
                 receive a random level 1 card of the next rarity (in this case,
-                Uncommon).
+                Uncommon)
                 <br />
                 <br />
                 Upgrade costs
@@ -255,22 +255,30 @@ export const AboutPage = () => {
                     </li>
                 </ul>
                 <br />
-                <h3 className={styles.h3}>6. Strategies and tips</h3>
+                <h3 className={styles.h3}>6. Mining basics</h3>
+                <br />
+                <ul className={styles.ul}>
+                    <li>Influence and Knowledge: These attributes affect the speed of point mining. The higher the combined Influence and Knowledge of your team, the more points you earn per mining cycle</li>
+                    <br />
+                    <li>Loyalty: Increases the duration of the mining cycle, allowing you to earn points for a longer period without needing to restart the process</li>
+                </ul>
+                <br />
+                <h3 className={styles.h3}>7. Strategies and tips</h3>
                 <br />
                 <ul className={styles.ul}>
                     <li>
                         Balanced team: choose characters with different skills
-                        and levels.
+                        and levels
                     </li>
                     <br />
                     <li>
                         Smart investments: decide which cards to upgrade and
-                        when to buy chests.
+                        when to buy chests
                     </li>
                     <br />
                     <li>
                         Play regularly: the more active you are, the faster you
-                        can accumulate points and progress in the game.
+                        can accumulate points and progress in the game
                     </li>
                 </ul>
             </div>
