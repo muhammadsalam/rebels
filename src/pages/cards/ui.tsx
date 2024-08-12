@@ -22,6 +22,7 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
             influence: number;
         }>
     >;
+    setModalCard: Dispatch<SetStateAction<Card | null>>
 }
 export const CardsPage: FC<CardProps> = ({
     activeChoosedCard = null,
@@ -31,14 +32,17 @@ export const CardsPage: FC<CardProps> = ({
     setActiveChoosedCard,
     setChoosedCards,
     setTeamSkills,
+    setModalCard,
     ...props
 }) => {
     const cards = useHeroStore((state) => state.cards);
     const choosedCards = tempCards || useHeroStore((state) => state.team);
 
     const handleCardClick = (card: Card) => {
+        // если выбранной карточки нет, то значит перешёл на страницу my_cards сразу.
+        // 
         if (activeChoosedCard === null) {
-            console.log("null");
+            setModalCard(card);
             return;
         }
 

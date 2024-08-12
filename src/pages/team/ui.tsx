@@ -33,6 +33,9 @@ export const TeamPage = () => {
     const [activeChoosedCard, setActiveChoosedCard] = useState<Card | null>(
         null
     );
+    const [modalCard, setModalCard] = useState<Card | null>(
+        null
+    );
     const [choosedCards, setChoosedCards] = useState(team);
     const balance = useUserStore.getState().balance;
 
@@ -41,11 +44,14 @@ export const TeamPage = () => {
 
     const handleCardClick = (card: Card) => {
         if (card.id !== 0) {
-            return setActiveChoosedCard(card);
+            setActiveChoosedCard(card);
+            setModalCard(card);
+            return;
         }
 
         setIsCardsGalleryActive(true);
         setActiveChoosedCard(card);
+
     };
 
     const hasChanges = () => {
@@ -111,6 +117,8 @@ export const TeamPage = () => {
 
         if (isUpdgraded) {
             setActiveChoosedCard(null);
+            setModalCard(null);
+            setChoosedCards(useHeroStore.getState().team);
         }
     };
 
@@ -150,7 +158,7 @@ export const TeamPage = () => {
                                 activeChoosedCard?.id === hero.id &&
                                 styles.card__active
                             )}
-                            key={hero.id + index}
+                            key={'main_cards_' + hero.id + index}
                             onClick={() => handleCardClick(hero)}
                         >
                             {hero.id === 0 ? (
@@ -251,10 +259,26 @@ export const TeamPage = () => {
                 </button>
             </div>
 
-            {activeChoosedCard && activeChoosedCard.id !== 0 && (
+            {isCardsGalleryActive && (
+                <CardsPage
+                    isActive={isCardsGalleryActive}
+                    setIsActive={setIsCardsGalleryActive}
+                    activeChoosedCard={activeChoosedCard}
+                    setModalCard={setModalCard}
+                    setActiveChoosedCard={setActiveChoosedCard}
+                    setChoosedCards={setChoosedCards}
+                    tempCards={activeChoosedCard ? choosedCards : undefined}
+                    setTeamSkills={setTeamSkills}
+                />
+            )}
+
+            {modalCard && modalCard.id !== 0 && (
                 <Modal
-                    onModalHide={() => setActiveChoosedCard(null)}
-                    heading={activeChoosedCard.name}
+                    onModalHide={() => {
+                        setActiveChoosedCard(null)
+                        setModalCard(null);
+                    }}
+                    heading={modalCard.name}
                 >
                     <div className={styles.modal_content}>
                         <div
@@ -269,18 +293,18 @@ export const TeamPage = () => {
                                     Knowledge
                                 </div>
                                 <span className={styles.skill_value}>
-                                    {activeChoosedCard.knowledge}
-                                    <span>
-                                        (+{activeChoosedCard.knowledge_step})
-                                    </span>
+                                    {modalCard.knowledge}
+                                    {modalCard.count > 1 && <span>
+                                        (+{modalCard.knowledge_step})
+                                    </span>}
                                 </span>
                             </div>
                             <div className={styles.line}>
                                 <div
                                     className={clsx(styles.line_inner)}
                                     style={{
-                                        width: `${((activeChoosedCard.knowledge +
-                                            activeChoosedCard.knowledge_step) /
+                                        width: `${((modalCard.count > 1 ? (modalCard.knowledge +
+                                            modalCard.knowledge_step) : modalCard.knowledge) /
                                             MAX_CARD_KNOWLEDGE) *
                                             100
                                             }%`,
@@ -300,18 +324,18 @@ export const TeamPage = () => {
                                     Loyalty
                                 </div>
                                 <span className={styles.skill_value}>
-                                    {activeChoosedCard.loyalty}
-                                    <span>
-                                        (+{activeChoosedCard.loyalty_step})
-                                    </span>
+                                    {modalCard.loyalty}
+                                    {modalCard.count > 1 && <span>
+                                        (+{modalCard.loyalty_step})
+                                    </span>}
                                 </span>
                             </div>
                             <div className={styles.line}>
                                 <div
                                     className={clsx(styles.line_inner)}
                                     style={{
-                                        width: `${((activeChoosedCard.loyalty +
-                                            activeChoosedCard.loyalty_step) /
+                                        width: `${((modalCard.count > 1 ? (modalCard.loyalty +
+                                            modalCard.loyalty_step) : modalCard.loyalty) /
                                             MAX_CARD_LOYALTY) *
                                             100
                                             }%`,
@@ -331,18 +355,18 @@ export const TeamPage = () => {
                                     Influence
                                 </div>
                                 <span className={styles.skill_value}>
-                                    {activeChoosedCard.influence}
-                                    <span>
-                                        (+{activeChoosedCard.influence_step})
-                                    </span>
+                                    {modalCard.influence}
+                                    {modalCard.count > 1 && <span>
+                                        (+{modalCard.influence_step})
+                                    </span>}
                                 </span>
                             </div>
                             <div className={styles.line}>
                                 <div
                                     className={clsx(styles.line_inner)}
                                     style={{
-                                        width: `${((activeChoosedCard.influence +
-                                            activeChoosedCard.influence_step) /
+                                        width: `${((modalCard.count > 1 ? (modalCard.influence +
+                                            modalCard.influence_step) : modalCard.influence) /
                                             MAX_CARD_INFLUENCE) *
                                             100
                                             }%`,
@@ -351,42 +375,30 @@ export const TeamPage = () => {
                             </div>
                         </div>
 
-                        {activeChoosedCard.count > 1 && <button
+                        {modalCard.count > 1 && <button
                             className={styles.upgradeButton}
-                            disabled={balance < activeChoosedCard.upgrade_price}
+                            disabled={balance < modalCard.upgrade_price}
                             onClick={() =>
-                                handleUpgradeCard(activeChoosedCard.id)
+                                handleUpgradeCard(modalCard.id)
                             }
                         >
                             <span>
                                 Upgrade { }
                                 {formatNumber(
-                                    activeChoosedCard.upgrade_price,
+                                    modalCard.upgrade_price,
                                     "ru-RU"
                                 )}
                             </span>
                             <CoinIcon className={styles.upgradeButton_icon} />
                         </button>}
-                        <button
+                        {activeChoosedCard !== null && <button
                             className={styles.changeButton}
                             onClick={() => setIsCardsGalleryActive(true)}
                         >
                             Change
-                        </button>
+                        </button>}
                     </div>
                 </Modal>
-            )}
-
-            {isCardsGalleryActive && (
-                <CardsPage
-                    isActive={isCardsGalleryActive}
-                    setIsActive={setIsCardsGalleryActive}
-                    activeChoosedCard={activeChoosedCard}
-                    setActiveChoosedCard={setActiveChoosedCard}
-                    setChoosedCards={setChoosedCards}
-                    tempCards={activeChoosedCard ? choosedCards : undefined}
-                    setTeamSkills={setTeamSkills}
-                />
             )}
         </div>
     );
