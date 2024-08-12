@@ -26,7 +26,6 @@ interface HeroState {
         influence: number;
     };
     saveTeam: (tempTeam: Card[]) => void;
-    upgradeCard: (hero_id: number) => Promise<Boolean>;
 }
 
 const useHeroStore = create<HeroState>((set, get) => ({
@@ -60,22 +59,7 @@ const useHeroStore = create<HeroState>((set, get) => ({
             console.log(e);
             alert(e);
         }
-    },
-    upgradeCard: async (hero_id) => {
-        try {
-            const { status, data } = await axios.post(`/user/heroes/upgrade?hero_id=${hero_id}`)
-
-            if (status === 200) {
-                console.log('upgraded', data);
-                return true
-            }
-
-            return false
-        } catch (e) {
-            console.log(e);
-            return false;
-        }
-    },
+    }
 }));
 
 export default useHeroStore;

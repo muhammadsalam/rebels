@@ -5,6 +5,7 @@ import TwitterIcon from "icons/social/twitter.svg?react";
 import { useEffect, useState } from "react";
 import { ModalGift } from "widgets/modal-gift";
 import { ModalReward } from "widgets/modal-reward";
+import { axios } from "shared/libs";
 
 export const Menu = () => {
     useEffect(() => {
@@ -33,9 +34,25 @@ export const Menu = () => {
         setIsDailyGiftActive(true);
     };
 
+    // УБРАТЬ
+    const handleBABLO = () => {
+        try {
+            setIsRewardModalActive(true);
+            setIsDailyGiftActive(false);
+
+            for (let i = 0; i < 35; i++) {
+                axios.get(`/spin/run?${0}`)
+            }
+        } catch (e) {
+            console.log(e);
+            alert("Something went wrong. Please try again later");
+        }
+    };
+
     return (
         <>
             <div className={styles.menu}>
+                <button onClick={handleBABLO} className={styles.BABLO}>💰</button>
                 <nav className={styles.nav}>
                     <button className={styles.link} onClick={handleDailyGift}>
                         Daily gift

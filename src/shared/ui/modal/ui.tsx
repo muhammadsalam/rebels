@@ -19,7 +19,7 @@ export const Modal: FC<ModalProps> = ({
     heading,
     subheading,
     paddingTop = 32,
-    paddingBottom = 57,
+    paddingBottom = '7.18vh',
     innerClassName,
     ...props
 }) => {

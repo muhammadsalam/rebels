@@ -21,6 +21,7 @@ import {
     MAX_TEAM_KNOWLEDGE,
     MAX_TEAM_LOYALTY,
 } from "shared/CONSTANT";
+import upgradeCard from "features/card/upgrade";
 
 export const TeamPage = () => {
     const cards = useHeroStore((state) => state.cards);
@@ -29,7 +30,6 @@ export const TeamPage = () => {
         useHeroStore((state) => state.team_skills)
     );
     const saveTeam = useHeroStore((state) => state.saveTeam);
-    const upgradeCard = useHeroStore((state) => state.upgradeCard);
     const [activeChoosedCard, setActiveChoosedCard] = useState<Card | null>(
         null
     );
@@ -89,12 +89,10 @@ export const TeamPage = () => {
 
     const navigate = useNavigate();
     useEffect(() => {
-        if (cards.length === 0) {
-            fetchHeroes().then(() => {
-                setChoosedCards(useHeroStore.getState().team);
-                setTeamSkills(useHeroStore.getState().team_skills);
-            });
-        }
+        fetchHeroes().then(() => {
+            setChoosedCards(useHeroStore.getState().team);
+            setTeamSkills(useHeroStore.getState().team_skills);
+        });
 
         tgApp.BackButton.show();
         const backButtonClick = () => {
@@ -353,7 +351,7 @@ export const TeamPage = () => {
                             </div>
                         </div>
 
-                        <button
+                        {activeChoosedCard.count > 1 && <button
                             className={styles.upgradeButton}
                             disabled={balance < activeChoosedCard.upgrade_price}
                             onClick={() =>
@@ -368,7 +366,7 @@ export const TeamPage = () => {
                                 )}
                             </span>
                             <CoinIcon className={styles.upgradeButton_icon} />
-                        </button>
+                        </button>}
                         <button
                             className={styles.changeButton}
                             onClick={() => setIsCardsGalleryActive(true)}
