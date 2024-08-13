@@ -1,20 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatNumber, tgApp } from "shared/libs";
 import useReferalStore from "entities/referal";
 import { Loading } from "widgets/loading";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
+import DoneIcon from 'icons/done.svg?react';
+import useUserStore from "entities/user";
 
 export const FriendsPage = () => {
-    const link = 'http://t.me/d_rebels_bot/app?startapp=1234567890';
     const refLink = useRef<HTMLTextAreaElement>(null);
 
     const { fetchReferals, ...refState } = useReferalStore((state) => state);
-
-    // const [isCopied, setIsCopied] = useState(false);
+    const uci_id = useUserStore((state) => state.uci_id);
+    const link = `http://t.me/d_rebels_bot/app?startapp=${uci_id}`;
+    const [isCopied, setIsCopied] = useState(false);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -59,9 +61,10 @@ export const FriendsPage = () => {
 
             refLink.current && refLink.current.blur();
 
+            setIsCopied(true);
         } catch (e) {
-            alert(e);
             console.log(e);
+            setIsCopied(false);
         }
     };
 
@@ -119,7 +122,12 @@ export const FriendsPage = () => {
                     ></div>
                 </div>
                 <div className={styles.progress_bottom}>
-                    <button className={styles.progress_button} onClick={handleCopy}>Copy</button>
+                    <button className={clsx(styles.progress_button, isCopied && styles.progress_button__done)} onClick={handleCopy}>
+                        <div className={styles.progress_button_text}>
+                            Copy
+                        </div>
+                        {isCopied && <DoneIcon className={styles.progress_button_icon} />}
+                    </button>
                     <span></span>
                     <a
                         target="_blank"

@@ -154,6 +154,7 @@
 }
 
 .progress_button {
+    height: 26px;
     padding: 5.5px 2px;
     font-size: 24px;
     font-weight: 700;
@@ -163,8 +164,41 @@
     background-color: transparent;
     color: var(--white);
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    position: relative;
+}
+
+.progress_button_text {
+    position: absolute;
+}
+
+.progress_button__done {
+    .progress_button_text {
+        scale: 0 1;
+        transform-origin: center;
+        transition: scale 0.2s ease-in-out;
+        overflow: hidden;
+    }
+}
+
+.progress_button_icon {
+    position: absolute;
+    clip-path: inset(0 100% 0 0);
+    animation: done 0.4s ease-in-out 0.2s forwards;
+
+    @keyframes done {
+        from {
+            clip-path: inset(0 100% 0 0);
+        }
+        50% {
+        }
+        to {
+            clip-path: inset(0 0 0 0);
+        }
+    }
 }
 
 .claim {
