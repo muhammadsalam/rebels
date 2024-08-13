@@ -10,6 +10,7 @@ import useChestsStore from "entities/chests";
 import useUserStore from "entities/user";
 import { ModalReward } from "widgets/modal-reward";
 import useHeroStore, { Card } from "entities/heroes";
+import useGameStatsStore from "entities/gameStats";
 
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
@@ -52,11 +53,12 @@ export const ShopPage = () => {
             return alert("Failed to buy chest. Please try again later.");
         }
 
-        useUserStore.setState({ balance: data.balance });
+        useUserStore.setState({ balance: data.balance, level: data.level });
         useHeroStore.setState({
             cards: data.heroes,
             team: data.heroes.filter((item: Card) => item.changed),
         });
+        useGameStatsStore.setState({ energy_update: data.energy_update, max_energy: data.max_energy })
 
         setReward(data.reward[0]);
     };
