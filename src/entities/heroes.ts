@@ -1,4 +1,3 @@
-import { axios } from 'shared/libs';
 import { create } from 'zustand';
 
 export type Card = {
@@ -25,10 +24,9 @@ interface HeroState {
         loyalty: number;
         influence: number;
     };
-    saveTeam: (tempTeam: Card[]) => void;
 }
 
-const useHeroStore = create<HeroState>((set, get) => ({
+const useHeroStore = create<HeroState>(() => ({
     cards: [],
     team: [],
     team_skills: {
@@ -36,30 +34,6 @@ const useHeroStore = create<HeroState>((set, get) => ({
         loyalty: 0,
         influence: 0
     },
-    saveTeam: async (tempTeam: Card[]) => {
-        try {
-            const prevTeam = get().team;
-
-            const payload = tempTeam.reduce<{ hero_id: number, new_hero_id: number }[]>((newTeam, item, index) => {
-                if (item.id !== prevTeam[index]?.id) {
-                    newTeam.push({
-                        hero_id: prevTeam[index]?.id as number, new_hero_id: item.id
-                    });
-                }
-
-                return newTeam;
-            }, []);
-
-            const { status, data } = await axios.post('/user/heroes/change', payload);
-
-            if (status === 200) {
-                set({ team: data.filter((item: Card) => item.changed), cards: data });
-            }
-        } catch (e) {
-            console.log(e);
-            alert(e);
-        }
-    }
 }));
 
 export default useHeroStore;

@@ -22,6 +22,7 @@ import {
     MAX_TEAM_LOYALTY,
 } from "shared/CONSTANT";
 import upgradeCard from "features/card/upgrade";
+import saveTeam from "features/team/save";
 
 export const TeamPage = () => {
     const cards = useHeroStore((state) => state.cards);
@@ -29,7 +30,6 @@ export const TeamPage = () => {
     const [team_skills, setTeamSkills] = useState(
         useHeroStore((state) => state.team_skills)
     );
-    const saveTeam = useHeroStore((state) => state.saveTeam);
     const [activeChoosedCard, setActiveChoosedCard] = useState<Card | null>(
         null
     );
@@ -121,6 +121,11 @@ export const TeamPage = () => {
             setChoosedCards(useHeroStore.getState().team);
         }
     };
+
+    const handleChange = () => {
+        setIsCardsGalleryActive(true);
+        setModalCard(null);
+    }
 
     if (!cards.length) return <Loading />;
 
@@ -393,7 +398,7 @@ export const TeamPage = () => {
                         </button>}
                         {activeChoosedCard !== null && <button
                             className={styles.changeButton}
-                            onClick={() => setIsCardsGalleryActive(true)}
+                            onClick={handleChange}
                         >
                             Change
                         </button>}
