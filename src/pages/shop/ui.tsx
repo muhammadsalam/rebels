@@ -14,6 +14,7 @@ import useHeroStore, { Card } from "entities/heroes";
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
     const balance = useUserStore((state) => state.balance);
+    const level = useUserStore((state) => state.level);
     const fetchChest = useChestsStore((state) => state.fetchChests);
 
     const navigate = useNavigate();
@@ -95,19 +96,23 @@ export const ShopPage = () => {
                             <p
                                 className={clsx(
                                     styles.chest_price,
-                                    balance < chest.price &&
-                                        styles.chest_price__disabled
+                                    (balance < chest.price) &&
+                                    styles.chest_price__disabled,
+                                    level < chest.required_level && styles.chest_price__unavailable
                                 )}
                             >
-                                <CoinIcon className={styles.chest_coin} />
-                                {formatNumber(chest.price, "ru-RU")}
+                                {level >= chest.required_level ? <>
+
+                                    <CoinIcon className={styles.chest_coin} />
+                                    {formatNumber(chest.price, "ru-RU")}
+                                </> : `available from level ${chest.required_level}`}
                             </p>
                         </div>
 
                         <button
                             className={styles.chest_button}
                             onClick={() => handleBuyChest(chest.id)}
-                            disabled={balance < chest.price}
+                            disabled={balance < chest.price || level < chest.required_level}
                         >
                             Buy
                         </button>

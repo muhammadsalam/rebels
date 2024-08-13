@@ -5,11 +5,11 @@ type Rarity = "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary";
 
 type Chest = {
     id: number,
-    level: number,
     price: number,
     count: number,
     rarity: Rarity,
     garanted: Rarity | null,
+    required_level: number,
     reward: [
         {
             percent: number,
@@ -29,12 +29,14 @@ const useChestsStore = create<ChestsState>(() => ({
         try {
             const { status, data } = await axios.get('/shop/boxes');
 
-            if (status === 200) {
-                useChestsStore.setState({ chests: data });
+            if (status !== 200) {
+                return alert('Something went wrong. Please try again later');
             }
 
+            useChestsStore.setState({ chests: data });
+
         } catch (e) {
-            console.error(e);
+            console.error('Something went wrong:', e);
         }
     }
 }));

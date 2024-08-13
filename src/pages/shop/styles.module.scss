@@ -94,7 +94,7 @@
 .chest_title {
     font-size: 20px;
     font-weight: 400;
-    line-height: 20.9px;
+    line-height: 21px;
     color: var(--white);
 }
 
@@ -110,7 +110,7 @@
     color: var(--white);
     font-size: 20px;
     font-weight: 400;
-    line-height: 20.9px;
+    line-height: 21px;
 }
 
 .chest_price__disabled {
@@ -119,6 +119,13 @@
     path {
         fill: var(--gray);
     }
+}
+
+.chest_price__unavailable {
+    color: var(--gray);
+    font-size: 16px;
+    line-height: 17px;
+    padding-bottom: 4px;
 }
 
 .chest__available .chest_price {
@@ -155,7 +162,7 @@
     color: var(--orange-2);
     font-size: 20px;
     font-weight: 400;
-    line-height: 20.9px;
+    line-height: 21px;
 
     &:disabled {
         color: var(--gray);
