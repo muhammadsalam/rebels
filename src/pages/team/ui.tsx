@@ -284,6 +284,7 @@ export const TeamPage = () => {
                         setModalCard(null);
                     }}
                     heading={modalCard.name}
+                    subheading={`level ${modalCard.level}`}
                 >
                     <div className={styles.modal_content}>
                         <div
