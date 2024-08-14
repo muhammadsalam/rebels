@@ -380,6 +380,7 @@ export const TeamPage = () => {
                             </div>
                         </div>
 
+                        {modalCard.count < 2 && activeChoosedCard === null && <div></div>}
                         {modalCard.count > 1 && <button
                             className={styles.upgradeButton}
                             disabled={balance < modalCard.upgrade_price}

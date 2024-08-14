@@ -102,6 +102,14 @@
     }
 }
 
+.modal_content .skill {
+    padding: 16px;
+
+    &:last-of-type {
+        margin-bottom: 3.72vh;
+    }
+}
+
 .skill_top {
     display: flex;
     justify-content: space-between;
@@ -304,7 +312,7 @@
 }
 
 .modal_content {
-    margin-top: 32px;
+    margin-top: 37px;
 }
 
 .upgradeButton {
@@ -320,7 +328,6 @@
     border: 0;
     border-radius: 93px;
     width: 100%;
-    margin-top: 3.72vh;
     font-size: 24px;
     font-weight: 700;
     line-height: 25px;
