@@ -2,13 +2,32 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
 import { useEffect, useRef, useState } from "react";
-import { formatNumber, tgApp } from "shared/libs";
+import { axios, formatNumber, tgApp } from "shared/libs";
 import useReferalStore from "entities/referal";
 import { Loading } from "widgets/loading";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import DoneIcon from 'icons/done.svg?react';
 import useUserStore from "entities/user";
+
+const formatTime = (timeInSeconds: number) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${hours}h ${minutes}m ${seconds}s`;
+};
+
+function calculateTimeToFill({ claim_time }: any) {
+    const current_time = Date.now() / 1000; // Текущее время в секундах
+
+    const time_to_fill = claim_time - current_time;
+
+    if (time_to_fill <= 0) {
+        return false;
+    }
+
+    return formatTime(time_to_fill);
+}
 
 export const FriendsPage = () => {
     const refLink = useRef<HTMLTextAreaElement>(null);
@@ -33,8 +52,6 @@ export const FriendsPage = () => {
             tgApp.BackButton.offClick(backButtonClick);
         };
     }, []);
-
-    if (refState.level === "") return <Loading />;
 
     const handleCopy = () => {
         try {
@@ -67,6 +84,39 @@ export const FriendsPage = () => {
             setIsCopied(false);
         }
     };
+
+    const claim_time = useReferalStore((state) => state.claim_time);
+    const [timeToFill, setTimeToFill] = useState("");
+
+    useEffect(() => {
+        const updateTimeToFill = () => {
+            const time = calculateTimeToFill({ claim_time });
+
+            setTimeToFill(time ? time : '');
+        };
+
+        updateTimeToFill();
+        const interval = setInterval(updateTimeToFill, 1000);
+
+        return () => clearInterval(interval);
+    }, [claim_time])
+
+    if (refState.level === "") return <Loading />;
+
+    const handleClaim = async () => {
+        try {
+            const { status, data } = await axios.post('/user/referal/claim');
+
+            if (status !== 200) {
+                throw new Error('something went wrong');
+            }
+
+            console.log(data);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -147,24 +197,24 @@ export const FriendsPage = () => {
                         <CoinIcon width={24} height={24} />
                         {formatNumber(refState.balance, "ru-RU")}
                     </div>
-                    <div className={styles.claim_time}>3h 12m</div>
+                    {timeToFill && <div className={styles.claim_time}>{timeToFill}</div>}
                 </div>
                 <div className={styles.claim_row}>
                     <p className={styles.progress_top_ph}>referral earnings</p>
-                    <p className={styles.progress_top_ph}>claim in </p>
+                    {timeToFill && <p className={styles.progress_top_ph}>claim in </p>}
                 </div>
                 <div className={styles.claim_line}>
                     <div
                         className={styles.claim_line_inner}
                         style={{
-                            width: `${(4 / refState.next_level) * 100}%`,
+                            width: `${Math.min(((((+new Date() / 1000) - (refState.claim_time - 24 * 60 * 60)) / (24 * 60 * 60)) * 100), 100)}%`,
                         }}
                     ></div>
                 </div>
             </div>
 
-            <button className={styles.claim_button} disabled={true}>
-                Wait
+            <button onClick={handleClaim} className={styles.claim_button} disabled={!!timeToFill}>
+                {timeToFill ? "Wait" : "Claim"}
             </button>
         </div>
     );

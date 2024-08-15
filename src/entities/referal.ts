@@ -15,6 +15,7 @@ interface ReferalState {
     ref_percent: number,
     balance: number,
     claim_time: number,
+    started_time: number,
     info: ReferalInfoCard[],
     fetchReferals: () => void,
     fetchReferalsInfo: () => void
@@ -28,6 +29,7 @@ const useReferalStore = create<ReferalState>((set, _) => ({
     ref_percent: 0,
     balance: 0,
     claim_time: 0,
+    started_time: 0,
     fetchReferals: async () => {
         const { status, data } = await axios.get('/user/referal/stats');
 
