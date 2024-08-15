@@ -59,6 +59,16 @@ export const ShopPage = () => {
             team: data.heroes.filter((item: Card) => item.changed),
         });
         useGameStatsStore.setState({ energy_update: data.energy_update, max_energy: data.max_energy })
+        const new_chests = chests.map(item => {
+            if (item.id === id) {
+                return {
+                    ...item,
+                    price: Math.round(item.price * 1.2)
+                }
+            }
+            return item
+        });
+        useChestsStore.setState({ chests: new_chests });
 
         setReward(data.reward[0]);
     };
