@@ -52,9 +52,10 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
     };
 
     const handleClick = (e: TouchEvent<HTMLDivElement>) => {
+        let localTaps = taps;
         Array.from(e.changedTouches).forEach((touch) => {
             const isCritical =
-                seededRandom(seed + taps + 1) < critical_chance / 100;
+                seededRandom(seed + localTaps + 1) < critical_chance / 100;
             const appliedDamage = isCritical ? damage * 2 : damage;
 
             const condition = clickCharacter(appliedDamage, isCritical);
@@ -90,6 +91,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
             }, 100);
 
             resetClaimTimeout();
+            localTaps++;
         });
     };
 

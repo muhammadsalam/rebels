@@ -26,7 +26,7 @@ export default async function () {
 
         if (status !== 200) return alert('Something is wrong, try again later.')
 
-        if (data.is_new_level || true) {
+        if (data.is_new_level) {
             const game_stats = {
                 damage: data.user.damage,
                 critical_chance: data.user.critical_chance,
@@ -42,5 +42,6 @@ export default async function () {
 
     } catch (error) {
         console.error('Error sending taps:', error);
+        alert('Something is wrong, try again later.' + error);
     }
 }
