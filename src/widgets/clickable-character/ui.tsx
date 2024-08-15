@@ -93,10 +93,6 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
         });
     };
 
-    useEffect(() => {
-        console.log("image changed");
-    }, [useVillainStore((state) => state.image)]);
-
     const wasted = useVillainStore((state) => state.wasted);
 
     const [play] = useSound(wastedSound);
