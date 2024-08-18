@@ -7,6 +7,8 @@ export type Quest = {
     reward: number;
     url: string;
     status: 'Start' | 'Check' | 'Claim' | 'Done';
+    attemps: number;
+    scenario: 1 | 2 | 3;
 }
 
 interface HeroState {
@@ -14,7 +16,7 @@ interface HeroState {
     fetchQuests: () => void;
 }
 
-const useQuestsStore = create<HeroState>((set, _) => ({
+const useQuestsStore = create<HeroState>((set, get) => ({
     quests: [],
     fetchQuests: async () => {
         try {
@@ -24,8 +26,23 @@ const useQuestsStore = create<HeroState>((set, _) => ({
                 return alert('Something went wrong. Please try again later');
             }
 
-            set({ quests: data })
-            console.log(data);
+            set({
+                quests: data.map((item: Quest) => {
+                    let scenario: 1 | 2 | 3;
+                    const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+                    if (randomNumber <= 20) {
+                        scenario = 1;
+                    } else if (randomNumber <= 60) {
+                        scenario = 2;
+                    } else {
+                        scenario = 3;
+                    }
+
+                    return { ...item, attemps: 1, scenario }
+                })
+            })
+            console.log(get().quests);
         } catch (e) {
             console.error(e);
         }

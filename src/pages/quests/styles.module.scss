@@ -42,6 +42,16 @@
         color: var(--white);
     }
 
+    &__checking .quest_button {
+        color: var(--gray);
+        pointer-events: none;
+    }
+
+    &__failed .quest_button {
+        color: var(--gray);
+        pointer-events: none;
+    }
+
     &__claim .quest_button {
         color: var(--green);
     }
@@ -78,4 +88,42 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 21px;
+}
+
+.loader {
+    display: inline-flex;
+    gap: 3px;
+    margin-left: 6.5px;
+
+    @keyframes loaderDot {
+        0% {
+            opacity: 0.5;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0.5;
+        }
+    }
+
+    span {
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        opacity: 0.5;
+        background-color: var(--gray);
+
+        &:nth-child(1) {
+            animation: loaderDot 1s infinite linear;
+        }
+
+        &:nth-child(2) {
+            animation: loaderDot 1s infinite linear 0.33s;
+        }
+
+        &:nth-child(3) {
+            animation: loaderDot 1s infinite linear 0.66s;
+        }
+    }
 }

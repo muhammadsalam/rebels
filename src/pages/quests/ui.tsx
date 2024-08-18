@@ -2,7 +2,7 @@ import clsx from "clsx";
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { axios, formatNumber, tgApp } from "shared/libs";
 import useQuestsStore, { Quest } from "entities/quests";
 import useUserStore from "entities/user";
@@ -10,6 +10,9 @@ import useUserStore from "entities/user";
 export const QuestsPage = () => {
     const quests = useQuestsStore((state) => state.quests);
     const fetchquests = useQuestsStore((state) => state.fetchQuests);
+    const [tempStatus, setTempStatus] = useState<Record<number, string>>({
+        1: "Checking"
+    });
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -29,7 +32,69 @@ export const QuestsPage = () => {
 
     const handleQuestClick = async (e: any, quest: Quest) => {
         try {
-            if (quest.status !== "Start") e.preventDefault();
+            // если не показано старт, то пропускаем
+            if (quest.status !== "Start" && tempStatus[quest.id] !== "Start") e.preventDefault();
+
+            if (quest.status === 'Check') {
+                if (tempStatus[quest.id] === 'Start') {
+                    // Показываем статус "Check"
+                    return setTempStatus((prev) => ({ ...prev, [quest.id]: "Check" }));
+                }
+
+                // Показываем статус "Checking" на 3 секунды
+                setTempStatus((prev) => ({ ...prev, [quest.id]: "Checking" }));
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+
+
+                switch (quest.scenario) {
+                    // при первом сценарии принимаем сразу
+                    case 1:
+                        break;
+                    case 2:
+                        if (quest.attemps === 1) {
+                            setTempStatus((prev) => ({
+                                ...prev,
+                                [quest.id]: "Failed"
+                            }));
+                            await new Promise((resolve) => setTimeout(resolve, 3000));
+                            setTempStatus((prev) => ({ ...prev, [quest.id]: "Start" }));
+
+                            return useQuestsStore.setState({
+                                quests: quests.map((item) =>
+                                    item.id === quest.id
+                                        ? { ...item, attemps: 2 }
+                                        : item
+                                ),
+                            });
+                        }
+                        break;
+                    case 3:
+                        if (quest.attemps <= 2) {
+                            setTempStatus((prev) => ({
+                                ...prev,
+                                [quest.id]: "Failed"
+                            }));
+                            await new Promise((resolve) => setTimeout(resolve, 3000));
+                            setTempStatus((prev) => ({ ...prev, [quest.id]: "Start" }));
+
+                            return useQuestsStore.setState({
+                                quests: quests.map((item) =>
+                                    item.id === quest.id
+                                        ? { ...item, attemps: quest.attemps + 1 }
+                                        : item
+                                ),
+                            });
+                        }
+                        break;
+
+                }
+            }
+
+            // удаление статуса "Checking" и "Failed"
+            setTempStatus((prev) => {
+                const { [quest.id]: _, ...newState } = prev;
+                return newState;
+            });
 
             const { status, data } = await axios.post(
                 `task/${quest.status.toLowerCase()}`,
@@ -55,9 +120,8 @@ export const QuestsPage = () => {
                     ),
                 });
             }
-        } catch (e) {
-            console.log(e);
-            alert("Something went wrong. Please try again later");
+        } catch (e: any) {
+            alert(`Something went wrong. Please try again later. ${e.message}`);
         }
     };
 
@@ -74,7 +138,7 @@ export const QuestsPage = () => {
                         className={clsx(
                             styles.quest,
                             styles[
-                            `quest__${quest.status.toLowerCase()}`
+                            `quest__${(tempStatus[quest.id] || quest.status).toLowerCase()}`
                             ]
                         )}
                     >
@@ -91,7 +155,16 @@ export const QuestsPage = () => {
                             onClick={(e) => handleQuestClick(e, quest)}
                             className={styles.quest_button}
                         >
-                            {quest.status}
+                            {
+                                tempStatus[quest.id] === "Checking" ? <>
+                                    Checking
+                                    <div className={styles.loader}>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </> : tempStatus[quest.id] || quest.status
+                            }
                         </a>
                     </div>
                 ))}
