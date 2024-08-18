@@ -6,13 +6,12 @@ import { useEffect, useState } from "react";
 import { axios, formatNumber, tgApp } from "shared/libs";
 import useQuestsStore, { Quest } from "entities/quests";
 import useUserStore from "entities/user";
+import { Loading } from "widgets/loading";
 
 export const QuestsPage = () => {
     const quests = useQuestsStore((state) => state.quests);
     const fetchquests = useQuestsStore((state) => state.fetchQuests);
-    const [tempStatus, setTempStatus] = useState<Record<number, string>>({
-        1: "Checking"
-    });
+    const [tempStatus, setTempStatus] = useState<Record<number, string>>({});
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -124,6 +123,8 @@ export const QuestsPage = () => {
             alert(`Something went wrong. Please try again later. ${e.message}`);
         }
     };
+
+    if (!quests.length) return <Loading />
 
     return (
         <div className={styles.container}>
