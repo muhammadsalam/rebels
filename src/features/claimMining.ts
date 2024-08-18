@@ -10,7 +10,7 @@ export default async function () {
             throw new Error('status code: ' + status)
         }
 
-        const balance = useUserStore.getState().balance;
+        // const balance = useUserStore.getState().balance;
 
         useGameStatsStore.setState({
             mining_balance: data.mining_balance,
@@ -19,7 +19,7 @@ export default async function () {
             mining_claimed_at: data.mining_claimed_at,
         })
 
-        useUserStore.setState({ balance: balance + data.mining_max_points });
+        useUserStore.setState({ balance: data.balance });
     } catch (error) {
         alert('Failed to claim mining. Please try again later')
         console.error('Failed to claim mining:', error);
