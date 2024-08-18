@@ -64,7 +64,7 @@ export const ShopPage = () => {
                 if (item.id === id) {
                     return {
                         ...item,
-                        price: Math.round(item.price * 1.2)
+                        price: data.new_price
                     }
                 }
                 return item
