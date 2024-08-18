@@ -17,6 +17,7 @@ import { FriendsPage } from "pages/friends";
 import { FriendsInfoPage } from "pages/friends-info";
 import { AboutPage } from "pages/about";
 import { FAQPage } from "pages/faq";
+import useOrientationLock from "shared/libs/use-orientation-lock";
 
 function App() {
     const fetchToken = useUserStore((state) => state.fetchToken);
@@ -28,6 +29,8 @@ function App() {
         PixelOperator: true,
         PixelOperatorMono: true,
     });
+
+    useOrientationLock();
 
     useEffect(() => {
         tgApp.ready();
