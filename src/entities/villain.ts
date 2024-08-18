@@ -11,6 +11,8 @@ interface VillainState {
     level: number;
     current_level: number;
     wasted: boolean;
+    description: string;
+    current_description: string;
 }
 
 const useVillainStore = create<VillainState>(() => ({
@@ -23,6 +25,8 @@ const useVillainStore = create<VillainState>(() => ({
     current_image: '',
     level: 0,
     current_level: 0,
+    description: '',
+    current_description: '',
     wasted: false,
 }));
 

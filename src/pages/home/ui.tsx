@@ -26,12 +26,14 @@ export const HomePage = () => {
     const wasted = useVillainStore((state) => state.wasted);
     const name = useVillainStore(state => state.name);
     const level = useVillainStore(state => state.level);
+    const description = useVillainStore(state => state.description);
 
     const handleNextVillainClick = () => {
         useVillainStore.setState({
             current_image: person_image,
             current_name: name,
             current_level: level,
+            current_description: description,
             wasted: false,
         });
     };
