@@ -207,7 +207,7 @@ export const FriendsPage = () => {
                     <div
                         className={styles.claim_line_inner}
                         style={{
-                            width: `${Math.min(((((+new Date() / 1000) - (refState.claim_time - 24 * 60 * 60)) / (24 * 60 * 60)) * 100), 100)}%`,
+                            width: `${Math.min(((((+new Date() / 1000) - (refState.claim_time - 12 * 60 * 60)) / (12 * 60 * 60)) * 100), 100)}%`,
                         }}
                     ></div>
                 </div>
