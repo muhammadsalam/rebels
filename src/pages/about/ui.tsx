@@ -30,9 +30,9 @@ export const AboutPage = () => {
                     master at managing your team. Study and enjoy the game!
                 </p>
                 <br />
-                <h3 className={styles.h3}>1. Getting Started</h3>
+                <h3 className={styles.h3}>1. Getting started</h3>
                 <br />
-                Characters and Cards
+                Characters and cards
                 <br />
                 <br />
                 <ul className={styles.ul}>
