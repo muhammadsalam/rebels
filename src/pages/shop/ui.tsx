@@ -45,32 +45,39 @@ export const ShopPage = () => {
     } | null>(null);
 
     const handleBuyChest = async (id: number) => {
-        setIsRewardModalActive(true);
-        const { status, data } = await axios.post(`/shop/buy/box/${id}`);
+        try {
+            setIsRewardModalActive(true);
+            const { status, data } = await axios.post(`/shop/buy/box/${id}`);
 
-        if (status !== 200) {
-            setIsRewardModalActive(false);
-            return alert("Failed to buy chest. Please try again later.");
-        }
-
-        useUserStore.setState({ balance: data.balance, level: data.level });
-        useHeroStore.setState({
-            cards: data.heroes,
-            team: data.heroes.filter((item: Card) => item.changed),
-        });
-        useGameStatsStore.setState({ energy_update: data.energy_update, max_energy: data.max_energy })
-        const new_chests = chests.map(item => {
-            if (item.id === id) {
-                return {
-                    ...item,
-                    price: Math.round(item.price * 1.2)
-                }
+            if (status !== 200) {
+                setIsRewardModalActive(false);
+                throw new Error("Failed to buy chest. Please try again later.");
             }
-            return item
-        });
-        useChestsStore.setState({ chests: new_chests });
 
-        setReward(data.reward[0]);
+            useUserStore.setState({ balance: data.balance, level: data.level });
+            useHeroStore.setState({
+                cards: data.heroes,
+                team: data.heroes.filter((item: Card) => item.changed),
+            });
+            useGameStatsStore.setState({ energy_update: data.energy_update, max_energy: data.max_energy })
+            const new_chests = chests.map(item => {
+                if (item.id === id) {
+                    return {
+                        ...item,
+                        price: Math.round(item.price * 1.2)
+                    }
+                }
+                return item
+            });
+            useChestsStore.setState({ chests: new_chests });
+
+            setReward(data.reward[0]);
+
+        } catch (e: any) {
+            setIsRewardModalActive(false);
+            console.log(e);
+            alert(`Failed to buy chest. Please try again later. ${e.message}`);
+        }
     };
 
     const handleClaimChest = () => {
