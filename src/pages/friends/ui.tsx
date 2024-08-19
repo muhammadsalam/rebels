@@ -111,9 +111,11 @@ export const FriendsPage = () => {
                 throw new Error('something went wrong');
             }
 
-            console.log(data);
+            useUserStore.setState({ balance: data.balance });
+            useReferalStore.setState({ claim_time: data.referral_balance_claim_at });
 
-        } catch (error) {
+        } catch (error: any) {
+            alert(`Something went wrong. Please try again later. ${error.message}`);
             console.log(error);
         }
     }
