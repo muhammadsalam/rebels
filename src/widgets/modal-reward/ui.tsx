@@ -7,9 +7,9 @@ import clsx from "clsx";
 
 type Reward =
     | {
-          name: string;
-          rarity: string;
-      }
+        name: string;
+        rarity: string;
+    }
     | number;
 
 export const ModalReward: FC<{
@@ -22,8 +22,8 @@ export const ModalReward: FC<{
                 className={clsx(
                     styles.reward_info,
                     reward &&
-                        typeof reward !== "number" &&
-                        styles[`reward_info__${reward.rarity.toLowerCase()}`]
+                    typeof reward !== "number" &&
+                    styles[`reward_info__${reward.rarity.toLowerCase()}`]
                 )}
             >
                 {reward ? (
@@ -45,7 +45,7 @@ export const ModalReward: FC<{
                         </>
                     )
                 ) : (
-                    <strong className={styles.reward_title}>Загрузка...</strong>
+                    <strong className={styles.reward_title}>Loading...</strong>
                 )}
             </div>
             <button
