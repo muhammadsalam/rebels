@@ -67,12 +67,14 @@ export const Menu = () => {
                 <div className={styles.links}>
                     <a
                         className={styles.link__icon}
+                        target="_blank"
                         href="https://t.me/rebelscommunity"
                     >
                         <TelegramIcon />
                     </a>
                     <a
                         className={styles.link__icon}
+                        target="_blank"
                         href="https://x.com/gameoftherebels"
                     >
                         <TwitterIcon />
