@@ -34,6 +34,7 @@ function App() {
 
     useEffect(() => {
         tgApp.ready();
+        tgApp.enableClosingConfirmation();
         tgApp.setHeaderColor("#0A0A0A");
         tgApp.setBackgroundColor("#0A0A0A");
         tgApp.expand();
