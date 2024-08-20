@@ -13,11 +13,13 @@ export type Quest = {
 
 interface HeroState {
     quests: Quest[];
+    isProcessing: boolean;
     fetchQuests: () => void;
 }
 
 const useQuestsStore = create<HeroState>((set, get) => ({
     quests: [],
+    isProcessing: false,
     fetchQuests: async () => {
         try {
             const { status, data } = await axios.get('/task');

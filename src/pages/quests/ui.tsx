@@ -28,14 +28,21 @@ export const QuestsPage = () => {
             tgApp.BackButton.offClick(backButtonClick);
         };
     }, []);
+    const isProcessing = useQuestsStore(state => state.isProcessing);
 
     const handleQuestClick = async (e: any, quest: Quest) => {
         try {
+            console.log(isProcessing);
+            if (isProcessing) return e.preventDefault();
+
+            useQuestsStore.setState({ isProcessing: true })
+
             // если не показано старт, то пропускаем
             if (quest.status !== "Start" && tempStatus[quest.id] !== "Start") e.preventDefault();
 
             if (quest.status === 'Check') {
                 if (tempStatus[quest.id] === 'Start') {
+                    useQuestsStore.setState({ isProcessing: false })
                     // Показываем статус "Check"
                     return setTempStatus((prev) => ({ ...prev, [quest.id]: "Check" }));
                 }
@@ -57,6 +64,7 @@ export const QuestsPage = () => {
                             }));
                             await new Promise((resolve) => setTimeout(resolve, 3000));
                             setTempStatus((prev) => ({ ...prev, [quest.id]: "Start" }));
+                            useQuestsStore.setState({ isProcessing: false })
 
                             return useQuestsStore.setState({
                                 quests: quests.map((item) =>
@@ -75,7 +83,7 @@ export const QuestsPage = () => {
                             }));
                             await new Promise((resolve) => setTimeout(resolve, 3000));
                             setTempStatus((prev) => ({ ...prev, [quest.id]: "Start" }));
-
+                            useQuestsStore.setState({ isProcessing: false })
                             return useQuestsStore.setState({
                                 quests: quests.map((item) =>
                                     item.id === quest.id
@@ -90,7 +98,7 @@ export const QuestsPage = () => {
             }
 
             // удаление статуса "Checking" и "Failed"
-            setTempStatus((prev) => {
+            await setTempStatus((prev) => {
                 const { [quest.id]: _, ...newState } = prev;
                 return newState;
             });
@@ -119,6 +127,9 @@ export const QuestsPage = () => {
                     ),
                 });
             }
+
+            useQuestsStore.setState({ isProcessing: false })
+
         } catch (e: any) {
             alert(`Something went wrong. Please try again later. ${e.message}`);
         }
