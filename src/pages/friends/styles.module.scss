@@ -173,13 +173,16 @@
 
 .progress_button_text {
     position: absolute;
+    scale: 1 1;
+    transform-origin: center;
+    transition: scale 0.2s ease-in-out;
 }
 
 .progress_button__done {
+    pointer-events: none;
+
     .progress_button_text {
         scale: 0 1;
-        transform-origin: center;
-        transition: scale 0.2s ease-in-out;
         overflow: hidden;
     }
 }

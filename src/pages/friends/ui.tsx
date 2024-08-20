@@ -79,6 +79,9 @@ export const FriendsPage = () => {
             refLink.current && refLink.current.blur();
 
             setIsCopied(true);
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 2000);
         } catch (e) {
             console.log(e);
             setIsCopied(false);
