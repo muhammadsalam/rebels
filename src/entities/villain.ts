@@ -13,6 +13,7 @@ interface VillainState {
     wasted: boolean;
     description: string;
     current_description: string;
+    new_level_reward: number | null;
 }
 
 const useVillainStore = create<VillainState>(() => ({
@@ -28,6 +29,7 @@ const useVillainStore = create<VillainState>(() => ({
     description: '',
     current_description: '',
     wasted: false,
+    new_level_reward: null,
 }));
 
 export default useVillainStore;

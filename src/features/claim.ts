@@ -36,8 +36,7 @@ export default async function () {
 
             useUserStore.setState({ balance: data.user.balance })
             useGameStatsStore.setState(game_stats)
-            // изменить image потом
-            useVillainStore.setState({ ...data.villain, image: data.villain.photo });
+            useVillainStore.setState({ ...data.villain, image: data.villain.photo, new_level_reward: data.new_level_reward });
         }
 
     } catch (error) {

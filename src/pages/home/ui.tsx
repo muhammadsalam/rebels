@@ -35,6 +35,7 @@ export const HomePage = () => {
             current_level: level,
             current_description: description,
             wasted: false,
+            new_level_reward: null,
         });
     };
 

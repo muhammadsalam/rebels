@@ -13,4 +13,8 @@
 .value {
     font-size: 30px;
     font-weight: 700;
+
+    &.reward {
+        color: #667c12;
+    }
 }
