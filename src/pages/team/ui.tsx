@@ -23,6 +23,7 @@ import {
 } from "shared/CONSTANT";
 import upgradeCard from "features/card/upgrade";
 import saveTeam from "features/team/save";
+import { Upgraded } from "widgets/upgraded";
 
 export const TeamPage = () => {
     const cards = useHeroStore((state) => state.cards);
@@ -41,6 +42,7 @@ export const TeamPage = () => {
 
     const [isCardsGalleryActive, setIsCardsGalleryActive] = useState(false);
     // const handleCardsGalleryPage = () => {};
+    const [upgradedCard, setUpgradedCard] = useState<null | { name: string, level: number }>(null);
 
     const handleCardClick = (card: Card) => {
         if (card.id !== 0) {
@@ -89,7 +91,9 @@ export const TeamPage = () => {
                 },
             });
 
-            saveTeam(choosedCards);
+            saveTeam(choosedCards).then(() => {
+                // setChoosedCards(useHeroStore.getState().team);
+            });
         }
     };
 
@@ -113,12 +117,17 @@ export const TeamPage = () => {
     }, []);
 
     const handleUpgradeCard = async (hero_id: number) => {
-        const isUpdgraded = await upgradeCard(hero_id);
+        const upgradedCard = await upgradeCard(hero_id);
 
-        if (isUpdgraded) {
+        if (upgradedCard) {
             setActiveChoosedCard(null);
             setModalCard(null);
             setChoosedCards(useHeroStore.getState().team);
+
+            setUpgradedCard({ name: upgradedCard.name, level: upgradedCard.level });
+            setTimeout(() => {
+                setUpgradedCard(null);
+            }, 2000);
         }
     };
 
@@ -263,6 +272,13 @@ export const TeamPage = () => {
                     Save
                 </button>
             </div>
+
+            {upgradedCard && (
+                <Upgraded
+                    onModalHide={() => setUpgradedCard(null)}
+                    info={upgradedCard}
+                />
+            )}
 
             {isCardsGalleryActive && (
                 <CardsPage

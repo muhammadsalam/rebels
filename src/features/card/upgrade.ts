@@ -9,7 +9,7 @@ export default async function (hero_id: number) {
 
         if (status !== 200) {
             alert('Something went wrong. Please try again later!');
-            return false
+            return null;
         }
 
         const game_stats = {
@@ -24,9 +24,9 @@ export default async function (hero_id: number) {
         useHeroStore.setState({ cards: data.heroes, team: data.heroes.filter((item: Card) => item.changed) });
         useUserStore.setState({ balance: data.balance });
 
-        return true;
+        return data.result;
     } catch (e) {
         alert('Something went wrong. Please try again later!');
-        return false;
+        return null;
     }
 }
