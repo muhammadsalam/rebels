@@ -6,14 +6,12 @@ export default async function (tempTeam: Card[]) {
     try {
         const prevTeam = useHeroStore.getState().team;
 
-        const payload = tempTeam.reduce<{ hero_id: number, new_hero_id: number }[]>((newTeam, item, index) => {
-            if (item.id !== prevTeam[index]?.id) {
-                newTeam.push({
-                    hero_id: prevTeam[index]?.id as number, new_hero_id: item.id
-                });
-            }
+        const deleted = prevTeam.filter(item => tempTeam.find(card => card.id === item.id) === undefined);
+        const added = tempTeam.filter(item => prevTeam.find(card => card.id === item.id) === undefined);
 
-            return newTeam;
+        const payload = deleted.reduce<{ hero_id: number, new_hero_id: number }[]>((items, item, index) => {
+            items.push({ hero_id: item.id, new_hero_id: added[index].id });
+            return items;
         }, []);
 
         const { status, data } = await axios.post('/user/heroes/change', payload);
