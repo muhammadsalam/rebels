@@ -74,17 +74,20 @@ function App() {
         });
 
         const handleOrientationChange = () => {
-            if (!window.matchMedia("(orientation: landscape)").matches || (window.orientation && (window.orientation === 90 || window.orientation === -90))) {
-                setIsLandscape(true);
+            if (window.matchMedia("(orientation: landscape)").matches) {
+                return setIsLandscape(true);
             }
+
+            return setIsLandscape(false);
+
         }
 
         handleOrientationChange();
 
-        window.addEventListener('orientationchange', handleOrientationChange);
+        window.addEventListener('resize', handleOrientationChange);
 
         return () => {
-            window.removeEventListener('orientationchange', handleOrientationChange);
+            window.removeEventListener('resize', handleOrientationChange);
         };
 
     }, []);
