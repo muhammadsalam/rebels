@@ -117,6 +117,11 @@ export const TeamPage = () => {
     }, []);
 
     const handleUpgradeCard = async (hero_id: number) => {
+        let savedCondition: any = true;
+        if (hasChanges()) {
+            savedCondition = await handleSaveTeam();
+            console.log(savedCondition);
+        }
         const upgradedCard = await upgradeCard(hero_id);
 
         if (upgradedCard) {
@@ -290,6 +295,7 @@ export const TeamPage = () => {
                     setChoosedCards={setChoosedCards}
                     tempCards={activeChoosedCard ? choosedCards : undefined}
                     setTeamSkills={setTeamSkills}
+                    handleChange={handleChange}
                 />
             )}
 
@@ -398,7 +404,7 @@ export const TeamPage = () => {
                         </div>
 
                         {modalCard.count < 2 && activeChoosedCard === null && <p className={styles.no_cards_text}>Upgrading requires the same card and points</p>}
-                        {modalCard.count > 1 && <button
+                        {modalCard.count > 1 && !(modalCard.rarity === 'Legend' && modalCard.level === 7) && <button
                             className={styles.upgradeButton}
                             disabled={balance < modalCard.upgrade_price}
                             onClick={() =>

@@ -23,7 +23,7 @@ export const Upgraded: FC<UpgradedProps> = ({ onModalHide, info, ...props }) => 
 
     return (
         <div {...props} className={styles.upgraded}>
-            <div className={styles.upgraded_overlay} onClick={onModalHide}></div>
+            <div className={styles.upgraded_overlay}></div>
             <div className={styles.upgraded_block}>
                 <div className={styles.overflow}>
                     <strong className={styles.upgraded_name}>{info.name}</strong>

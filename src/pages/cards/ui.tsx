@@ -22,7 +22,8 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
             influence: number;
         }>
     >;
-    setModalCard: Dispatch<SetStateAction<Card | null>>
+    setModalCard: Dispatch<SetStateAction<Card | null>>;
+    handleChange: () => void;
 }
 export const CardsPage: FC<CardProps> = ({
     activeChoosedCard = null,
@@ -33,6 +34,7 @@ export const CardsPage: FC<CardProps> = ({
     setChoosedCards,
     setTeamSkills,
     setModalCard,
+    handleChange,
     ...props
 }) => {
     const cards = useHeroStore((state) => state.cards);
@@ -44,6 +46,13 @@ export const CardsPage: FC<CardProps> = ({
         if (activeChoosedCard === null) {
             setModalCard(card);
             return;
+        }
+
+        if (activeChoosedCard.id === 0) {
+            (async () => {
+                await setModalCard(card);
+                await handleChange();
+            })()
         }
 
         // проверяется нажатая карточка такая же как активная или нет И поверяется есть ли карточка в выбранных
