@@ -17,7 +17,7 @@ import { FriendsPage } from "pages/friends";
 import { FriendsInfoPage } from "pages/friends-info";
 import { AboutPage } from "pages/about";
 import { FAQPage } from "pages/faq";
-import useOrientationLock from "shared/libs/use-orientation-lock";
+import { AutoRotate } from "widgets/auto-rotate";
 
 function App() {
     const fetchToken = useUserStore((state) => state.fetchToken);
@@ -30,7 +30,7 @@ function App() {
         PixelOperatorMono: true,
     });
 
-    useOrientationLock();
+    const [isLandscape, setIsLandscape] = useState(false);
 
     useEffect(() => {
         tgApp.ready();
@@ -72,6 +72,21 @@ function App() {
                 PixelOperatorMono: false,
             }));
         });
+
+        const handleOrientationChange = () => {
+            if (!window.matchMedia("(orientation: landscape)").matches || (window.orientation && (window.orientation === 90 || window.orientation === -90))) {
+                setIsLandscape(true);
+            }
+        }
+
+        handleOrientationChange();
+
+        window.addEventListener('orientationchange', handleOrientationChange);
+
+        return () => {
+            window.removeEventListener('orientationchange', handleOrientationChange);
+        };
+
     }, []);
 
     useEffect(() => {
@@ -95,21 +110,24 @@ function App() {
         return <Loading />;
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/team" element={<TeamPage />} />
-                <Route path="/mine" element={<Mine />} />
-                <Route path="/shop" element={<ShopPage />} />
-                <Route path="/shop/info" element={<ShopInfoPage />} />
-                <Route path="/quests" element={<QuestsPage />} />
-                <Route path="/friends" element={<FriendsPage />} />
-                <Route path="/friends/info" element={<FriendsInfoPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/faq" element={<FAQPage />} />
-            </Routes>
-        </Router>
+        <>
+            {isLandscape && <AutoRotate />}
+            <Router>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/team" element={<TeamPage />} />
+                    <Route path="/mine" element={<Mine />} />
+                    <Route path="/shop" element={<ShopPage />} />
+                    <Route path="/shop/info" element={<ShopInfoPage />} />
+                    <Route path="/quests" element={<QuestsPage />} />
+                    <Route path="/friends" element={<FriendsPage />} />
+                    <Route path="/friends/info" element={<FriendsInfoPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/faq" element={<FAQPage />} />
+                </Routes>
+            </Router>
+        </>
     );
 }
 
