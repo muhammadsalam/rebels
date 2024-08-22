@@ -221,9 +221,9 @@ export const FriendsPage = () => {
                 </div>
             </div>
 
-            <button onClick={handleClaim} className={styles.claim_button} disabled={!!timeToFill}>
+            {<button onClick={handleClaim} className={clsx(styles.claim_button, styles.claim_time)} disabled={!!timeToFill || claim_time === 0}>
                 {timeToFill ? "Wait" : "Claim"}
-            </button>
+            </button>}
         </div>
     );
 };
