@@ -11,6 +11,7 @@ import useUserStore from "entities/user";
 import { ModalReward } from "widgets/modal-reward";
 import useHeroStore, { Card } from "entities/heroes";
 import useGameStatsStore from "entities/gameStats";
+import { Loading } from "widgets/loading";
 
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
@@ -84,6 +85,11 @@ export const ShopPage = () => {
         setIsRewardModalActive(false);
         setReward(null);
     };
+
+    const [isLoading, setIsLoading] = useState(true);
+    setTimeout(() => setIsLoading(false), 1000);
+
+    if (chests.length === 0 || isLoading) return <Loading />
 
     return (
         <div className={styles.container}>

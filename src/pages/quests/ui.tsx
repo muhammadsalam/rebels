@@ -135,7 +135,10 @@ export const QuestsPage = () => {
         }
     };
 
-    if (!quests.length) return <Loading />
+    const [isLoading, setIsLoading] = useState(true);
+    setTimeout(() => setIsLoading(false), 1000);
+
+    if (!quests.length || isLoading) return <Loading />
 
     return (
         <div className={styles.container}>

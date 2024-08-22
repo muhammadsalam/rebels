@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import TrophyIcon from "icons/trophy.svg?react";
 import clsx from "clsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import fetchProfile from "features/fetchProfile";
 import useUserStore from "entities/user";
 import useGameStatsStore from "entities/gameStats";
@@ -48,7 +48,10 @@ export const ProfilePage = () => {
         };
     }, []);
 
-    if (isProfileLoading) return <Loading />;
+    const [isLoading, setIsLoading] = useState(true);
+    setTimeout(() => setIsLoading(false), 1000);
+
+    if (isProfileLoading || isLoading) return <Loading />;
 
     return (
         <div className={styles.container}>

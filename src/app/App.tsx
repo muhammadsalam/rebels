@@ -104,11 +104,14 @@ function App() {
         };
     }, [userId]);
 
+    const [isLoading, setIsLoading] = useState(true);
+    setTimeout(() => setIsLoading(false), 1000);
+
     if (
         token === null ||
         userId === null ||
         isFontsLoading.PixelOperator ||
-        isFontsLoading.PixelOperatorMono
+        isFontsLoading.PixelOperatorMono || isLoading
     )
         return <Loading />;
 

@@ -141,7 +141,10 @@ export const TeamPage = () => {
         setModalCard(null);
     }
 
-    if (!cards.length) return <Loading />;
+    const [isLoading, setIsLoading] = useState(true);
+    setTimeout(() => setIsLoading(false), 1000);
+
+    if (!cards.length || isLoading) return <Loading />;
 
     return (
         <div className={styles.container}>
