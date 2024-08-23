@@ -10,6 +10,7 @@ interface GameStatsState {
 
     isProfileLoading: boolean;
     total_value: number;
+    start_level_value: number;
     next_level_value: number;
     damage: number;
     critical_chance: number;
@@ -33,6 +34,7 @@ interface GameStatsState {
 const useGameStatsStore = create<GameStatsState>((set, get) => ({
     isProfileLoading: false,
     total_value: 0,
+    start_level_value: 0,
     next_level_value: 0,
     total_hero_values: {
         knowledge: 0,

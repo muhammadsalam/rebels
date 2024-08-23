@@ -10,7 +10,7 @@ export default async () => {
         if (status !== 200) return;
 
         useUserStore.setState({ level: data.level, level_name: data.level_name, username: data.username });
-        useGameStatsStore.setState({ total_value: data.total_value, total_hero_values: data.total_hero_values, next_level_value: data.next_level_value });
+        useGameStatsStore.setState({ total_value: data.total_value, total_hero_values: data.total_hero_values, next_level_value: data.next_level_value, start_level_value: data.start_value });
     } catch (err) {
         console.error(err);
     }

@@ -25,6 +25,9 @@ export const ProfilePage = () => {
     const total_value_next = useGameStatsStore(
         (state) => state.next_level_value
     );
+    const total_value_start = useGameStatsStore(
+        (state) => state.start_level_value
+    );
     const isProfileLoading = useGameStatsStore(
         (state) => state.isProfileLoading
     );
@@ -85,7 +88,7 @@ export const ProfilePage = () => {
                     <div
                         className={styles.total_skills_line_inner}
                         style={{
-                            width: `${(total_value / total_value_next) * 100}%`,
+                            width: `${((total_value - total_value_start) / (total_value_next - total_value_start)) * 100}%`,
                         }}
                     ></div>
                 </div>
