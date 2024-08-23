@@ -62,6 +62,7 @@
     font-weight: 700;
     line-height: 34px;
     display: inline-block;
+    text-align: center;
     --starting-x: -100%;
     translate: var(--starting-x) 0;
     animation: translate 0.1s ease-in-out 0.4s forwards;
