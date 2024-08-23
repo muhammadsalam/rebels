@@ -23,7 +23,6 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
         }>
     >;
     setModalCard: Dispatch<SetStateAction<Card | null>>;
-    handleChange: () => void;
 }
 export const CardsPage: FC<CardProps> = ({
     activeChoosedCard = null,
@@ -34,7 +33,6 @@ export const CardsPage: FC<CardProps> = ({
     setChoosedCards,
     setTeamSkills,
     setModalCard,
-    handleChange,
     ...props
 }) => {
     const cards = useHeroStore((state) => state.cards);
