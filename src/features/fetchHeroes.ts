@@ -9,7 +9,22 @@ export default async () => {
 
         useHeroStore.setState({
             cards: data.heroes,
-            team: data.changed,
+            team: data.changed.concat(
+                new Array(5).fill({
+                    id: 0,
+                    level: 0,
+                    knowledge_step: 0,
+                    loyalty_step: 0,
+                    influence_step: 0,
+                    changed: true,
+                    influence: 0,
+                    knowledge: 0,
+                    loyalty: 0,
+                    name: "",
+                    rarity: "Common",
+                    upgrade_price: 0,
+                })
+            ).slice(0, 5),
             team_skills: data.team_values
         })
         return data.changed;

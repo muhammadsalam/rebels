@@ -38,6 +38,7 @@ export const TeamPage = () => {
         null
     );
     const [choosedCards, setChoosedCards] = useState(team);
+    console.log(choosedCards);
     const balance = useUserStore.getState().balance;
 
     const [isCardsGalleryActive, setIsCardsGalleryActive] = useState(false);

@@ -50,8 +50,10 @@ export const CardsPage: FC<CardProps> = ({
 
         if (activeChoosedCard.id === 0) {
             (async () => {
-                await setModalCard(card);
-                await handleChange();
+                const tempArr = choosedCards.map((item) =>
+                    item.id === activeChoosedCard.id ? card : item
+                );
+                setChoosedCards && setChoosedCards(tempArr);
             })()
         }
 
