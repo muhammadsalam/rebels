@@ -6,7 +6,7 @@ export type Card = {
     knowledge_step: number,
     loyalty_step: number,
     influence_step: number,
-    changed: boolean;
+    position: number | null;
     influence: number;
     knowledge: number;
     loyalty: number;

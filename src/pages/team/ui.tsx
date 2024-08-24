@@ -38,7 +38,6 @@ export const TeamPage = () => {
         null
     );
     const [choosedCards, setChoosedCards] = useState(team);
-    console.log(choosedCards);
     const balance = useUserStore.getState().balance;
 
     const [isCardsGalleryActive, setIsCardsGalleryActive] = useState(false);
@@ -60,10 +59,8 @@ export const TeamPage = () => {
     const hasChanges = () => {
         let hasChange = false;
 
-        const filteredCards = cards.filter((item) => item.changed);
-
         for (let i = 0; i < choosedCards.length; i++) {
-            if (!filteredCards.find((item) => item.id === choosedCards[i].id)) {
+            if (!team.find((item) => item.id === choosedCards[i].id)) {
                 hasChange = true;
                 break;
             }
@@ -123,14 +120,14 @@ export const TeamPage = () => {
             savedCondition = await handleSaveTeam();
             console.log(savedCondition);
         }
-        const upgradedCard = await upgradeCard(hero_id);
+        const upgrade_data = await upgradeCard(hero_id);
 
-        if (upgradedCard) {
+        if (upgrade_data) {
             setActiveChoosedCard(null);
             setModalCard(null);
-            setChoosedCards(useHeroStore.getState().team);
+            setChoosedCards(upgrade_data.upgraded_team);
 
-            setUpgradedCard({ name: upgradedCard.name, level: upgradedCard.level });
+            setUpgradedCard({ name: upgrade_data.upgradedCard.name, level: upgrade_data?.upgradedCard.level });
             setTimeout(() => {
                 setUpgradedCard(null);
             }, 2000);
@@ -156,45 +153,47 @@ export const TeamPage = () => {
             </div>
 
             <div className={styles.choosed_cards}>
-                {choosedCards
-                    .concat(
-                        new Array(5).fill({
-                            id: 0,
-                            level: 0,
-                            knowledge_step: 0,
-                            loyalty_step: 0,
-                            influence_step: 0,
-                            changed: true,
-                            influence: 0,
-                            knowledge: 0,
-                            loyalty: 0,
-                            name: "",
-                            rarity: "Common",
-                            upgrade_price: 0,
-                        })
-                    )
-                    .slice(0, 5)
-                    .map((hero, index) => (
+                {choosedCards.map((_, index, cardsArray) => {
+                    let item = cardsArray.find(item => item.position === index);
+
+                    if (item === undefined) item = {
+                        id: 0,
+                        level: 0,
+                        count: 0,
+                        knowledge_step: 0,
+                        loyalty_step: 0,
+                        influence_step: 0,
+                        position: index,
+                        influence: 0,
+                        knowledge: 0,
+                        loyalty: 0,
+                        name: "",
+                        rarity: "Common",
+                        upgrade_price: 0,
+                    }
+
+                    return (
                         <div
                             className={clsx(
                                 styles.card,
-                                activeChoosedCard?.id === hero.id &&
+                                activeChoosedCard?.id === item?.id &&
                                 styles.card__active
                             )}
-                            key={'main_cards_' + hero.id + index}
-                            onClick={() => handleCardClick(hero)}
+                            key={'main_cards_' + item?.id + index}
+                            onClick={() => handleCardClick((item as Card))}
                         >
-                            {hero.id === 0 ? (
+                            {item?.id === 0 ? (
                                 "+"
                             ) : (
                                 <img
-                                    src={`/assets/card-item-${hero.rarity.toLowerCase()}.png`}
-                                    alt={hero.name}
+                                    src={`/assets/card-item-${item?.rarity.toLowerCase()}.png`}
+                                    alt={item?.name}
                                     className={styles.card_img}
                                 />
                             )}
                         </div>
-                    ))}
+                    )
+                })}
             </div>
 
             <div className={styles.skills}>

@@ -6,13 +6,15 @@ export default async function (tempTeam: Card[]) {
     try {
         const prevTeam = useHeroStore.getState().team;
 
-        const deleted = prevTeam.filter(item => tempTeam.find(card => card.id === item.id) === undefined);
-        const added = tempTeam.filter(item => prevTeam.find(card => card.id === item.id) === undefined);
+        const payload = tempTeam.reduce<{ hero_id: number, position: number | null }[]>((items, item) => {
+            const oldCard = prevTeam.find(card => card.position === item.position)
 
-        const payload = deleted.reduce<{ hero_id: number, new_hero_id: number }[]>((items, item, index) => {
-            items.push({ hero_id: item.id, new_hero_id: added[index].id });
+            if (item.position !== null && tempTeam.find(card => card.id === oldCard?.id && card.position === item.position) === undefined) {
+                items.push({ hero_id: item.id, position: item.position });
+            }
+
             return items;
-        }, []);
+        }, [])
 
         const { status, data } = await axios.post('/user/heroes/change', payload);
 
@@ -20,7 +22,7 @@ export default async function (tempTeam: Card[]) {
             alert('Something went wrong. Please try again later!');
         }
 
-        useHeroStore.setState({ team: data.team.filter((item: Card) => item.changed), cards: data.team });
+        useHeroStore.setState({ team: data.team.filter((item: Card) => item.position !== null), cards: data.team });
         useGameStatsStore.setState({ critical_chance: data.critical_chance, damage: data.damage, energy_usage: data.energy_usage })
     } catch (e) {
         console.log(e);

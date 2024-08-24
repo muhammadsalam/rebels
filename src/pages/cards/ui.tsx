@@ -40,7 +40,7 @@ export const CardsPage: FC<CardProps> = ({
 
     const handleCardClick = (card: Card) => {
         // если выбранной карточки нет, то значит перешёл на страницу my_cards сразу.
-        // 
+
         if (activeChoosedCard === null) {
             setModalCard(card);
             return;
@@ -66,7 +66,7 @@ export const CardsPage: FC<CardProps> = ({
             return;
         } else {
             const tempArr = choosedCards.map((item) =>
-                item.id === activeChoosedCard.id ? card : item
+                item.id === activeChoosedCard.id ? { ...card, position: activeChoosedCard.position } : item
             );
             setChoosedCards && setChoosedCards(tempArr);
             const team_skills = {

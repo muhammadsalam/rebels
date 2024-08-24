@@ -58,7 +58,7 @@ export const ShopPage = () => {
             useUserStore.setState({ balance: data.balance, level: data.level });
             useHeroStore.setState({
                 cards: data.heroes,
-                team: data.heroes.filter((item: Card) => item.changed),
+                team: data.heroes.filter((item: Card) => item.position !== null),
             });
             useGameStatsStore.setState({ energy_update: data.energy_update, max_energy: data.max_energy })
             const new_chests = chests.map(item => {

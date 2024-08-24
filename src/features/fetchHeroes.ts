@@ -1,22 +1,25 @@
-import useHeroStore from "entities/heroes";
+import useHeroStore, { Card } from "entities/heroes";
 import { axios } from "shared/libs";
 
 export default async () => {
     try {
         const { status, data } = await axios.get('/user/heroes');
 
-        if (status !== 200) return;
+        if (status !== 200) throw new Error('something went wrong');
+
+        const team = data.heroes.filter((item: Card) => item.position !== null);
 
         useHeroStore.setState({
             cards: data.heroes,
-            team: data.changed.concat(
-                new Array(5).fill({
+            team: team.concat(
+                (new Array(5) as Card[]).fill({
                     id: 0,
                     level: 0,
+                    count: 0,
                     knowledge_step: 0,
                     loyalty_step: 0,
                     influence_step: 0,
-                    changed: true,
+                    position: null,
                     influence: 0,
                     knowledge: 0,
                     loyalty: 0,
@@ -24,11 +27,14 @@ export default async () => {
                     rarity: "Common",
                     upgrade_price: 0,
                 })
-            ).slice(0, 5),
+            ).slice(0, 5).map((item: Card, index: number) => {
+                return { ...item, position: item.position ?? index }
+            }),
             team_skills: data.team_values
         })
-        return data.changed;
+
+        return team;
     } catch (err) {
-        console.error(err);
+        alert('Something went wrong. Please try again later! ' + err);
     }
 }
