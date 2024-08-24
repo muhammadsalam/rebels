@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, useState } from "react";
+import { FC, HTMLAttributes, memo, useState } from "react";
 import styles from "./styles.module.scss";
 import AlignCenterIcon from "icons/align-center.svg?react";
 import UserIcon from "icons/user.svg?react";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import useUserStore from "entities/user";
 import { tgApp } from "shared/libs";
 
-export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
+export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const [isActiveMenu, setIsActiveMenu] = useState(false);
 
     const handleMenuOpen = () => {
@@ -234,4 +234,4 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
             </Link>
         </div>
     );
-};
+});

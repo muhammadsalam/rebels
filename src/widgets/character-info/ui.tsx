@@ -1,10 +1,10 @@
-import { FC, HTMLAttributes, useState } from "react";
+import { FC, HTMLAttributes, memo, useState } from "react";
 import styles from "./styles.module.scss";
 import useVillainStore from "entities/villain";
 import InfoBoxIcon from 'icons/info-box.svg?react';
 import { Modal } from "shared/ui";
 
-export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
+export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const current_name = useVillainStore((state) => state.current_name);
     const current_level = useVillainStore((state) => state.current_level);
     const current_image = useVillainStore(state => state.current_image);
@@ -39,4 +39,4 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
             </Modal>}
         </div>
     );
-};
+});

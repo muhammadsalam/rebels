@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes } from "react";
+import { FC, HTMLAttributes, memo } from "react";
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import { formatNumber } from "shared/libs";
@@ -6,7 +6,7 @@ import useUserStore from "entities/user";
 import clsx from "clsx";
 import useVillainStore from "entities/villain";
 
-export const CoinsIsland: FC<HTMLAttributes<HTMLDivElement>> = ({
+export const CoinsIsland: FC<HTMLAttributes<HTMLDivElement>> = memo(({
     className,
     ...props
 }) => {
@@ -21,4 +21,4 @@ export const CoinsIsland: FC<HTMLAttributes<HTMLDivElement>> = ({
             </strong>
         </div>
     );
-};
+});

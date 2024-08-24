@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes } from "react";
+import { FC, HTMLAttributes, memo } from "react";
 import styles from "./styles.module.scss";
 import HeartIcon from "icons/heart.svg?react";
 import useVillainStore from "entities/villain";
@@ -6,7 +6,7 @@ import useGameStatsStore from "entities/gameStats";
 import { formatNumber } from "shared/libs";
 import clsx from "clsx";
 
-export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
+export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const health = useVillainStore((state) => state.health);
     const current_health = useVillainStore((state) => state.current_health);
     const current_energy = useGameStatsStore((state) => state.energy_balance);
@@ -76,4 +76,4 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
             </div>
         </div>
     );
-};
+});

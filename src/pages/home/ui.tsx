@@ -42,7 +42,7 @@ export const HomePage = () => {
     return (
         <div className={styles.container}>
             <TopIslands />
-            <CharacterInfo style={{ width: "calc(100% - 16px)" }} />
+            <CharacterInfo />
             <div className={styles.slider}>
                 <div
                     className={clsx(
