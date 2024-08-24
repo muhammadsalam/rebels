@@ -9,6 +9,7 @@ type Reward =
     | {
         name: string;
         rarity: string;
+        photo: string;
     }
     | number;
 
@@ -35,7 +36,7 @@ export const ModalReward: FC<{
                         <>
                             <div className={styles.reward_img}>
                                 <img
-                                    src={`/assets/card-item-${reward.rarity.toLowerCase()}.png`}
+                                    src={`${import.meta.env.VITE_API_BACK}/hero/${reward.photo}`}
                                     alt={reward.name}
                                 />
                             </div>

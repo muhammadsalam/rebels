@@ -105,7 +105,7 @@ export const CardsPage: FC<CardProps> = ({
             >
                 <div className={styles.item_img}>
                     <img
-                        src={`/assets/card-item-${card.rarity.toLowerCase()}.png`}
+                        src={`${import.meta.env.VITE_API_BACK}/hero/${card.photo}`}
                         alt={card.name}
                     />
                 </div>

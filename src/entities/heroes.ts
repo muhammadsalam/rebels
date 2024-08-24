@@ -3,6 +3,7 @@ import { create } from 'zustand';
 export type Card = {
     id: number;
     level: number,
+    photo: string,
     knowledge_step: number,
     loyalty_step: number,
     influence_step: number,

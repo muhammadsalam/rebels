@@ -160,6 +160,7 @@ export const TeamPage = () => {
                         id: 0,
                         level: 0,
                         count: 0,
+                        photo: "",
                         knowledge_step: 0,
                         loyalty_step: 0,
                         influence_step: 0,
@@ -186,7 +187,7 @@ export const TeamPage = () => {
                                 "+"
                             ) : (
                                 <img
-                                    src={`/assets/card-item-${item?.rarity.toLowerCase()}.png`}
+                                    src={`${import.meta.env.VITE_API_BACK}/hero/${item?.photo}`}
                                     alt={item?.name}
                                     className={styles.card_img}
                                 />
