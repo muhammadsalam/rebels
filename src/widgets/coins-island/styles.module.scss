@@ -1,13 +1,9 @@
-.island {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.coins {
+    flex-grow: 1;
+    height: auto;
+    width: auto;
     padding: 7.5px 18.5px;
     gap: 12px;
-
-    border-radius: 111px;
-    background-color: var(--dark);
-    box-shadow: var(--shadow-1);
 }
 
 .value {

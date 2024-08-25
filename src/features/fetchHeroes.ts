@@ -13,6 +13,7 @@ export default async () => {
             cards: data.heroes,
             team: team.concat(
                 (new Array(5) as Card[]).fill({
+                    photo: '',
                     id: 0,
                     level: 0,
                     count: 0,

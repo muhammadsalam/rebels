@@ -4,7 +4,7 @@ import TelegramIcon from "icons/social/telegram.svg?react";
 import TwitterIcon from "icons/social/twitter.svg?react";
 import { useEffect, useState } from "react";
 import { ModalGift } from "widgets/modal-gift";
-import { ModalReward } from "widgets/modal-reward";
+import { ModalReward, TReward } from "widgets/modal-reward";
 import { axios } from "shared/libs";
 
 export const Menu = () => {
@@ -18,9 +18,7 @@ export const Menu = () => {
         };
     }, []);
 
-    const [reward, setReward] = useState<
-        { name: string; rarity: string } | null | number
-    >(null);
+    const [reward, setReward] = useState<TReward | null | number>(null);
     const [isDailyGiftActive, setIsDailyGiftActive] = useState(false);
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
 

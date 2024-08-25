@@ -5,7 +5,7 @@ import CoinIcon from "icons/coin.svg?react";
 import { formatNumber } from "shared/libs";
 import clsx from "clsx";
 
-type Reward =
+export type TReward =
     | {
         name: string;
         rarity: string;
@@ -14,7 +14,7 @@ type Reward =
     | number;
 
 export const ModalReward: FC<{
-    reward: Reward | null;
+    reward: TReward | null;
     handleClaimChest: () => void;
 }> = ({ reward, handleClaimChest }) => {
     return (

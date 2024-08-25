@@ -8,7 +8,7 @@ import { axios, formatNumber, tgApp } from "shared/libs";
 import { useEffect, useState } from "react";
 import useChestsStore from "entities/chests";
 import useUserStore from "entities/user";
-import { ModalReward } from "widgets/modal-reward";
+import { ModalReward, TReward } from "widgets/modal-reward";
 import useHeroStore, { Card } from "entities/heroes";
 import useGameStatsStore from "entities/gameStats";
 import { Loading } from "widgets/loading";
@@ -40,10 +40,7 @@ export const ShopPage = () => {
     }, []);
 
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
-    const [reward, setReward] = useState<{
-        name: string;
-        rarity: string;
-    } | null>(null);
+    const [reward, setReward] = useState<TReward | null>(null);
 
     const handleBuyChest = async (id: number) => {
         try {

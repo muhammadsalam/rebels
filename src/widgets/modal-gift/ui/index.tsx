@@ -4,11 +4,12 @@ import styles from "./styles.module.scss";
 import GiftIcon from "icons/gift.svg?react";
 import { axios } from "shared/libs";
 import useUserStore from "entities/user";
+import { TReward } from "widgets/modal-reward";
 
 export const ModalGift: FC<{
     onModalHide: () => void;
     setReward: (
-        reward: number | { name: string; rarity: string } | null
+        reward: number | TReward | null
     ) => void;
     setIsRewardModalActive: (_: boolean) => void;
     setIsDailyGiftActive: (_: boolean) => void;

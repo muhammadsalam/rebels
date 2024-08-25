@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, memo, useState } from "react";
+import { FC, HTMLAttributes, memo, useCallback, useState } from "react";
 import styles from "./styles.module.scss";
 import AlignCenterIcon from "icons/align-center.svg?react";
 import UserIcon from "icons/user.svg?react";
@@ -9,36 +9,35 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import useUserStore from "entities/user";
 import { tgApp } from "shared/libs";
+import { Island } from "shared/ui";
 
 export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const [isActiveMenu, setIsActiveMenu] = useState(false);
-
-    const handleMenuOpen = () => {
-        setIsActiveMenu((state) => !state);
-    };
-
     const vibro = useUserStore(state => state.settings.vibro)
 
-    const handleVibroToggle = () => {
+    const handleMenuOpen = useCallback(() => {
+        setIsActiveMenu((state) => !state);
+    }, []);
+
+    const handleVibroToggle = useCallback(() => {
+        const newVibroState = !vibro;
+
         useUserStore.setState((state) => ({
             ...state,
-            settings: { ...state.settings, vibro: !state.settings.vibro },
+            settings: { ...state.settings, vibro: newVibroState },
         }));
 
         if (parseFloat(tgApp.version) > 6.9) {
-            tgApp.CloudStorage.setItem('vibro', !vibro);
+            tgApp.CloudStorage.setItem('vibro', newVibroState);
         } else {
-            localStorage.setItem('vibro', '' + !vibro);
+            localStorage.setItem('vibro', '' + newVibroState);
         }
-    };
+    }, [vibro]);
 
     return (
         <div {...props} className={styles.wrapper}>
-            <div
-                className={clsx(
-                    styles.island__icon,
-                    isActiveMenu && styles.close
-                )}
+            <Island
+                className={clsx(isActiveMenu && styles.close)}
                 onClick={handleMenuOpen}
             >
                 {isActiveMenu ? (
@@ -46,7 +45,8 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
                 ) : (
                     <AlignCenterIcon />
                 )}
-            </div>
+            </Island>
+
             {isActiveMenu && (
                 <button className={styles.vibro} onClick={handleVibroToggle}>
                     <svg
@@ -227,11 +227,14 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
                     Vibro {!vibro ? "off" : "on"}
                 </button>
             )}
+
             {isActiveMenu && <Menu />}
-            <CoinsIsland className={styles.island} />
-            <Link to="/profile" className={styles.island__icon}>
+
+            <CoinsIsland />
+
+            <Island tag={Link} to="/profile">
                 <UserIcon />
-            </Link>
+            </Island>
         </div>
     );
 });

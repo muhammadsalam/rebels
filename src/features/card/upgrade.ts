@@ -23,6 +23,7 @@ export default async function (hero_id: number) {
         useGameStatsStore.setState(game_stats);
         const team = data.heroes.filter((item: Card) => item.position !== null).concat(
             (new Array(5) as Card[]).fill({
+                photo: '',
                 id: 0,
                 level: 0,
                 count: 0,
