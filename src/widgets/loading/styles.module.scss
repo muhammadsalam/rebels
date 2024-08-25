@@ -7,7 +7,7 @@
     right: 0;
     background-color: var(--dark);
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
 }
 
@@ -44,4 +44,31 @@
 
 .title__fulled {
     background-position: 0% !important;
+}
+
+.img {
+    width: 45%;
+    margin-bottom: 20vh;
+    animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(0.75);
+    }
+    20% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(0.75);
+    }
+    60% {
+        transform: scale(1);
+    }
+    80% {
+        transform: scale(0.75);
+    }
+    100% {
+        transform: scale(0.75);
+    }
 }
