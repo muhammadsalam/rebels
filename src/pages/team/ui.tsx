@@ -1,18 +1,17 @@
-import useHeroStore, { Card } from "entities/heroes";
-import styles from "./styles.module.scss";
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
+import { saveTeam, fetchHeroes, Card, upgradeHero, useHeroStore } from "entities/heroes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal } from "shared/ui";
-import { formatNumber, tgApp } from "shared/libs";
-import useUserStore from "entities/user";
+import { Island, Modal } from "shared/ui";
+import { formatNumber, tgApp } from "shared/libs/utils";
+import { useUserStore } from "entities/user";
 import { CardsPage } from "pages/cards";
-import fetchHeroes from "features/fetchHeroes";
 import { Loading } from "widgets/loading";
+import { Upgraded } from "widgets/upgraded";
 import {
     MAX_CARD_INFLUENCE,
     MAX_CARD_KNOWLEDGE,
@@ -21,9 +20,9 @@ import {
     MAX_TEAM_KNOWLEDGE,
     MAX_TEAM_LOYALTY,
 } from "shared/CONSTANT";
-import upgradeCard from "features/card/upgrade";
-import saveTeam from "features/team/save";
-import { Upgraded } from "widgets/upgraded";
+
+import styles from "./styles.module.scss";
+
 
 export const TeamPage = () => {
     const cards = useHeroStore((state) => state.cards);
@@ -120,7 +119,7 @@ export const TeamPage = () => {
             savedCondition = await handleSaveTeam();
             console.log(savedCondition);
         }
-        const upgrade_data = await upgradeCard(hero_id);
+        const upgrade_data = await upgradeHero(hero_id);
 
         if (upgrade_data) {
             setActiveChoosedCard(null);
@@ -267,19 +266,17 @@ export const TeamPage = () => {
             </div>
 
             <div className={styles.buttons}>
-                <button
-                    className={styles.button}
-                    onClick={() => setIsCardsGalleryActive(true)}
-                >
+                <Island tag="button" onClick={() => setIsCardsGalleryActive(true)} className={styles.button}>
                     My cards
-                </button>
-                <button
-                    className={styles.button}
+                </Island>
+
+                <Island tag="button"
                     disabled={!hasChanges()}
                     onClick={handleSaveTeam}
+                    className={styles.button}
                 >
                     Save
-                </button>
+                </Island>
             </div>
 
             {upgradedCard && (
@@ -407,7 +404,8 @@ export const TeamPage = () => {
                         </div>
 
                         {modalCard.count < 2 && activeChoosedCard === null && <p className={styles.no_cards_text}>Upgrading requires the same card and points</p>}
-                        {modalCard.count > 1 && !(modalCard.rarity === 'Legend' && modalCard.level === 7) && <button
+                        {modalCard.count > 1 && !(modalCard.rarity === 'Legend' && modalCard.level === 7) && <Island
+                            tag='button'
                             className={styles.upgradeButton}
                             disabled={balance < modalCard.upgrade_price}
                             onClick={() =>
@@ -422,7 +420,7 @@ export const TeamPage = () => {
                                 )}
                             </span>
                             <CoinIcon className={styles.upgradeButton_icon} />
-                        </button>}
+                        </Island>}
                         {activeChoosedCard !== null && <button
                             className={styles.changeButton}
                             onClick={handleChange}

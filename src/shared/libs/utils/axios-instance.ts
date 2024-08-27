@@ -1,5 +1,5 @@
 import _axios from "axios";
-import useUserStore from "entities/user";
+import { useUserStore } from "entities/user";
 
 export const axios = _axios.create({
     baseURL: import.meta.env.VITE_API_BACK,

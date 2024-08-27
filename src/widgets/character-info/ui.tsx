@@ -1,8 +1,9 @@
 import { FC, HTMLAttributes, memo, useState } from "react";
-import styles from "./styles.module.scss";
 import useVillainStore from "entities/villain";
 import InfoBoxIcon from 'icons/info-box.svg?react';
-import { Modal } from "shared/ui";
+import { Island, Modal } from "shared/ui";
+
+import styles from "./styles.module.scss";
 
 export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const current_name = useVillainStore((state) => state.current_name);
@@ -12,7 +13,7 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
     const [isInfoActive, setIsInfoActive] = useState(false);
 
     return (
-        <div {...props} className={styles.wrapper}>
+        <Island {...props} className={styles.wrapper}>
             <div className={styles.info}>
                 <span className={styles.info_level}>{current_level} lvl</span>
                 <div className={styles.info_line}></div>
@@ -35,8 +36,10 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
 
                 <p className={styles.person_text}>{current_description}</p>
 
-                <button onClick={() => setIsInfoActive(false)} className={styles.person_button}>Close</button>
+                <Island tag="button" onClick={() => setIsInfoActive(false)} className={styles.person_button}>
+                    Close
+                </Island>
             </Modal>}
-        </div>
+        </Island>
     );
 });

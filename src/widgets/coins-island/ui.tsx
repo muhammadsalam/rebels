@@ -1,8 +1,8 @@
 import { FC, HTMLAttributes, memo } from "react";
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
-import { formatNumber } from "shared/libs";
-import useUserStore from "entities/user";
+import { formatNumber } from "shared/libs/utils";
+import { useUserStore } from "entities/user";
 import clsx from "clsx";
 import useVillainStore from "entities/villain";
 import { Island } from "shared/ui";
@@ -20,6 +20,5 @@ export const CoinsIsland: FC<HTMLAttributes<HTMLDivElement>> = memo(({
                 {new_level_reward ? ` +${formatNumber(new_level_reward, "en-EN")}` : formatNumber(balance, "en-EN")}
             </strong>
         </Island>
-        // <div {...props} className={clsx(styles.island, className)}></div>
     );
 });

@@ -1,16 +1,10 @@
-import { useEffect } from 'react';
+import { memo } from 'react';
 import styles from './style.module.scss'
+import { useBodyLock } from 'shared/libs/hooks';
 
-export const AutoRotate = () => {
-    useEffect(() => {
-        const bodyOverflow = document.body.style.overflow;
+export const AutoRotate = memo(() => {
+    useBodyLock();
 
-        document.body.style.overflow = "hidden";
-
-        return () => {
-            document.body.style.overflow = bodyOverflow;
-        };
-    }, [])
     return (
         <div className={styles.rotate}>
             <div className={styles.rotate_block}>
@@ -27,4 +21,4 @@ export const AutoRotate = () => {
             </div>
         </div>
     );
-}
+})

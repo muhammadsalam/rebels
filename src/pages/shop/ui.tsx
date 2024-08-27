@@ -4,13 +4,12 @@ import InfoBoxIcon from "icons/info-box.svg?react";
 import ChestIcon from "icons/chest.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
-import { axios, formatNumber, tgApp } from "shared/libs";
+import { axios, formatNumber, tgApp } from "shared/libs/utils";
 import { useEffect, useState } from "react";
 import useChestsStore from "entities/chests";
-import useUserStore from "entities/user";
+import { useUserStore, useGameStatsStore } from "entities/user";
 import { ModalReward, TReward } from "widgets/modal-reward";
-import useHeroStore, { Card } from "entities/heroes";
-import useGameStatsStore from "entities/gameStats";
+import { useHeroStore, Card } from "entities/heroes";
 import { Loading } from "widgets/loading";
 
 export const ShopPage = () => {

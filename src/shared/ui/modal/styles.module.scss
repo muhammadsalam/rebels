@@ -22,16 +22,8 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    background-color: transparent;
-    border: 0;
-    background-color: var(--dark);
-    box-shadow: var(--shadow-1);
-    border-radius: 77px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
 }
 
 .modal_inner {

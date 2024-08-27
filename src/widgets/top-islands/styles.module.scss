@@ -12,22 +12,16 @@
 }
 
 .vibro {
-    border: 0;
-    background-color: var(--dark);
-    box-shadow: var(--shadow-1);
-    border-radius: 100px;
-    color: var(--white);
     width: 128px;
     height: 44px;
     position: absolute;
     right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 8px;
     font-family: "Pixel Operator";
     font-size: 18px;
     font-weight: 700;
     line-height: 19px;
     z-index: 11;
+    padding-left: 15px;
+    justify-content: flex-start;
 }

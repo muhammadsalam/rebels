@@ -1,8 +1,8 @@
-import useGameStatsStore from "entities/gameStats";
-import useHeroStore, { Card } from "entities/heroes";
-import { axios } from "shared/libs";
+import { useGameStatsStore } from "entities/user/";
+import { useHeroStore, Card } from "entities/heroes";
+import { axios } from "shared/libs/utils";
 
-export default async function (tempTeam: Card[]) {
+export const saveTeam = async function (tempTeam: Card[]) {
     try {
         const prevTeam = useHeroStore.getState().team;
 

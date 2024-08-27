@@ -2,9 +2,10 @@ import { FC, HTMLAttributes, memo } from "react";
 import styles from "./styles.module.scss";
 import HeartIcon from "icons/heart.svg?react";
 import useVillainStore from "entities/villain";
-import useGameStatsStore from "entities/gameStats";
-import { formatNumber } from "shared/libs";
+import { useGameStatsStore } from "entities/user";
+import { formatNumber } from "shared/libs/utils";
 import clsx from "clsx";
+import { Island } from "shared/ui";
 
 export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const health = useVillainStore((state) => state.health);
@@ -15,9 +16,9 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo((props) 
 
     return (
         <div {...props} className={styles.wrapper}>
-            <div className={styles.heart_icon}>
+            <Island className={styles.heart_icon}>
                 <HeartIcon />
-            </div>
+            </Island>
             <div className={styles.heart_count}>
                 <span>{formatNumber(current_health)}</span>
                 <span>{formatNumber(health)}</span>
@@ -42,7 +43,7 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo((props) 
                 <span>{formatNumber(current_energy)}</span>
                 <span>{formatNumber(max_energy)}</span>
             </div>
-            <div className={styles.battery_icon}>
+            <Island className={styles.battery_icon}>
                 <svg
                     width="20"
                     height="20"
@@ -73,7 +74,7 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo((props) 
                         />
                     )}
                 </svg>
-            </div>
+            </Island>
         </div>
     );
 });

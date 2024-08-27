@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 import { FC, useEffect, useState } from "react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
-import { formatNumber, tgApp } from "shared/libs";
+import { formatNumber, tgApp } from "shared/libs/utils";
 import useReferalStore, { ReferalInfoCard } from "entities/referal";
 import { Loading } from "widgets/loading";
 

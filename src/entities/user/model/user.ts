@@ -1,0 +1,27 @@
+import { create } from 'zustand';
+
+export interface UserState {
+    settings: {
+        vibro: boolean;
+    };
+    token: string | null;
+    id: number | null;
+    balance: number;
+    username: string;
+    level: number;
+    level_name: string;
+    uci_id: number,
+}
+
+export const useUserStore = create<UserState>(() => ({
+    settings: {
+        vibro: true,
+    },
+    token: null,
+    id: null,
+    balance: 0,
+    username: '',
+    level: 0,
+    level_name: '',
+    uci_id: 0,
+}));

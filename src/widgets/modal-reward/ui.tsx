@@ -2,7 +2,7 @@ import { FC } from "react";
 import styles from "./styles.module.scss";
 import { Modal } from "shared/ui";
 import CoinIcon from "icons/coin.svg?react";
-import { formatNumber } from "shared/libs";
+import { formatNumber } from "shared/libs/utils";
 import clsx from "clsx";
 
 export type TReward =

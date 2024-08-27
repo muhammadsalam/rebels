@@ -5,6 +5,8 @@ import { LinkProps } from "react-router-dom";
 
 export const Island: FC<{
     tag?: any,
+    href?: string,
+    disabled?: true | false,
 } & (LinkProps | HTMLAttributes<HTMLDivElement>)> = memo(({ tag: Tag = 'div', children, className, ...props }) => {
     return (
         <Tag className={clsx(className, styles.island)} {...props}>

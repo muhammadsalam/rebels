@@ -1,7 +1,7 @@
-import useHeroStore, { Card } from "entities/heroes";
-import { axios } from "shared/libs";
+import { useHeroStore, Card } from "entities/heroes";
+import { axios } from "shared/libs/utils";
 
-export default async () => {
+export const fetchHeroes = async () => {
     try {
         const { status, data } = await axios.get('/user/heroes');
 

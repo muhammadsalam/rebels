@@ -2,7 +2,7 @@ import { Modal } from "shared/ui";
 import styles from "./styles.module.scss";
 import { Dispatch, FC, HTMLAttributes, SetStateAction } from "react";
 import { Accordeon } from "widgets/accordeon";
-import useHeroStore, { Card } from "entities/heroes";
+import { useHeroStore, Card } from "entities/heroes";
 import clsx from "clsx";
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";

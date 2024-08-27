@@ -1,7 +1,9 @@
-import { FC, HTMLAttributes, ReactNode, useEffect } from "react";
-import styles from "./styles.module.scss";
+import { FC, HTMLAttributes, ReactNode } from "react";
 import CloseIcon from "icons/close.svg?react";
 import clsx from "clsx";
+import { useBodyLock } from "shared/libs/hooks";
+import { Island } from "../island";
+import styles from "./styles.module.scss";
 
 interface ModalProps extends HTMLAttributes<HTMLDivElement> {
     onModalHide: () => void;
@@ -23,15 +25,7 @@ export const Modal: FC<ModalProps> = ({
     innerClassName,
     ...props
 }) => {
-    useEffect(() => {
-        const bodyOverflow = document.body.style.overflow;
-
-        document.body.style.overflow = "hidden";
-
-        return () => {
-            document.body.style.overflow = bodyOverflow;
-        };
-    }, []);
+    useBodyLock();
 
     return (
         <div className={`${styles.modal} ${className}`} {...props}>
@@ -42,9 +36,9 @@ export const Modal: FC<ModalProps> = ({
                     className={styles.wrapper}
                     style={{ paddingTop, paddingBottom }}
                 >
-                    <button className={styles.close} onClick={onModalHide}>
+                    <Island tag="button" className={styles.close} onClick={onModalHide}>
                         <CloseIcon />
-                    </button>
+                    </Island>
                     {heading && <h2 className={styles.heading}>{heading}</h2>}
                     {subheading && (
                         <p className={styles.subheading}>{subheading}</p>

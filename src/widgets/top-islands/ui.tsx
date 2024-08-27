@@ -1,4 +1,5 @@
 import { FC, HTMLAttributes, memo, useCallback, useState } from "react";
+import { Island } from "shared/ui";
 import styles from "./styles.module.scss";
 import AlignCenterIcon from "icons/align-center.svg?react";
 import UserIcon from "icons/user.svg?react";
@@ -7,9 +8,8 @@ import { Menu } from "widgets/menu";
 import CloseIcon from "icons/close.svg?react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import useUserStore from "entities/user";
-import { tgApp } from "shared/libs";
-import { Island } from "shared/ui";
+import { useUserStore } from "entities/user";
+import { tgApp } from "shared/libs/utils";
 
 export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const [isActiveMenu, setIsActiveMenu] = useState(false);
@@ -48,7 +48,7 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
             </Island>
 
             {isActiveMenu && (
-                <button className={styles.vibro} onClick={handleVibroToggle}>
+                <Island tag="button" onClick={handleVibroToggle} className={styles.vibro}>
                     <svg
                         width="20"
                         height="20"
@@ -225,7 +225,7 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
                         </defs>
                     </svg>
                     Vibro {!vibro ? "off" : "on"}
-                </button>
+                </Island>
             )}
 
             {isActiveMenu && <Menu />}

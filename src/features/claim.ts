@@ -1,8 +1,6 @@
-import useGameStatsStore from "entities/gameStats";
-import useTapsCounterStore from "entities/tapsCounter";
-import useUserStore from "entities/user";
+import { useTapsCounterStore, useGameStatsStore, useUserStore } from "entities/user";
 import useVillainStore from "entities/villain";
-import { axios } from "shared/libs";
+import { axios } from "shared/libs/utils";
 
 export default async function () {
     const { taps, critical_taps, seed } = useTapsCounterStore.getState();

@@ -1,4 +1,4 @@
-import { axios } from 'shared/libs';
+import { axios } from 'shared/libs/utils';
 import { create } from 'zustand';
 
 export type ReferalInfoCard = {

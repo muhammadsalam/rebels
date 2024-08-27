@@ -1,9 +1,9 @@
-import useGameStatsStore from "entities/gameStats";
-import useHeroStore, { Card } from "entities/heroes";
-import useUserStore from "entities/user";
-import { axios } from "shared/libs";
+import { useGameStatsStore } from "entities/user";
+import { useHeroStore, Card } from "entities/heroes";
+import { useUserStore } from "entities/user";
+import { axios } from "shared/libs/utils";
 
-export default async function (hero_id: number) {
+export const upgradeHero = async function (hero_id: number) {
     try {
         const { status, data } = await axios.post(`/user/heroes/upgrade?hero_id=${hero_id}`)
 

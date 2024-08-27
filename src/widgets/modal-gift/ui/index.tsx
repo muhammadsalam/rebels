@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Modal } from "shared/ui";
 import styles from "./styles.module.scss";
 import GiftIcon from "icons/gift.svg?react";
-import { axios } from "shared/libs";
-import useUserStore from "entities/user";
+import { axios } from "shared/libs/utils";
+import { useUserStore } from "entities/user";
 import { TReward } from "widgets/modal-reward";
 
 export const ModalGift: FC<{

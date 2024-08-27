@@ -1,5 +1,6 @@
-import { FC, HTMLAttributes, useEffect } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import styles from './style.module.scss';
+import { useBodyLock } from 'shared/libs/hooks';
 
 interface UpgradedProps extends HTMLAttributes<HTMLDivElement> {
     onModalHide: () => void;
@@ -10,16 +11,7 @@ interface UpgradedProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Upgraded: FC<UpgradedProps> = ({ onModalHide, info, ...props }) => {
-
-    useEffect(() => {
-        const bodyOverflow = document.body.style.overflow;
-
-        document.body.style.overflow = "hidden";
-
-        return () => {
-            document.body.style.overflow = bodyOverflow;
-        };
-    }, [])
+    useBodyLock();
 
     return (
         <div {...props} className={styles.upgraded}>

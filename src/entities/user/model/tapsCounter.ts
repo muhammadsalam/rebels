@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-interface TapsState {
+export interface TapsState {
     taps: number;
     critical_taps: number;
     seed: number;
     addTap: (isCritical: boolean) => void;
 }
 
-const useTapsCounterStore = create<TapsState>((set) => ({
+export const useTapsCounterStore = create<TapsState>((set) => ({
     taps: 0,
     critical_taps: 0,
     seed: +new Date(),
@@ -20,5 +20,3 @@ const useTapsCounterStore = create<TapsState>((set) => ({
         ));
     },
 }));
-
-export default useTapsCounterStore;

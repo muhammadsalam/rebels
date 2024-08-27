@@ -2,35 +2,29 @@ import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import TelegramIcon from "icons/social/telegram.svg?react";
 import TwitterIcon from "icons/social/twitter.svg?react";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { ModalGift } from "widgets/modal-gift";
 import { ModalReward, TReward } from "widgets/modal-reward";
-import { axios } from "shared/libs";
+import { axios } from "shared/libs/utils";
+import { Island } from "shared/ui";
+import { useBodyLock } from "shared/libs/hooks";
 
 export const Menu = () => {
-    useEffect(() => {
-        const bodyOverflow = document.body.style.overflow;
-
-        document.body.style.overflow = "hidden";
-
-        return () => {
-            document.body.style.overflow = bodyOverflow;
-        };
-    }, []);
+    useBodyLock();
 
     const [reward, setReward] = useState<TReward | null | number>(null);
     const [isDailyGiftActive, setIsDailyGiftActive] = useState(false);
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
 
-    const onClaim = () => {
+    const onClaim = useCallback(() => {
         setIsRewardModalActive(false);
         setIsDailyGiftActive(false);
         setReward(null);
-    };
+    }, []);
 
-    const handleDailyGift = () => {
+    const handleDailyGift = useCallback(() => {
         setIsDailyGiftActive(true);
-    };
+    }, []);
 
     // УБРАТЬ
     const handleBABLO = () => {
@@ -52,33 +46,44 @@ export const Menu = () => {
             <div className={styles.menu}>
                 <button onClick={handleBABLO} className={styles.BABLO}>💰</button>
                 <nav className={styles.nav}>
-                    <button className={styles.link} onClick={handleDailyGift}>
+                    <Island tag='button' onClick={handleDailyGift} className={styles.link}>
                         Daily gift
-                    </button>
-                    <Link
-                        className={styles.link}
+                    </Island>
+                    <Island
+                        tag={Link}
                         to="/about"
-                        children="About"
-                    />
-                    <Link className={styles.link} to="/faq" children="FAQ" />
+                        className={styles.link}
+                    >
+                        About
+                    </Island>
+                    <Island
+                        tag={Link}
+                        to="/faq"
+                        className={styles.link}
+                    >
+                        FAQ
+                    </Island>
                 </nav>
                 <div className={styles.links}>
-                    <a
-                        className={styles.link__icon}
+                    <Island
+                        tag='a'
                         target="_blank"
-                        href="https://t.me/rebelscommunity"
+                        className={styles.link__icon}
+                        href="https://t.me/joinrebels"
                     >
                         <TelegramIcon />
-                    </a>
-                    <a
+                    </Island>
+                    <Island
+                        tag='a'
                         className={styles.link__icon}
                         target="_blank"
                         href="https://x.com/gameoftherebels"
                     >
                         <TwitterIcon />
-                    </a>
+                    </Island>
                 </div>
             </div>
+
             {isDailyGiftActive && (
                 <ModalGift
                     onModalHide={onClaim}
@@ -87,6 +92,7 @@ export const Menu = () => {
                     setIsDailyGiftActive={setIsDailyGiftActive}
                 />
             )}
+
             {isRewardModalActive && (
                 <ModalReward reward={reward} handleClaimChest={onClaim} />
             )}

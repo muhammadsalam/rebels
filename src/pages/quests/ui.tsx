@@ -3,9 +3,9 @@ import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { axios, formatNumber, tgApp } from "shared/libs";
+import { axios, formatNumber, tgApp } from "shared/libs/utils";
 import useQuestsStore, { Quest } from "entities/quests";
-import useUserStore from "entities/user";
+import { useUserStore } from "entities/user";
 import { Loading } from "widgets/loading";
 
 export const QuestsPage = () => {

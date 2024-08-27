@@ -24,20 +24,11 @@
 }
 
 .link {
-    border: 0;
     font-size: 24px;
     font-weight: 700;
     line-height: 26px;
-    color: var(--white);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 171px;
     height: 60px;
-    border-radius: 93px;
-    box-shadow: var(--shadow-1);
-    background-color: var(--dark);
 }
 
 .links {
@@ -47,14 +38,8 @@
 }
 
 .link__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 56px;
     height: 56px;
-    border-radius: 111px;
-    background-color: var(--dark);
-    box-shadow: var(--shadow-1);
 }
 
 // изменить

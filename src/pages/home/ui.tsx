@@ -5,7 +5,7 @@ import { CharacterInfo } from "widgets/character-info";
 import { CharacterStatus } from "widgets/character-status";
 import { Navigation } from "widgets/navigation";
 import { useEffect, useState } from "react";
-import { tgApp } from "shared/libs";
+import { tgApp } from "shared/libs/utils";
 import { Switcher } from "shared/ui";
 import { Mine } from "widgets/mine";
 import clsx from "clsx";
@@ -16,28 +16,15 @@ export const HomePage = () => {
         tgApp.BackButton.hide();
     }, []);
 
-    const [active, setActive] = useState(false);
+    const [isSwitched, setIsSwitched] = useState(false);
     const handleSwitch = () => {
-        setActive((state) => !state);
+        setIsSwitched((state) => !state);
     };
 
     const current_health = useVillainStore((state) => state.current_health);
-    const person_image = useVillainStore((state) => state.image);
     const wasted = useVillainStore((state) => state.wasted);
-    const name = useVillainStore(state => state.name);
-    const level = useVillainStore(state => state.level);
-    const description = useVillainStore(state => state.description);
 
-    const handleNextVillainClick = () => {
-        useVillainStore.setState({
-            current_image: person_image,
-            current_name: name,
-            current_level: level,
-            current_description: description,
-            wasted: false,
-            new_level_reward: null,
-        });
-    };
+    const handleNextVillainClick = useVillainStore(state => state.toggleVillain);
 
     return (
         <div className={styles.container}>
@@ -47,7 +34,7 @@ export const HomePage = () => {
                 <div
                     className={clsx(
                         styles.slider_content,
-                        active && styles.slider_content__active
+                        isSwitched && styles.slider_content__active
                     )}
                 >
                     <div className={styles.slider_item}>
@@ -58,7 +45,7 @@ export const HomePage = () => {
                     </div>
                 </div>
                 <Switcher
-                    active={active}
+                    active={isSwitched}
                     handleSwitch={handleSwitch}
                     style={{ marginLeft: "auto", marginTop: "-19px" }}
                 />

@@ -1,13 +1,11 @@
-import useGameStatsStore from "entities/gameStats";
-import useTapsCounterStore from "entities/tapsCounter";
-import useUserStore from "entities/user";
+import { useTapsCounterStore, useGameStatsStore, useUserStore } from "entities/user";
 import useVillainStore from "entities/villain";
 
 export default function (damage: number, isCritical: boolean) {
     const { energy_balance, energy_usage } = useGameStatsStore.getState();
     const { balance } = useUserStore.getState();
     const { current_health, wasted, health } = useVillainStore.getState();
-    const { addTap } = useTapsCounterStore.getState();
+    const addTap = useTapsCounterStore.getState().addTap;
 
     const newHealth = current_health - damage;
     const newEnergy = energy_balance - energy_usage;

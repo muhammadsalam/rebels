@@ -27,7 +27,7 @@ interface HeroState {
     };
 }
 
-const useHeroStore = create<HeroState>(() => ({
+export const useHeroStore = create<HeroState>(() => ({
     cards: [],
     team: [],
     team_skills: {
@@ -36,5 +36,3 @@ const useHeroStore = create<HeroState>(() => ({
         influence: 0
     },
 }));
-
-export default useHeroStore;

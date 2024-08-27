@@ -1,4 +1,4 @@
-import { tgApp } from "shared/libs";
+import { tgApp } from "shared/libs/utils";
 import styles from "./styles.module.scss";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

@@ -2,9 +2,7 @@ import styles from "./styles.module.scss";
 import TrophyIcon from "icons/trophy.svg?react";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import fetchProfile from "features/fetchProfile";
-import useUserStore from "entities/user";
-import useGameStatsStore from "entities/gameStats";
+import { useGameStatsStore, useUserStore, fetchProfile } from "entities/user/";
 import { Loading } from "widgets/loading";
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
@@ -14,7 +12,7 @@ import {
     MAX_TOTAL_KNOWLEDGE_VALUE,
     MAX_TOTAL_LOYALTY_VALUE,
 } from "shared/CONSTANT";
-import { tgApp } from "shared/libs";
+import { tgApp } from "shared/libs/utils";
 import { useNavigate } from "react-router-dom";
 
 export const ProfilePage = () => {

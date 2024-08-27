@@ -1,12 +1,6 @@
 .wrapper {
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    width: 100%;
     padding: 11.5px 24px;
-    border-radius: 102px;
-    box-shadow: var(--shadow-1);
-    background-color: var(--dark);
     width: calc(100% - 16px);
 }
 

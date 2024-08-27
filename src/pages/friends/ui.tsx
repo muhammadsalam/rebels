@@ -2,13 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
 import { useEffect, useRef, useState } from "react";
-import { axios, formatNumber, tgApp } from "shared/libs";
+import { axios, formatNumber, tgApp } from "shared/libs/utils";
 import useReferalStore from "entities/referal";
 import { Loading } from "widgets/loading";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import DoneIcon from 'icons/done.svg?react';
-import useUserStore from "entities/user";
+import { useUserStore } from "entities/user";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);

@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { useEffect } from "react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
-import { tgApp } from "shared/libs";
+import { tgApp } from "shared/libs/utils";
 
 export const ShopInfoPage = () => {
     const chests = useChestsStore((state) => state.chests);

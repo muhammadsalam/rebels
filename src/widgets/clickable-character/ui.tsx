@@ -7,10 +7,9 @@ import {
     useState,
 } from "react";
 import styles from "./styles.module.scss";
-import useGameStatsStore from "entities/gameStats";
+import { useGameStatsStore, useTapsCounterStore } from "entities/user";
 import clickCharacter from "features/clickCharacter";
-import { seededRandom } from "shared/libs/seed-random";
-import useTapsCounterStore from "entities/tapsCounter";
+import { seededRandom } from "shared/libs/utils";
 import claim from "features/claim";
 import clsx from "clsx";
 import useVillainStore from "entities/villain";

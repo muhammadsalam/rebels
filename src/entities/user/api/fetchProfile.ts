@@ -1,8 +1,7 @@
-import useGameStatsStore from "entities/gameStats";
-import useUserStore from "entities/user";
-import { axios } from "shared/libs";
+import { useUserStore, useGameStatsStore } from "entities/user";
+import { axios } from "shared/libs/utils";
 
-export default async () => {
+export const fetchProfile = async () => {
     useGameStatsStore.setState({ isProfileLoading: true });
     try {
         const { data, status } = await axios.get('/user/profile');

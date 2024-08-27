@@ -1,10 +1,9 @@
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
-import useGameStatsStore from "entities/gameStats";
+import { claimMining, startMining, useGameStatsStore } from "entities/user";
 import clsx from "clsx";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { formatNumber, tgApp } from "shared/libs";
-import claimMining from "features/claimMining";
+import { formatNumber, tgApp } from "shared/libs/utils";
 import { useNavigate } from "react-router-dom";
 
 const formatTime = (timeInSeconds: number) => {
@@ -107,7 +106,7 @@ export const Mine = () => {
         }, 200);
 
         if (mining_claimed_at === 0) {
-            return useGameStatsStore.getState().startMining();
+            return startMining();
         }
 
         if (mining_balance === mining_max_points) {
