@@ -7,6 +7,7 @@ import clsx from "clsx";
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
+import { useUserStore } from "entities/user";
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
     activeChoosedCard?: Card | null;
@@ -37,6 +38,7 @@ export const CardsPage: FC<CardProps> = ({
 }) => {
     const cards = useHeroStore((state) => state.cards);
     const choosedCards = tempCards || useHeroStore((state) => state.team);
+    const balance = useUserStore(state => state.balance)
 
     const handleCardClick = (card: Card) => {
         // если выбранной карточки нет, то значит перешёл на страницу my_cards сразу.
@@ -146,6 +148,11 @@ export const CardsPage: FC<CardProps> = ({
                         {card.count} pcs
                     </div>
                 </div>
+                {card.count > 1 && balance >= card.upgrade_price && <svg className={styles.item_upgrading} width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.8" d="M6.2 1.4001H7.6V2.8001H9V1.4001H7.6V9.77516e-05H6.2V1.4001H4.8V2.8001H6.2V1.4001ZM3.4 4.2001V2.8001H4.8V4.2001H3.4ZM3.4 4.2001V5.6001H2V4.2001H3.4ZM10.4 4.2001V2.8001H9V4.2001H10.4ZM10.4 4.2001V5.6001H11.8V4.2001H10.4Z" fill="#C4EB2A" />
+                    <path opacity="0.5" d="M6.2 5.5998H7.6V6.9998H9V5.5998H7.6V4.1998H6.2V5.5998H4.8V6.9998H6.2V5.5998ZM3.4 8.3998V6.9998H4.8V8.3998H3.4ZM3.4 8.3998V9.7998H2V8.3998H3.4ZM10.4 8.3998V6.9998H9V8.3998H10.4ZM10.4 8.3998V9.7998H11.8V8.3998H10.4Z" fill="#C4EB2A" />
+                    <path opacity="0.3" d="M6.2 9.8H7.6V11.2H9V9.8H7.6V8.4H6.2V9.8H4.8V11.2H6.2V9.8ZM3.4 12.6V11.2H4.8V12.6H3.4ZM3.4 12.6V14H2V12.6H3.4ZM10.4 12.6V11.2H9V12.6H10.4ZM10.4 12.6V14H11.8V12.6H10.4Z" fill="#C4EB2A" />
+                </svg>}
             </div>
         );
     };
