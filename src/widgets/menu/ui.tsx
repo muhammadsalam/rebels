@@ -5,7 +5,7 @@ import TwitterIcon from "icons/social/twitter.svg?react";
 import { useCallback, useState } from "react";
 import { ModalGift } from "widgets/modal-gift";
 import { ModalReward, TReward } from "widgets/modal-reward";
-import { axios } from "shared/libs/utils";
+import { axios, showAlert } from "shared/libs/utils";
 import { Island } from "shared/ui";
 import { useBodyLock } from "shared/libs/hooks";
 
@@ -36,8 +36,7 @@ export const Menu = () => {
                 axios.get(`/spin/run?${0}`)
             }
         } catch (e) {
-            console.log(e);
-            alert("Something went wrong. Please try again later");
+            showAlert("Something went wrong. Please try again later. " + e);
         }
     };
 

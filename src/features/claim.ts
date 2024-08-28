@@ -1,6 +1,6 @@
 import { useTapsCounterStore, useGameStatsStore, useUserStore } from "entities/user";
 import useVillainStore from "entities/villain";
-import { axios } from "shared/libs/utils";
+import { axios, showAlert } from "shared/libs/utils";
 
 export default async function () {
     const { taps, critical_taps, seed } = useTapsCounterStore.getState();
@@ -22,7 +22,7 @@ export default async function () {
         useTapsCounterStore.setState({ taps: 0, critical_taps: 0, seed: +new Date() });
         const { status, data } = await axios.post('/tap', item);
 
-        if (status !== 200) return alert('Something is wrong, try again later.')
+        if (status !== 200) throw new Error('Something is wrong, try again later.')
 
         if (data.is_new_level) {
             const game_stats = {
@@ -38,7 +38,6 @@ export default async function () {
         }
 
     } catch (error) {
-        console.error('Error sending taps:', error);
-        alert('Something is wrong, try again later.' + error);
+        showAlert('Something is wrong when taps sending. ' + error);
     }
 }

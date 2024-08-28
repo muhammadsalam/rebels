@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Modal } from "shared/ui";
 import styles from "./styles.module.scss";
 import GiftIcon from "icons/gift.svg?react";
-import { axios } from "shared/libs/utils";
+import { axios, showAlert } from "shared/libs/utils";
 import { useUserStore } from "entities/user";
 import { TReward } from "widgets/modal-reward";
 
@@ -28,7 +28,7 @@ export const ModalGift: FC<{
                 if (status !== 200) {
                     setIsRewardModalActive(true);
                     setIsRewardModalActive(false);
-                    alert("Something went wrong. Please try again later");
+                    throw new Error("Something went wrong. Please try again later");
                 }
 
                 if (data.prize.toLowerCase() === "points") {
@@ -42,8 +42,7 @@ export const ModalGift: FC<{
                     setReward(data.hero);
                 }
             } catch (e) {
-                console.log(e);
-                alert("Something went wrong. Please try again later");
+                showAlert("Something went wrong. Please try again later. " + e);
             }
         };
 

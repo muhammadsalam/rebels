@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
 import { useEffect, useRef, useState } from "react";
-import { axios, formatNumber, tgApp } from "shared/libs/utils";
+import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
 import useReferalStore from "entities/referal";
 import { Loading } from "widgets/loading";
 import CoinIcon from "icons/coin.svg?react";
@@ -121,7 +121,7 @@ export const FriendsPage = () => {
             useReferalStore.setState({ claim_time: data.referral_balance_claim_at });
 
         } catch (error: any) {
-            alert(`Something went wrong. Please try again later. ${error.message}`);
+            showAlert(`Something went wrong. Please try again later. ${error.message}`);
             console.log(error);
         }
     }

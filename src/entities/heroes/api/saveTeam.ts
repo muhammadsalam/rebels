@@ -1,6 +1,6 @@
 import { useGameStatsStore } from "entities/user/";
 import { useHeroStore, Card } from "entities/heroes";
-import { axios } from "shared/libs/utils";
+import { axios, showAlert } from "shared/libs/utils";
 
 export const saveTeam = async function (tempTeam: Card[]) {
     try {
@@ -19,14 +19,13 @@ export const saveTeam = async function (tempTeam: Card[]) {
         const { status, data } = await axios.post('/user/heroes/change', payload);
 
         if (status !== 200) {
-            alert('Something went wrong. Please try again later!');
+            throw new Error('Something went wrong. Please try again later!');
         }
 
         useHeroStore.setState({ team: data.team.filter((item: Card) => item.position !== null), cards: data.team });
         useGameStatsStore.setState({ critical_chance: data.critical_chance, damage: data.damage, energy_usage: data.energy_usage })
-    } catch (e) {
-        console.log(e);
-        alert(e);
+    } catch (error) {
+        showAlert('Something went wrong. Please try again later! ' + error);
     }
 
 }

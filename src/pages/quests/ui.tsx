@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { axios, formatNumber, tgApp } from "shared/libs/utils";
+import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
 import useQuestsStore, { Quest } from "entities/quests";
 import { useUserStore } from "entities/user";
 import { Loading } from "widgets/loading";
@@ -109,7 +109,7 @@ export const QuestsPage = () => {
             );
 
             if (status !== 200) {
-                return alert("Something went wrong. Please try again later");
+                throw new Error("Something went wrong. Please try again later");
             }
 
             if (data.status && data.new_status === "Done") {
@@ -131,7 +131,7 @@ export const QuestsPage = () => {
             useQuestsStore.setState({ isProcessing: false })
 
         } catch (e: any) {
-            alert(`Something went wrong. Please try again later. ${e.message}`);
+            showAlert(`Something went wrong. Please try again later. ${e.message}`);
         }
     };
 

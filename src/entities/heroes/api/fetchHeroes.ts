@@ -1,5 +1,5 @@
 import { useHeroStore, Card } from "entities/heroes";
-import { axios } from "shared/libs/utils";
+import { axios, showAlert } from "shared/libs/utils";
 
 export const fetchHeroes = async () => {
     try {
@@ -36,6 +36,6 @@ export const fetchHeroes = async () => {
 
         return team;
     } catch (err) {
-        alert('Something went wrong. Please try again later! ' + err);
+        showAlert('Something went wrong. Please try again later! ' + err);
     }
 }

@@ -1,4 +1,4 @@
-import { axios } from 'shared/libs/utils';
+import { axios, showAlert } from 'shared/libs/utils';
 import { create } from 'zustand';
 
 export type ReferalInfoCard = {
@@ -31,22 +31,31 @@ const useReferalStore = create<ReferalState>((set, _) => ({
     claim_time: 0,
     started_time: 0,
     fetchReferals: async () => {
-        const { status, data } = await axios.get('/user/referal/stats');
+        try {
+            const { status, data } = await axios.get('/user/referal/stats');
 
-        if (status !== 200) {
-            return alert('something went wrong');
+            if (status !== 200) {
+                throw new Error('something went wrong');
+            }
+
+            set({ ...data })
+
+        } catch (error) {
+            showAlert('Something went wrong. Please try again later. ' + error);
         }
-
-        set({ ...data })
     },
     fetchReferalsInfo: async () => {
-        const { status, data } = await axios.get('/user/referal');
+        try {
+            const { status, data } = await axios.get('/user/referal');
 
-        if (status !== 200) {
-            return alert('something went wrong');
+            if (status !== 200) {
+                throw new Error('Something went wrong when refferals fetching.');
+            }
+
+            set({ info: data })
+        } catch (error) {
+            showAlert('Something went wrong. Please try again later. ' + error);
         }
-
-        set({ info: data })
     },
 }));
 

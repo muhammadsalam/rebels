@@ -1,15 +1,14 @@
 import { useGameStatsStore } from "entities/user";
 import { useHeroStore, Card } from "entities/heroes";
 import { useUserStore } from "entities/user";
-import { axios } from "shared/libs/utils";
+import { axios, showAlert } from "shared/libs/utils";
 
 export const upgradeHero = async function (hero_id: number) {
     try {
         const { status, data } = await axios.post(`/user/heroes/upgrade?hero_id=${hero_id}`)
 
         if (status !== 200) {
-            alert('Something went wrong. Please try again later!');
-            return null;
+            throw new Error('Something went wrong. Please try again later!');
         }
 
         const game_stats = {
@@ -48,8 +47,8 @@ export const upgradeHero = async function (hero_id: number) {
         useUserStore.setState({ balance: data.balance });
 
         return { upgradedCard: data.result, upgraded_team: team };
-    } catch (e) {
-        alert('Something went wrong. Please try again later!');
+    } catch (error) {
+        showAlert('Something went wrong. Please try again later! ' + error);
         return null;
     }
 }

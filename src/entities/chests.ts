@@ -1,4 +1,4 @@
-import { axios } from 'shared/libs/utils';
+import { axios, showAlert } from 'shared/libs/utils';
 import { create } from 'zustand';
 
 type Rarity = "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary";
@@ -30,13 +30,13 @@ const useChestsStore = create<ChestsState>(() => ({
             const { status, data } = await axios.get('/shop/boxes');
 
             if (status !== 200) {
-                return alert('Something went wrong. Please try again later');
+                throw new Error('Something went wrong. Please try again later');
             }
 
             useChestsStore.setState({ chests: data });
 
         } catch (e) {
-            console.error('Something went wrong:', e);
+            showAlert('Something went wrong. Please try again later. ' + e);
         }
     }
 }));

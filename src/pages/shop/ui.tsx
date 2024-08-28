@@ -4,7 +4,7 @@ import InfoBoxIcon from "icons/info-box.svg?react";
 import ChestIcon from "icons/chest.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
-import { axios, formatNumber, tgApp } from "shared/libs/utils";
+import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
 import { useEffect, useState } from "react";
 import useChestsStore from "entities/chests";
 import { useUserStore, useGameStatsStore } from "entities/user";
@@ -73,7 +73,7 @@ export const ShopPage = () => {
         } catch (e: any) {
             setIsRewardModalActive(false);
             console.log(e);
-            alert(`Failed to buy chest. Please try again later. ${e.message}`);
+            showAlert(`Failed to buy chest. Please try again later. ${e.message}`);
         }
     };
 

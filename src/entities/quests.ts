@@ -1,4 +1,4 @@
-import { axios } from 'shared/libs/utils';
+import { axios, showAlert } from 'shared/libs/utils';
 import { create } from 'zustand';
 
 export type Quest = {
@@ -17,7 +17,7 @@ interface HeroState {
     fetchQuests: () => void;
 }
 
-const useQuestsStore = create<HeroState>((set, get) => ({
+const useQuestsStore = create<HeroState>((set) => ({
     quests: [],
     isProcessing: false,
     fetchQuests: async () => {
@@ -25,7 +25,7 @@ const useQuestsStore = create<HeroState>((set, get) => ({
             const { status, data } = await axios.get('/task');
 
             if (status !== 200) {
-                return alert('Something went wrong. Please try again later');
+                throw new Error('Something went wrong. Please try again later');
             }
 
             set({
@@ -44,9 +44,8 @@ const useQuestsStore = create<HeroState>((set, get) => ({
                     return { ...item, attemps: 1, scenario }
                 })
             })
-            console.log(get().quests);
         } catch (e) {
-            console.error(e);
+            showAlert('Something went wrong. Please try again later. ' + e);
         }
     }
 }));
