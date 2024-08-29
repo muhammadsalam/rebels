@@ -118,7 +118,7 @@ export const FriendsPage = () => {
             }
 
             useUserStore.setState({ balance: data.balance });
-            useReferalStore.setState({ claim_time: data.referral_balance_claim_at });
+            useReferalStore.setState({ claim_time: data.referral_balance_claim_at, balance: 0 });
 
         } catch (error: any) {
             showAlert(`Something went wrong. Please try again later. ${error.message}`);
