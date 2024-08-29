@@ -6,16 +6,13 @@ type Rarity = "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary";
 type Chest = {
     id: number,
     price: number,
-    count: number,
     rarity: Rarity,
     garanted: Rarity | null,
     required_level: number,
-    reward: [
-        {
-            percent: number,
-            rarity: Rarity[]
-        }
-    ]
+    reward: {
+        percent: number,
+        rarity: Rarity[]
+    }[]
 };
 
 interface ChestsState {

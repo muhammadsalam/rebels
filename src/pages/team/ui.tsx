@@ -3,14 +3,13 @@ import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
-import { saveTeam, fetchHeroes, Card, upgradeHero, useHeroStore } from "entities/heroes";
+import { saveTeam, Card, upgradeHero, useHeroStore } from "entities/heroes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Island, Modal } from "shared/ui";
 import { formatNumber, tgApp } from "shared/libs/utils";
 import { useUserStore } from "entities/user";
 import { CardsPage } from "pages/cards";
-import { Loading } from "widgets/loading";
 import { Upgraded } from "widgets/upgraded";
 import {
     MAX_CARD_INFLUENCE,
@@ -25,7 +24,6 @@ import styles from "./styles.module.scss";
 
 
 export const TeamPage = () => {
-    const cards = useHeroStore((state) => state.cards);
     const team = useHeroStore((state) => state.team);
     const [team_skills, setTeamSkills] = useState(
         useHeroStore((state) => state.team_skills)
@@ -96,11 +94,6 @@ export const TeamPage = () => {
 
     const navigate = useNavigate();
     useEffect(() => {
-        fetchHeroes().then(() => {
-            setChoosedCards(useHeroStore.getState().team);
-            setTeamSkills(useHeroStore.getState().team_skills);
-        });
-
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
@@ -137,11 +130,6 @@ export const TeamPage = () => {
         setIsCardsGalleryActive(true);
         setModalCard(null);
     }
-
-    const [isLoading, setIsLoading] = useState(true);
-    setTimeout(() => setIsLoading(false), 1000);
-
-    if (!cards.length || isLoading) return <Loading />;
 
     return (
         <div className={styles.container}>

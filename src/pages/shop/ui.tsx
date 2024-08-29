@@ -10,22 +10,14 @@ import useChestsStore from "entities/chests";
 import { useUserStore, useGameStatsStore } from "entities/user";
 import { ModalReward, TReward } from "widgets/modal-reward";
 import { useHeroStore, Card } from "entities/heroes";
-import { Loading } from "widgets/loading";
 
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
     const balance = useUserStore((state) => state.balance);
     const level = useUserStore((state) => state.level);
-    const fetchChest = useChestsStore((state) => state.fetchChests);
 
     const navigate = useNavigate();
     useEffect(() => {
-        (async () => {
-            if (chests.length === 0) {
-                await fetchChest();
-            }
-        })();
-
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
@@ -81,11 +73,6 @@ export const ShopPage = () => {
         setIsRewardModalActive(false);
         setReward(null);
     };
-
-    const [isLoading, setIsLoading] = useState(true);
-    setTimeout(() => setIsLoading(false), 1000);
-
-    if (chests.length === 0 || isLoading) return <Loading />
 
     return (
         <div className={styles.container}>

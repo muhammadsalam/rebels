@@ -6,17 +6,13 @@ import { useEffect, useState } from "react";
 import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
 import useQuestsStore, { Quest } from "entities/quests";
 import { useUserStore } from "entities/user";
-import { Loading } from "widgets/loading";
 
 export const QuestsPage = () => {
     const quests = useQuestsStore((state) => state.quests);
-    const fetchquests = useQuestsStore((state) => state.fetchQuests);
     const [tempStatus, setTempStatus] = useState<Record<number, string>>({});
 
     const navigate = useNavigate();
     useEffect(() => {
-        fetchquests();
-
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
@@ -134,11 +130,6 @@ export const QuestsPage = () => {
             showAlert(`Something went wrong. Please try again later. ${e.message}`);
         }
     };
-
-    const [isLoading, setIsLoading] = useState(true);
-    setTimeout(() => setIsLoading(false), 1000);
-
-    if (!quests.length || isLoading) return <Loading />
 
     return (
         <div className={styles.container}>

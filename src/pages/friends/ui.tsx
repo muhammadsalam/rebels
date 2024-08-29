@@ -4,7 +4,6 @@ import InfoBoxIcon from "icons/info-box.svg?react";
 import { useEffect, useRef, useState } from "react";
 import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
 import useReferalStore from "entities/referal";
-import { Loading } from "widgets/loading";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import DoneIcon from 'icons/done.svg?react';
@@ -103,11 +102,6 @@ export const FriendsPage = () => {
 
         return () => clearInterval(interval);
     }, [claim_time])
-
-    const [isLoading, setIsLoading] = useState(true);
-    setTimeout(() => setIsLoading(false), 1000);
-
-    if (refState.level === "" || isLoading) return <Loading />;
 
     const handleClaim = async () => {
         try {

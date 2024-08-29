@@ -1,21 +1,15 @@
 import styles from "./styles.module.scss";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import { formatNumber, tgApp } from "shared/libs/utils";
 import useReferalStore, { ReferalInfoCard } from "entities/referal";
-import { Loading } from "widgets/loading";
 
 export const FriendsInfoPage = () => {
-    const fetchReferalsInfo = useReferalStore((state) => state.fetchReferalsInfo);
     const infoItems = useReferalStore((state) => state.info);
 
     const navigate = useNavigate();
     useEffect(() => {
-        if (infoItems.length === 0) {
-            fetchReferalsInfo();
-        }
-
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/friends");
@@ -27,11 +21,6 @@ export const FriendsInfoPage = () => {
             tgApp.BackButton.offClick(backButtonClick);
         };
     }, []);
-
-    const [isLoading, setIsLoading] = useState(true);
-    setTimeout(() => setIsLoading(false), 1000);
-
-    if (infoItems.length === 0 || isLoading) return <Loading />;
 
     const Card: FC<ReferalInfoCard> = ({
         level,
