@@ -3,7 +3,7 @@ import { Modal } from "shared/ui";
 import styles from "./styles.module.scss";
 import GiftIcon from "icons/gift.svg?react";
 import { axios, showAlert } from "shared/libs/utils";
-import { useUserStore } from "entities/user";
+import { useGameStatsStore, useUserStore } from "entities/user";
 import { TReward } from "widgets/modal-reward";
 import { useHeroStore } from "entities/heroes";
 
@@ -42,7 +42,16 @@ export const ModalGift: FC<{
                     setReward(data.hero);
                     useHeroStore.setState({ cards: data.heroes });
                     useHeroStore.getState().teamFromCards();
+                    useGameStatsStore.setState({
+                        total_value: data.total_value,
+                        total_hero_values: data.total_values,
+                    })
                 }
+
+                useGameStatsStore.setState({
+                    energy_update: data.energy_update,
+                    max_energy: data.max_energy,
+                })
             } catch (e) {
                 showAlert("Something went wrong. Please try again later. " + e);
             }
