@@ -1,9 +1,8 @@
 import styles from "./styles.module.scss";
 import TrophyIcon from "icons/trophy.svg?react";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
-import { useGameStatsStore, useUserStore, fetchProfile } from "entities/user/";
-import { Loading } from "widgets/loading";
+import { useEffect } from "react";
+import { useGameStatsStore, useUserStore } from "entities/user/";
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
@@ -26,17 +25,12 @@ export const ProfilePage = () => {
     const total_value_start = useGameStatsStore(
         (state) => state.start_level_value
     );
-    const isProfileLoading = useGameStatsStore(
-        (state) => state.isProfileLoading
-    );
     const total_hero_values = useGameStatsStore(
         (state) => state.total_hero_values
     );
 
     const navigate = useNavigate();
     useEffect(() => {
-        fetchProfile();
-
         tgApp.BackButton.show();
         const backButtonClick = () => {
             navigate("/");
@@ -48,11 +42,6 @@ export const ProfilePage = () => {
             tgApp.BackButton.offClick(backButtonClick);
         };
     }, []);
-
-    const [isLoading, setIsLoading] = useState(true);
-    setTimeout(() => setIsLoading(false), 1000);
-
-    if (isProfileLoading || isLoading) return <Loading />;
 
     return (
         <div className={styles.container}>
