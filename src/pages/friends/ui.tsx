@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
 import useReferalStore from "entities/referal";
 import CoinIcon from "icons/coin.svg?react";
@@ -28,7 +28,7 @@ function calculateTimeToFill({ claim_time }: any) {
     return formatTime(time_to_fill);
 }
 
-export const FriendsPage = () => {
+export const FriendsPage = memo(() => {
     const refLink = useRef<HTMLTextAreaElement>(null);
 
     const { fetchReferals, ...refState } = useReferalStore((state) => state);
@@ -220,4 +220,4 @@ export const FriendsPage = () => {
             </button>}
         </div>
     );
-};
+});

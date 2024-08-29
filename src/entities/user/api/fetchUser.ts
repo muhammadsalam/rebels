@@ -170,32 +170,12 @@ export const fetchUser = async () => {
             current_description: data.villain.description,
         });
 
-        const team = data.heroes.filter((item: THero) => item.position !== null);
-
         useHeroStore.setState({
             cards: data.heroes,
-            team: team.concat(
-                (new Array(5) as THero[]).fill({
-                    photo: '',
-                    id: 0,
-                    level: 0,
-                    count: 0,
-                    knowledge_step: 0,
-                    loyalty_step: 0,
-                    influence_step: 0,
-                    position: null,
-                    influence: 0,
-                    knowledge: 0,
-                    loyalty: 0,
-                    name: "",
-                    rarity: "Common",
-                    upgrade_price: 0,
-                })
-            ).slice(0, 5).map((item: THero, index: number) => {
-                return { ...item, position: item.position ?? index }
-            }),
             team_skills: data.team_values
         });
+
+        useHeroStore.getState().teamFromCards();
 
         useChestsStore.setState({ chests: data.boxes });
 

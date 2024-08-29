@@ -5,6 +5,7 @@ import GiftIcon from "icons/gift.svg?react";
 import { axios, showAlert } from "shared/libs/utils";
 import { useUserStore } from "entities/user";
 import { TReward } from "widgets/modal-reward";
+import { useHeroStore } from "entities/heroes";
 
 export const ModalGift: FC<{
     onModalHide: () => void;
@@ -26,7 +27,6 @@ export const ModalGift: FC<{
                 const { status, data } = await axios.get(`/spin/run?${index}`);
 
                 if (status !== 200) {
-                    setIsRewardModalActive(true);
                     setIsRewardModalActive(false);
                     throw new Error("Something went wrong. Please try again later");
                 }
@@ -40,6 +40,8 @@ export const ModalGift: FC<{
 
                 if (data.prize.toLowerCase() === "hero") {
                     setReward(data.hero);
+                    useHeroStore.setState({ cards: data.heroes });
+                    useHeroStore.getState().teamFromCards();
                 }
             } catch (e) {
                 showAlert("Something went wrong. Please try again later. " + e);

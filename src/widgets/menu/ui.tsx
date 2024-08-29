@@ -32,7 +32,7 @@ export const Menu = () => {
             setIsRewardModalActive(true);
             setIsDailyGiftActive(false);
 
-            for (let i = 0; i < 35; i++) {
+            for (let i = 0; i < 100; i++) {
                 axios.get(`/spin/run?${0}`)
             }
         } catch (e) {
