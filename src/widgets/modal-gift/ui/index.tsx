@@ -43,8 +43,14 @@ export const ModalGift: FC<{
                     useHeroStore.setState({ cards: data.heroes });
                     useHeroStore.getState().teamFromCards();
                     useGameStatsStore.setState({
-                        total_value: data.total_value,
-                        total_hero_values: data.total_values,
+                        next_level_value: data.profile.next_level_value,
+                        start_level_value: data.profile.start_value,
+                        total_value: data.profile.total_value,
+                        total_values: data.profile.total_values,
+                    });
+                    useUserStore.setState({
+                        level_name: data.profile.level_name,
+                        level: data.profile.level
                     })
                 }
 

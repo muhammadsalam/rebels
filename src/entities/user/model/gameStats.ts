@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export interface GameStatsState {
-    total_hero_values: {
+    total_values: {
         knowledge: number;
         loyalty: number;
         influence: number;
@@ -31,7 +31,7 @@ export const useGameStatsStore = create<GameStatsState>(() => ({
     total_value: 0,
     start_level_value: 0,
     next_level_value: 0,
-    total_hero_values: {
+    total_values: {
         knowledge: 0,
         loyalty: 0,
         influence: 0

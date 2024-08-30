@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import useChestsStore from "entities/chests";
 import { useUserStore, useGameStatsStore } from "entities/user";
 import { ModalReward, TReward } from "widgets/modal-reward";
-import { useHeroStore, Card } from "entities/heroes";
+import { useHeroStore } from "entities/heroes";
 
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
@@ -43,12 +43,18 @@ export const ShopPage = () => {
                 throw new Error("Failed to buy chest. Please try again later.");
             }
 
-            useUserStore.setState({ balance: data.balance, level: data.level });
-            useHeroStore.setState({
-                cards: data.heroes,
-                team: data.heroes.filter((item: Card) => item.position !== null),
+            useUserStore.setState({ balance: data.balance, level: data.profile.level, level_name: data.profile.level_name });
+            useHeroStore.setState({ cards: data.heroes });
+            useHeroStore.getState().teamFromCards();
+            useGameStatsStore.setState({
+                energy_update: data.energy_update,
+                max_energy: data.max_energy,
+
+                total_value: data.profile.total_value,
+                total_values: data.profile.total_values,
+                start_level_value: data.profile.start_value,
+                next_level_value: data.profile.next_level_value,
             });
-            useGameStatsStore.setState({ energy_update: data.energy_update, max_energy: data.max_energy })
             const new_chests = chests.map(item => {
                 if (item.id === id) {
                     return {

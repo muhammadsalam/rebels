@@ -28,11 +28,12 @@ type TUser = {
 }
 
 type TProfile = {
+    level: number;
     level_name: string,
     start_value: number,
-    total_value: number,
     next_level_value: number,
-    total_hero_values: {
+    total_value: number,
+    total_values: {
         knowledge: number,
         loyalty: number,
         influence: number
@@ -145,7 +146,7 @@ export const fetchUser = async () => {
             mining_claimed_at: data.user.mining_claimed_at,
 
             total_value: data.profile.total_value,
-            total_hero_values: data.profile.total_hero_values,
+            total_values: data.profile.total_values,
             start_level_value: data.profile.start_value,
             next_level_value: data.profile.next_level_value,
         };
@@ -154,7 +155,7 @@ export const fetchUser = async () => {
             id: data.user.id,
             balance: data.user.balance,
             uci_id: data.user.telegram_id,
-            level: data.user.level,
+            level: data.profile.level,
             level_name: data.profile.level_name,
             username: data.user.username
         });

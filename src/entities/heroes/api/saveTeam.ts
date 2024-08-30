@@ -22,8 +22,13 @@ export const saveTeam = async function (tempTeam: Card[]) {
             throw new Error('Something went wrong. Please try again later!');
         }
 
-        useHeroStore.setState({ team: data.team.filter((item: Card) => item.position !== null), cards: data.team });
-        useGameStatsStore.setState({ critical_chance: data.critical_chance, damage: data.damage, energy_usage: data.energy_usage })
+        useHeroStore.setState({ cards: data.team, team_skills: data.team_values });
+        useHeroStore.getState().teamFromCards();
+        useGameStatsStore.setState({
+            critical_chance: data.critical_chance,
+            damage: data.damage,
+            energy_usage: data.energy_usage
+        })
     } catch (error) {
         showAlert('Something went wrong. Please try again later! ' + error);
     }

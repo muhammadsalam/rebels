@@ -25,8 +25,8 @@ export const ProfilePage = () => {
     const total_value_start = useGameStatsStore(
         (state) => state.start_level_value
     );
-    const total_hero_values = useGameStatsStore(
-        (state) => state.total_hero_values
+    const total_values = useGameStatsStore(
+        (state) => state.total_values
     );
 
     const navigate = useNavigate();
@@ -88,14 +88,14 @@ export const ProfilePage = () => {
                             Knowledge
                         </div>
                         <span className={styles.skill_value}>
-                            {total_hero_values.knowledge}
+                            {total_values.knowledge}
                         </span>
                     </div>
                     <div className={styles.line}>
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${(total_hero_values.knowledge /
+                                width: `${(total_values.knowledge /
                                     MAX_TOTAL_KNOWLEDGE_VALUE) *
                                     100
                                     }%`,
@@ -110,14 +110,14 @@ export const ProfilePage = () => {
                             Loyalty
                         </div>
                         <span className={styles.skill_value}>
-                            {total_hero_values.loyalty}
+                            {total_values.loyalty}
                         </span>
                     </div>
                     <div className={styles.line}>
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${(total_hero_values.loyalty /
+                                width: `${(total_values.loyalty /
                                     MAX_TOTAL_LOYALTY_VALUE) *
                                     100
                                     }%`,
@@ -132,14 +132,14 @@ export const ProfilePage = () => {
                             Influence
                         </div>
                         <span className={styles.skill_value}>
-                            {total_hero_values.influence}
+                            {total_values.influence}
                         </span>
                     </div>
                     <div className={styles.line}>
                         <div
                             className={clsx(styles.line_inner)}
                             style={{
-                                width: `${(total_hero_values.influence /
+                                width: `${(total_values.influence /
                                     MAX_TOTAL_INFLUENCE_VALUE) *
                                     100
                                     }%`,
