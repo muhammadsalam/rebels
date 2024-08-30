@@ -8,6 +8,9 @@ import { ModalReward, TReward } from "widgets/modal-reward";
 import { axios, showAlert } from "shared/libs/utils";
 import { Island } from "shared/ui";
 import { useBodyLock } from "shared/libs/hooks";
+import { useGameStatsStore, useUserStore } from "entities/user";
+import { useHeroStore } from "entities/heroes";
+import caseSound from '/assets/cases.mp3'
 
 export const Menu = () => {
     useBodyLock();
@@ -27,13 +30,42 @@ export const Menu = () => {
     }, []);
 
     // УБРАТЬ
-    const handleBABLO = () => {
+    const handleBABLO = async () => {
         try {
             setIsRewardModalActive(true);
             setIsDailyGiftActive(false);
 
-            for (let i = 0; i < 100; i++) {
-                axios.get(`/spin/run?${0}`)
+            new Audio(caseSound).play();
+
+            for (let i = 0; i < 75; i++) {
+                const { status, data } = await axios.get(`/spin/run`);
+
+                if (status !== 200) {
+                    setIsRewardModalActive(false);
+                    throw new Error("Something went wrong. Please try again later");
+                }
+
+                if (data.prize.toLowerCase() === "points") {
+                    setReward(data.points);
+                    useUserStore.setState({
+                        balance: data.balance,
+                    });
+                }
+
+                if (data.prize.toLowerCase() === "hero") {
+                    setReward(data.hero);
+                    useHeroStore.setState({ cards: data.heroes });
+                    useHeroStore.getState().teamFromCards();
+                    useGameStatsStore.setState({
+                        total_value: data.total_value,
+                        total_hero_values: data.total_values,
+                    })
+                }
+
+                useGameStatsStore.setState({
+                    energy_update: data.energy_update,
+                    max_energy: data.max_energy,
+                })
             }
         } catch (e) {
             showAlert("Something went wrong. Please try again later. " + e);

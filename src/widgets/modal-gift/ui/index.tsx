@@ -34,7 +34,7 @@ export const ModalGift: FC<{
                 if (data.prize.toLowerCase() === "points") {
                     setReward(data.points);
                     useUserStore.setState({
-                        balance: useUserStore.getState().balance + data.points,
+                        balance: data.balance,
                     });
                 }
 
