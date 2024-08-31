@@ -14,7 +14,7 @@ function App() {
     const isLandscape = useOrientation();
 
     const [isLoading, setIsLoading] = useState(true);
-    setTimeout(() => setIsLoading(false), 3000);
+    setTimeout(() => setIsLoading(false), 3500);
 
     useEnergy();
 
