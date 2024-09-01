@@ -8,15 +8,15 @@ import { useEnergy } from "features/energy";
 import { useLoadFonts } from "./hooks/useLoadFonts";
 import { useOrientation } from "./hooks/useOrientation";
 
+
 function App() {
     const { isInitialized } = useInitializeApp();
     const isFontsLoaded = useLoadFonts();
     const isLandscape = useOrientation();
+    useEnergy();
 
     const [isLoading, setIsLoading] = useState(true);
     setTimeout(() => setIsLoading(false), 5000);
-
-    useEnergy();
 
     if (
         !isInitialized

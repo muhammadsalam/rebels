@@ -5,6 +5,9 @@ import clsx from "clsx";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { formatNumber, tgApp } from "shared/libs/utils";
 import { useNavigate } from "react-router-dom";
+import useSound from "use-sound";
+import claimSound from "/assets/sounds/claim.mp3";
+import startMiningSound from '/assets/sounds/startmining.mp3';
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -91,6 +94,8 @@ export const Mine = () => {
 
     const timeoutIdRef = useRef<number | null>(null);
 
+    const [playClaimingSound] = useSound(claimSound);
+    const [playStartMiningSound] = useSound(startMiningSound);
     const handleOnClickButton = (e: MouseEvent<HTMLButtonElement>) => {
         const target = e.target as HTMLButtonElement;
 
@@ -106,10 +111,12 @@ export const Mine = () => {
         }, 200);
 
         if (mining_claimed_at === 0) {
+            playStartMiningSound();
             return startMining();
         }
 
         if (mining_balance === mining_max_points) {
+            playClaimingSound();
             return claimMining();
         }
     };

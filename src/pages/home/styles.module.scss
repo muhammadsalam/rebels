@@ -16,11 +16,11 @@
     display: flex;
     translate: 0% 0;
     transition: translate 0.2s ease-in-out;
-    gap: 20px;
+    gap: 100px;
 }
 
 .slider_content__active {
-    translate: calc(-100% - 20px) 0 0;
+    translate: calc(-100% - 100px) 0 0;
 }
 
 .slider_item {

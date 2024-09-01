@@ -3,6 +3,8 @@ import styles from "./styles.module.scss";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Accordeon } from "widgets/accordeon";
+import useSound from "use-sound";
+import accordeonClickSound from '/assets/sounds/click.mp3';
 
 export const FAQPage = () => {
     const navigate = useNavigate();
@@ -19,11 +21,17 @@ export const FAQPage = () => {
         };
     }, []);
 
+    const [playAccordeonClick] = useSound(accordeonClickSound)
+    const handleClick = () => {
+        playAccordeonClick()
+    }
+
     return (
         <div className={styles.faq}>
             <style>{"* {user-select: auto}"}</style>
             <h2 className={styles.heading}>FAQ</h2>
             <Accordeon
+                onClick={handleClick}
                 title="How to start playing?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -35,6 +43,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="How to level up cards?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -48,6 +57,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="What is energy and how is it used?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -58,6 +68,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="How to get new cards?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -68,6 +79,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="How does the chest system work?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -79,6 +91,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="What types of cards are there and how do they differ?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -89,6 +102,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="How to get rare cards?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -100,6 +114,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="How do character levels affect battle?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -111,6 +126,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="How to develop your account and what does it give?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}
@@ -123,6 +139,7 @@ export const FAQPage = () => {
             </Accordeon>
 
             <Accordeon
+                onClick={handleClick}
                 title="How do card characteristics work?"
                 textStyles={{ fontSize: "18px", color: "var(--gray)" }}
                 arrowStyles={{ flexGrow: 1, maxWidth: 24, width: "100%" }}

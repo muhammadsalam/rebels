@@ -14,7 +14,7 @@ import claim from "features/claim";
 import clsx from "clsx";
 import useVillainStore from "entities/villain";
 import useSound from "use-sound";
-import wastedSound from "/assets/wasted.mp3";
+import wastedSound from "/assets/sounds/wasted.mp3";
 
 interface ClickPosition {
     x: number;

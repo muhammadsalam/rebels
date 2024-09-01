@@ -10,6 +10,8 @@ import useChestsStore from "entities/chests";
 import { useUserStore, useGameStatsStore } from "entities/user";
 import { ModalReward, TReward } from "widgets/modal-reward";
 import { useHeroStore } from "entities/heroes";
+import ChestAudio from "/assets/sounds/chest.mp3";
+import useSound from "use-sound";
 
 export const ShopPage = () => {
     const chests = useChestsStore((state) => state.chests);
@@ -32,17 +34,22 @@ export const ShopPage = () => {
 
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
     const [reward, setReward] = useState<TReward | null>(null);
+    const [isBuyingId, setIsBuyingId] = useState<null | number>(null);
+    const [playChestAudio] = useSound(ChestAudio);
 
     const handleBuyChest = async (id: number) => {
         try {
-            setIsRewardModalActive(true);
+            if (isBuyingId) return;
+
+            setIsBuyingId(id)
             const { status, data } = await axios.post(`/shop/buy/box/${id}`);
 
             if (status !== 200) {
-                setIsRewardModalActive(false);
                 throw new Error("Failed to buy chest. Please try again later.");
             }
 
+            playChestAudio();
+            setIsRewardModalActive(true);
             useUserStore.setState({ balance: data.balance, level: data.profile.level, level_name: data.profile.level_name });
             useHeroStore.setState({ cards: data.heroes });
             useHeroStore.getState().teamFromCards();
@@ -68,10 +75,10 @@ export const ShopPage = () => {
 
             setReward(data.reward[0]);
 
-        } catch (e: any) {
-            setIsRewardModalActive(false);
-            console.log(e);
-            showAlert(`Failed to buy chest. Please try again later. ${e.message}`);
+        } catch (error) {
+            showAlert(`Failed to buy chest. Please try again later. ${error}`);
+        } finally {
+            setIsBuyingId(null)
         }
     };
 
@@ -93,12 +100,14 @@ export const ShopPage = () => {
 
             <div className={styles.chests}>
                 {[...chests].reverse().map((chest) => (
-                    <div
+                    <button
                         key={chest.id}
                         className={clsx(
                             styles.chest,
                             styles[`chest__${chest.rarity.toLowerCase()}`]
                         )}
+                        onClick={() => handleBuyChest(chest.id)}
+                        disabled={balance < chest.price || level < chest.required_level || chest.id === isBuyingId}
                     >
                         <div className={styles.chest_icon}>
                             <ChestIcon />
@@ -123,14 +132,10 @@ export const ShopPage = () => {
                             </p>
                         </div>
 
-                        <button
-                            className={styles.chest_button}
-                            onClick={() => handleBuyChest(chest.id)}
-                            disabled={balance < chest.price || level < chest.required_level}
-                        >
+                        <span className={styles.chest_status}>
                             Buy
-                        </button>
-                    </div>
+                        </span>
+                    </button>
                 ))}
             </div>
 

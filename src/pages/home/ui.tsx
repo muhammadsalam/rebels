@@ -10,21 +10,30 @@ import { Switcher } from "shared/ui";
 import { Mine } from "widgets/mine";
 import clsx from "clsx";
 import useVillainStore from "entities/villain";
+import useSound from "use-sound";
+import nextVillainSound from '/assets/sounds/nextvillain.mp3';
+import clickSound from '/assets/sounds/click.mp3';
 
 export const HomePage = () => {
     useEffect(() => {
         tgApp.BackButton.hide();
     }, []);
 
+    const [playSwitchSound] = useSound(clickSound);
     const [isSwitched, setIsSwitched] = useState(false);
     const handleSwitch = () => {
+        playSwitchSound();
         setIsSwitched((state) => !state);
     };
 
     const current_health = useVillainStore((state) => state.current_health);
     const wasted = useVillainStore((state) => state.wasted);
-
-    const handleNextVillainClick = useVillainStore(state => state.toggleVillain);
+    const toggleVillain = useVillainStore(state => state.toggleVillain);
+    const [playNextRogueAudio] = useSound(nextVillainSound);
+    const handleNextVillain = () => {
+        playNextRogueAudio();
+        toggleVillain();
+    };
 
     return (
         <div className={styles.container}>
@@ -53,7 +62,7 @@ export const HomePage = () => {
             {wasted ? (
                 <button
                     className={styles.button__wasted}
-                    onClick={handleNextVillainClick}
+                    onClick={handleNextVillain}
                     disabled={current_health === 0}
                 >
                     Next rogue

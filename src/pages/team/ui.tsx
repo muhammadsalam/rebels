@@ -19,8 +19,9 @@ import {
     MAX_TEAM_KNOWLEDGE,
     MAX_TEAM_LOYALTY,
 } from "shared/CONSTANT";
-
 import styles from "./styles.module.scss";
+import useSound from "use-sound";
+import upgradeAudio from "/assets/sounds/upgrade.mp3";
 
 
 export const TeamPage = () => {
@@ -106,15 +107,20 @@ export const TeamPage = () => {
         };
     }, []);
 
+    const [playUpgradeAudio] = useSound(upgradeAudio);
+    const [isUpgrading, setIsUpgrading] = useState(false);
     const handleUpgradeCard = async (hero_id: number) => {
+        setIsUpgrading(true);
         let savedCondition: any = true;
         if (hasChanges()) {
             savedCondition = await handleSaveTeam();
             console.log(savedCondition);
         }
         const upgrade_data = await upgradeHero(hero_id);
+        setIsUpgrading(false);
 
         if (upgrade_data) {
+            playUpgradeAudio();
             setActiveChoosedCard(null);
             setModalCard(null);
             setChoosedCards(upgrade_data.upgraded_team);
@@ -402,7 +408,7 @@ export const TeamPage = () => {
                         {modalCard.count > 1 && !(modalCard.rarity === 'Legend' && modalCard.level === 7) && <Island
                             tag='button'
                             className={styles.upgradeButton}
-                            disabled={balance < modalCard.upgrade_price}
+                            disabled={balance < modalCard.upgrade_price || isUpgrading}
                             onClick={() =>
                                 handleUpgradeCard(modalCard.id)
                             }

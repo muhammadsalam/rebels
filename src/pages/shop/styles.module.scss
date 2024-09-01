@@ -54,9 +54,17 @@
     box-shadow: var(--shadow-1);
     border-radius: 12px;
     padding: 16px;
+    width: 100%;
+    border: 0;
 
     & + & {
         margin-top: 32px;
+    }
+
+    &:disabled {
+        .chest_status {
+            color: var(--gray);
+        }
     }
 }
 
@@ -155,7 +163,7 @@
     }
 }
 
-.chest_button {
+.chest_status {
     margin-left: auto;
     border: 0;
     background-color: transparent;
@@ -163,9 +171,4 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 21px;
-
-    &:disabled {
-        color: var(--gray);
-        // animation: buyAnimation ease-in-out 0.5s infinite;
-    }
 }

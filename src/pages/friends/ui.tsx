@@ -8,6 +8,8 @@ import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import DoneIcon from 'icons/done.svg?react';
 import { useUserStore } from "entities/user";
+import useSound from "use-sound";
+import claimSound from "/assets/sounds/claim.mp3";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -103,13 +105,21 @@ export const FriendsPage = memo(() => {
         return () => clearInterval(interval);
     }, [claim_time])
 
+    const [isClaiming, setIsClaiming] = useState(false);
+    const [playClaimingSound] = useSound(claimSound);
     const handleClaim = async () => {
         try {
+            if (isClaiming) return;
+
+            setIsClaiming(true);
+
             const { status, data } = await axios.post('/user/referal/claim');
 
             if (status !== 200) {
                 throw new Error('something went wrong');
             }
+
+            playClaimingSound();
 
             useUserStore.setState({ balance: data.balance });
             useReferalStore.setState({ claim_time: data.referral_balance_claim_at, balance: 0 });
@@ -117,6 +127,8 @@ export const FriendsPage = memo(() => {
         } catch (error: any) {
             showAlert(`Something went wrong. Please try again later. ${error.message}`);
             console.log(error);
+        } finally {
+            setIsClaiming(false);
         }
     }
 
