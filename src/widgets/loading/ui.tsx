@@ -9,7 +9,7 @@ export const Loading = () => {
         const typed = new Typed(textRef.current, {
             startDelay: 1100,
             strings: ["Despite everything, there is calculation in all chaos."],
-            typeSpeed: 20,
+            typeSpeed: 30,
             // onTypingPaused: () => {
             //     alert('onTypingPaused');
             // },
