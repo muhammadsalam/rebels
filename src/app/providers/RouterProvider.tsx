@@ -12,11 +12,11 @@ import { FriendsInfoPage } from 'pages/friends-info';
 import { AboutPage } from 'pages/about';
 import { FAQPage } from 'pages/faq';
 import useSound from 'use-sound';
-import pageClicksAudio from '/assets/sounds/pageclicks.mp3';
+// import pageClicksAudio from '/assets/sounds/pageclicks.mp3';
 
 export const AppRoutes: React.FC = () => {
     const location = useLocation();
-    const [playPageChanged] = useSound(pageClicksAudio)
+    const [playPageChanged] = useSound('/assets/sounds/pageclicks.mp3');
 
     useEffect(() => {
         playPageChanged();

@@ -21,7 +21,6 @@ import {
 } from "shared/CONSTANT";
 import styles from "./styles.module.scss";
 import useSound from "use-sound";
-import upgradeAudio from "/assets/sounds/upgrade.mp3";
 
 
 export const TeamPage = () => {
@@ -42,7 +41,10 @@ export const TeamPage = () => {
     // const handleCardsGalleryPage = () => {};
     const [upgradedCard, setUpgradedCard] = useState<null | { name: string, level: number }>(null);
 
+    const [playClickSound] = useSound('/assets/sounds/click.mp3');
     const handleCardClick = (card: Card) => {
+        playClickSound();
+
         if (card.id !== 0) {
             setActiveChoosedCard(card);
             setModalCard(card);
@@ -107,7 +109,7 @@ export const TeamPage = () => {
         };
     }, []);
 
-    const [playUpgradeAudio] = useSound(upgradeAudio);
+    const [playUpgradeAudio] = useSound('/assets/sounds/upgrade.mp3');
     const [isUpgrading, setIsUpgrading] = useState(false);
     const handleUpgradeCard = async (hero_id: number) => {
         setIsUpgrading(true);

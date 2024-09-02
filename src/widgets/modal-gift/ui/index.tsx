@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Modal } from "shared/ui";
 import styles from "./styles.module.scss";
 import GiftIcon from "icons/gift.svg?react";
@@ -6,12 +6,11 @@ import { axios, showAlert } from "shared/libs/utils";
 import { useGameStatsStore, useUserStore } from "entities/user";
 import { TReward } from "widgets/modal-reward";
 import { useHeroStore } from "entities/heroes";
+import useSound from "use-sound";
 
 export const ModalGift: FC<{
     onModalHide: () => void;
-    setReward: (
-        reward: number | TReward | null
-    ) => void;
+    setReward: (reward: number | TReward | null) => void;
     setIsRewardModalActive: (_: boolean) => void;
     setIsDailyGiftActive: (_: boolean) => void;
 }> = ({
@@ -20,16 +19,24 @@ export const ModalGift: FC<{
     setIsRewardModalActive,
     setIsDailyGiftActive,
 }) => {
+        const [isDailySending, setIsDailySending] = useState(false);
+        const [playGiftSound] = useSound("/assets/sounds/gift.mp3");
+
         const onCardClick = async (index: number) => {
             try {
-                setIsRewardModalActive(true);
-                setIsDailyGiftActive(false);
+                playGiftSound();
+                if (isDailySending) return;
+                setIsDailySending(true);
+
                 const { status, data } = await axios.get(`/spin/run?${index}`);
 
                 if (status !== 200) {
                     setIsRewardModalActive(false);
                     throw new Error("Something went wrong. Please try again later");
                 }
+
+                setIsRewardModalActive(true);
+                setIsDailyGiftActive(false);
 
                 if (data.prize.toLowerCase() === "points") {
                     setReward(data.points);
@@ -50,16 +57,18 @@ export const ModalGift: FC<{
                     });
                     useUserStore.setState({
                         level_name: data.profile.level_name,
-                        level: data.profile.level
-                    })
+                        level: data.profile.level,
+                    });
                 }
 
                 useGameStatsStore.setState({
                     energy_update: data.energy_update,
                     max_energy: data.max_energy,
-                })
+                });
             } catch (e) {
                 showAlert("Something went wrong. Please try again later. " + e);
+            } finally {
+                setIsDailySending(false);
             }
         };
 

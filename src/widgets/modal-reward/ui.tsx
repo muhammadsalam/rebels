@@ -4,6 +4,7 @@ import { Modal } from "shared/ui";
 import CoinIcon from "icons/coin.svg?react";
 import { formatNumber } from "shared/libs/utils";
 import clsx from "clsx";
+import useSound from "use-sound";
 
 export type TReward =
     | {
@@ -17,6 +18,12 @@ export const ModalReward: FC<{
     reward: TReward | null;
     handleClaimChest: () => void;
 }> = ({ reward, handleClaimChest }) => {
+
+    const [playGiftSound] = useSound("/assets/sounds/gift.mp3");
+    const handleClaimClick = () => {
+        playGiftSound();
+        handleClaimChest();
+    }
     return (
         <Modal onModalHide={handleClaimChest} heading="Your reward">
             <div
@@ -50,7 +57,7 @@ export const ModalReward: FC<{
                 )}
             </div>
             <button
-                onClick={handleClaimChest}
+                onClick={handleClaimClick}
                 className={styles.reward_button}
                 disabled={!reward}
             >

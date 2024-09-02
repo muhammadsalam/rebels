@@ -14,7 +14,6 @@ import claim from "features/claim";
 import clsx from "clsx";
 import useVillainStore from "entities/villain";
 import useSound from "use-sound";
-import wastedSound from "/assets/sounds/wasted.mp3";
 
 interface ClickPosition {
     x: number;
@@ -96,7 +95,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
 
     const wasted = useVillainStore((state) => state.wasted);
 
-    const [play] = useSound(wastedSound);
+    const [play] = useSound('/assets/sounds/wasted.mp3');
     useEffect(() => {
         wasted && play();
     }, [wasted]);

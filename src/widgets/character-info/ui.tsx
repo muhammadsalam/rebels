@@ -4,6 +4,7 @@ import InfoBoxIcon from 'icons/info-box.svg?react';
 import { Island, Modal } from "shared/ui";
 
 import styles from "./styles.module.scss";
+import useSound from "use-sound";
 
 export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const current_name = useVillainStore((state) => state.current_name);
@@ -12,6 +13,17 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
     const current_description = useVillainStore(state => state.current_description);
     const [isInfoActive, setIsInfoActive] = useState(false);
 
+    const [playClickSound] = useSound('/assets/sounds/click.mp3');
+    const handleInfoBoxClick = () => {
+        playClickSound();
+        setIsInfoActive(true);
+    }
+
+    const handleInfoBoxClose = () => {
+        playClickSound();
+        setIsInfoActive(false);
+    }
+
     return (
         <Island {...props} className={styles.wrapper}>
             <div className={styles.info}>
@@ -19,7 +31,7 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
                 <div className={styles.info_line}></div>
                 <div className={styles.info_name}>{current_name}</div>
             </div>
-            <InfoBoxIcon onClick={() => setIsInfoActive(true)} />
+            <InfoBoxIcon onClick={handleInfoBoxClick} />
 
             {isInfoActive && <Modal onModalHide={() => setIsInfoActive(false)}>
                 <div className={styles.person_top}>
@@ -36,7 +48,7 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
 
                 <p className={styles.person_text}>{current_description}</p>
 
-                <Island tag="button" onClick={() => setIsInfoActive(false)} className={styles.person_button}>
+                <Island tag="button" onClick={handleInfoBoxClose} className={styles.person_button}>
                     Close
                 </Island>
             </Modal>}

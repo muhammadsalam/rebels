@@ -10,9 +10,7 @@ import { Island } from "shared/ui";
 import { useBodyLock } from "shared/libs/hooks";
 import { useGameStatsStore, useUserStore } from "entities/user";
 import { useHeroStore } from "entities/heroes";
-import caseSound from '/assets/sounds/cases.mp3'
 import useSound from "use-sound";
-// import clickDailySound from '/assets/sounds/gift.mp3'
 
 
 export const Menu = () => {
@@ -21,7 +19,6 @@ export const Menu = () => {
     const [reward, setReward] = useState<TReward | null | number>(null);
     const [isDailyGiftActive, setIsDailyGiftActive] = useState(false);
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
-    // const [playGift] = useSound(clickDailySound);
 
     const onClaim = useCallback(() => {
         setIsRewardModalActive(false);
@@ -33,7 +30,7 @@ export const Menu = () => {
         setIsDailyGiftActive(true);
     }, []);
 
-    const [playCaseSound] = useSound(caseSound);
+    const [playCaseSound] = useSound('/assets/sounds/cases.mp3');
 
     // УБРАТЬ
     const handleBABLO = async () => {

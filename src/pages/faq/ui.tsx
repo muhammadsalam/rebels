@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Accordeon } from "widgets/accordeon";
 import useSound from "use-sound";
-import accordeonClickSound from '/assets/sounds/click.mp3';
 
 export const FAQPage = () => {
     const navigate = useNavigate();
@@ -21,7 +20,7 @@ export const FAQPage = () => {
         };
     }, []);
 
-    const [playAccordeonClick] = useSound(accordeonClickSound)
+    const [playAccordeonClick] = useSound('/assets/sounds/click.mp3')
     const handleClick = () => {
         playAccordeonClick()
     }

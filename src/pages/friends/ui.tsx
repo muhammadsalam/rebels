@@ -9,7 +9,6 @@ import clsx from "clsx";
 import DoneIcon from 'icons/done.svg?react';
 import { useUserStore } from "entities/user";
 import useSound from "use-sound";
-import claimSound from "/assets/sounds/claim.mp3";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -106,7 +105,7 @@ export const FriendsPage = memo(() => {
     }, [claim_time])
 
     const [isClaiming, setIsClaiming] = useState(false);
-    const [playClaimingSound] = useSound(claimSound);
+    const [playClaimingSound] = useSound('/assets/sounds/claim.mp3');
     const handleClaim = async () => {
         try {
             if (isClaiming) return;

@@ -10,7 +10,6 @@ import useChestsStore from "entities/chests";
 import { useUserStore, useGameStatsStore } from "entities/user";
 import { ModalReward, TReward } from "widgets/modal-reward";
 import { useHeroStore } from "entities/heroes";
-import ChestAudio from "/assets/sounds/chest.mp3";
 import useSound from "use-sound";
 
 export const ShopPage = () => {
@@ -35,7 +34,7 @@ export const ShopPage = () => {
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
     const [reward, setReward] = useState<TReward | null>(null);
     const [isBuyingId, setIsBuyingId] = useState<null | number>(null);
-    const [playChestAudio] = useSound(ChestAudio);
+    const [playChestAudio] = useSound('/assets/sounds/chest.mp3');
 
     const handleBuyChest = async (id: number) => {
         try {
