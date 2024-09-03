@@ -12,15 +12,13 @@
 }
 
 .block {
-    margin-top: 1cm;
-    margin: 1cm 10px 0;
-    border: 2px solid var(--white);
+    margin: 5cm 40px 0;
+    border: 1px solid var(--white);
     display: flex;
     align-items: flex-start;
     max-width: 370px;
     gap: 20px;
-    font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
 
     animation: block 0.5s ease-in-out 0.5s forwards;
     color: transparent;
