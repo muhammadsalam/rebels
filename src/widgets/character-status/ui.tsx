@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import HeartIcon from "icons/heart.svg?react";
 import useVillainStore from "entities/villain";
 import { useGameStatsStore } from "entities/user";
-import { formatNumber } from "shared/libs/utils";
+import { axios, formatNumber } from "shared/libs/utils";
 import { Island, Line } from "shared/ui";
 
 export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
@@ -15,6 +15,13 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
         );
         const max_energy = useGameStatsStore((state) => state.max_energy);
         const energyPercentage = (current_energy / max_energy) * 100;
+
+        // УБРАТЬ
+        const handleClick = () => {
+            axios.post("/user/energy").then(() => {
+                useGameStatsStore.setState({ energy_balance: useGameStatsStore.getState().max_energy })
+            })
+        }
 
         return (
             <div {...props} className={styles.wrapper}>
@@ -43,7 +50,7 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
                     <span>{formatNumber(current_energy)}</span>
                     <span>{formatNumber(max_energy)}</span>
                 </div>
-                <Island className={styles.battery_icon}>
+                <Island className={styles.battery_icon} onClick={handleClick}>
                     <svg
                         width="20"
                         height="20"
