@@ -135,6 +135,7 @@ export const TeamPage = () => {
     };
 
     const handleChange = () => {
+        playClickSound();
         setIsCardsGalleryActive(true);
         setModalCard(null);
     }

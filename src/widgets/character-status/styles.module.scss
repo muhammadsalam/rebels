@@ -28,26 +28,17 @@
 }
 
 .line {
-    box-shadow: var(--inner-shadow);
     margin: 0 16px;
-    border-radius: 25px;
-    line-height: 17px;
 }
 
-.line_inner {
-    width: 21%;
-    height: 9px;
-    border-radius: 25px;
+.line__health {
+    --action-background: var(--orange-2);
+    --action-box-shadow: 0.63px 3px 11.7px 0px rgb(235, 100, 42, 0.58);
 }
 
-.line__health .line_inner {
-    background-color: var(--orange-2);
-    box-shadow: 0.63px 3px 11.7px 0px rgb(235, 100, 42, 0.58);
-}
-
-.line__energy .line_inner {
-    background-color: var(--green);
-    box-shadow: 0.63px 3px 11.7px 0px rgb(196, 235, 42, 0.38);
+.line__energy {
+    --action-background: var(--green);
+    --action-box-shadow: 0.63px 3px 11.7px 0px rgb(196, 235, 42, 0.38);
 }
 
 .battery_count {

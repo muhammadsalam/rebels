@@ -8,6 +8,7 @@ import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
 import { useUserStore } from "entities/user";
+import useSound from "use-sound";
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
     activeChoosedCard?: Card | null;
@@ -40,7 +41,9 @@ export const CardsPage: FC<CardProps> = ({
     const choosedCards = tempCards || useHeroStore((state) => state.team);
     const balance = useUserStore(state => state.balance)
 
+    const [playClickSound] = useSound('/assets/sounds/click.mp3');
     const handleCardClick = (card: Card) => {
+        playClickSound()
         // если выбранной карточки нет, то значит перешёл на страницу my_cards сразу.
 
         if (activeChoosedCard === null) {
@@ -49,12 +52,10 @@ export const CardsPage: FC<CardProps> = ({
         }
 
         if (activeChoosedCard.id === 0) {
-            (async () => {
-                const tempArr = choosedCards.map((item) =>
-                    item.id === activeChoosedCard.id ? card : item
-                );
-                setChoosedCards && setChoosedCards(tempArr);
-            })()
+            const tempArr = choosedCards.map((item) =>
+                item.id === activeChoosedCard.id ? card : item
+            );
+            setChoosedCards && setChoosedCards(tempArr);
         }
 
         // проверяется нажатая карточка такая же как активная или нет И поверяется есть ли карточка в выбранных

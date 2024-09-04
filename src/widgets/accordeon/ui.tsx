@@ -2,6 +2,7 @@ import { FC, HTMLAttributes, ReactNode, useState } from "react";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
 import ArrowDownIcon from "icons/arrow-down.svg?react";
+import useSound from "use-sound";
 
 interface AccordeonProps extends HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -23,10 +24,12 @@ export const Accordeon: FC<AccordeonProps> = ({
     textStyles,
     ...props
 }) => {
+    const [playAccordeonClick] = useSound('/assets/sounds/click.mp3')
     const [isActive, setIsActive] = useState(isAccordActive);
 
     const handleAccordionClick = () => {
         setIsActive((state) => !state);
+        playAccordeonClick();
     };
 
     return (

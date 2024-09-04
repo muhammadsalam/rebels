@@ -1,13 +1,13 @@
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import { claimMining, startMining, useGameStatsStore } from "entities/user";
-import clsx from "clsx";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { formatNumber, tgApp } from "shared/libs/utils";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import claimSound from "/assets/sounds/claim.mp3";
 import startMiningSound from '/assets/sounds/startmining.mp3';
+import { Line } from "shared/ui";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -181,21 +181,11 @@ export const Mine = () => {
                     </strong>
                 </div>
             </div>
-            <div className={styles.line}>
-                <div
-                    className={clsx(
-                        styles.line_inner,
-                        mining_max_points === mining_balance &&
-                        styles.line_inner__full
-                    )}
-                    style={{
-                        width: `${mining_claimed_at === 0
-                            ? 0
-                            : (mining_balance / mining_max_points) * 100
-                            }%`,
-                    }}
-                ></div>
-            </div>
+            <Line
+                className={styles.line}
+                width={mining_claimed_at === 0 ? 0 : (mining_balance / mining_max_points) * 100}
+                height={27}
+            />
         </div>
     );
 };
