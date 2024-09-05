@@ -11,16 +11,19 @@ import { Mine } from "widgets/mine";
 import clsx from "clsx";
 import useVillainStore from "entities/villain";
 import useSound from "use-sound";
+import { useUserStore } from "entities/user";
 
 export const HomePage = () => {
     useEffect(() => {
         tgApp.BackButton.hide();
     }, []);
 
+    const sounds = useUserStore(state => state.settings.sounds)
+
     const [playSwitchSound] = useSound('/assets/sounds/click.mp3');
     const [isSwitched, setIsSwitched] = useState(false);
     const handleSwitch = () => {
-        playSwitchSound();
+        sounds && playSwitchSound();
         setIsSwitched((state) => !state);
     };
 
@@ -29,7 +32,7 @@ export const HomePage = () => {
     const toggleVillain = useVillainStore(state => state.toggleVillain);
     const [playNextRogueAudio] = useSound('/assets/sounds/nextvillain.mp3');
     const handleNextVillain = () => {
-        playNextRogueAudio();
+        sounds && playNextRogueAudio();
         toggleVillain();
     };
 

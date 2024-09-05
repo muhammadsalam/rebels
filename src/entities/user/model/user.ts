@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 export interface UserState {
     settings: {
-        vibro: boolean;
+        sounds: boolean;
     };
     token: string | null;
     id: number | null;
@@ -15,7 +15,7 @@ export interface UserState {
 
 export const useUserStore = create<UserState>(() => ({
     settings: {
-        vibro: true,
+        sounds: true,
     },
     token: null,
     id: null,

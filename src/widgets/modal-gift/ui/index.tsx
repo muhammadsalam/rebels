@@ -19,12 +19,13 @@ export const ModalGift: FC<{
     setIsRewardModalActive,
     setIsDailyGiftActive,
 }) => {
+        const sounds = useUserStore(state => state.settings.sounds)
         const [isDailySending, setIsDailySending] = useState(false);
         const [playGiftSound] = useSound("/assets/sounds/gift.mp3");
 
         const onCardClick = async (index: number) => {
             try {
-                playGiftSound();
+                sounds && playGiftSound();
                 if (isDailySending) return;
                 setIsDailySending(true);
 

@@ -31,6 +31,8 @@ export const ShopPage = () => {
         };
     }, []);
 
+    const sounds = useUserStore(state => state.settings.sounds)
+
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
     const [reward, setReward] = useState<TReward | null>(null);
     const [isBuyingId, setIsBuyingId] = useState<null | number>(null);
@@ -47,7 +49,7 @@ export const ShopPage = () => {
                 throw new Error("Failed to buy chest. Please try again later.");
             }
 
-            playChestAudio();
+            sounds && playChestAudio();
             setIsRewardModalActive(true);
             useUserStore.setState({ balance: data.balance, level: data.profile.level, level_name: data.profile.level_name });
             useHeroStore.setState({ cards: data.heroes });

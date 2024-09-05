@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
-import { claimMining, startMining, useGameStatsStore } from "entities/user";
+import { claimMining, startMining, useGameStatsStore, useUserStore } from "entities/user";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { formatNumber, tgApp } from "shared/libs/utils";
 import { useNavigate } from "react-router-dom";
@@ -94,6 +94,7 @@ export const Mine = () => {
 
     const timeoutIdRef = useRef<number | null>(null);
 
+    const sounds = useUserStore((state) => state.settings.sounds);
     const [playClaimingSound] = useSound(claimSound);
     const [playStartMiningSound] = useSound(startMiningSound);
     const handleOnClickButton = (e: MouseEvent<HTMLButtonElement>) => {
@@ -111,12 +112,12 @@ export const Mine = () => {
         }, 200);
 
         if (mining_claimed_at === 0) {
-            playStartMiningSound();
+            sounds && playStartMiningSound();
             return startMining();
         }
 
         if (mining_balance === mining_max_points) {
-            playClaimingSound();
+            sounds && playClaimingSound();
             return claimMining();
         }
     };

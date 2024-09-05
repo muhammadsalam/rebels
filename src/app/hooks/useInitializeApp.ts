@@ -19,16 +19,16 @@ export const useInitializeApp = () => {
         tgApp.disableVerticalSwipes();
 
         if (parseFloat(tgApp.version) > 6.9) {
-          tgApp.CloudStorage.getItem('vibro', (_: any, value: any) => {
+          tgApp.CloudStorage.getItem('sounds', (_: any, value: any) => {
             useUserStore.setState((state) => ({
               ...state,
-              settings: { ...state.settings, vibro: value }
+              settings: { ...state.settings, sounds: value }
             }))
           });
         } else {
           useUserStore.setState((state) => ({
             ...state,
-            settings: { ...state.settings, vibro: localStorage.getItem('vibro') === 'true' }
+            settings: { ...state.settings, sounds: localStorage.getItem('sounds') === 'true' }
           }))
         }
 

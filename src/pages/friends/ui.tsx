@@ -104,6 +104,7 @@ export const FriendsPage = memo(() => {
         return () => clearInterval(interval);
     }, [claim_time])
 
+    const sounds = useUserStore(state => state.settings.sounds)
     const [isClaiming, setIsClaiming] = useState(false);
     const [playClaimingSound] = useSound('/assets/sounds/claim.mp3');
     const handleClaim = async () => {
@@ -118,7 +119,7 @@ export const FriendsPage = memo(() => {
                 throw new Error('something went wrong');
             }
 
-            playClaimingSound();
+            sounds && playClaimingSound();
 
             useUserStore.setState({ balance: data.balance });
             useReferalStore.setState({ claim_time: data.referral_balance_claim_at, balance: 0 });

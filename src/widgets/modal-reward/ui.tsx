@@ -5,6 +5,7 @@ import CoinIcon from "icons/coin.svg?react";
 import { formatNumber } from "shared/libs/utils";
 import clsx from "clsx";
 import useSound from "use-sound";
+import { useUserStore } from "entities/user";
 
 export type TReward =
     | {
@@ -19,9 +20,10 @@ export const ModalReward: FC<{
     handleClaimChest: () => void;
 }> = ({ reward, handleClaimChest }) => {
 
+    const sounds = useUserStore(state => state.settings.sounds)
     const [playGiftSound] = useSound("/assets/sounds/gift.mp3");
     const handleClaimClick = () => {
-        playGiftSound();
+        sounds && playGiftSound();
         handleClaimChest();
     }
     return (

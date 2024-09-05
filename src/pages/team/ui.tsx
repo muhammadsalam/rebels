@@ -41,9 +41,10 @@ export const TeamPage = () => {
     // const handleCardsGalleryPage = () => {};
     const [upgradedCard, setUpgradedCard] = useState<null | { name: string, level: number }>(null);
 
+    const sounds = useUserStore(state => state.settings.sounds)
     const [playClickSound] = useSound('/assets/sounds/click.mp3');
     const handleCardClick = (card: Card) => {
-        playClickSound();
+        sounds && playClickSound();
 
         if (card.id !== 0) {
             setActiveChoosedCard(card);
@@ -122,7 +123,7 @@ export const TeamPage = () => {
         setIsUpgrading(false);
 
         if (upgrade_data) {
-            playUpgradeAudio();
+            sounds && playUpgradeAudio();
             setActiveChoosedCard(null);
             setModalCard(null);
             setChoosedCards(upgrade_data.upgraded_team);
@@ -135,7 +136,7 @@ export const TeamPage = () => {
     };
 
     const handleChange = () => {
-        playClickSound();
+        sounds && playClickSound();
         setIsCardsGalleryActive(true);
         setModalCard(null);
     }

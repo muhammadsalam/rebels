@@ -31,6 +31,7 @@ export const Menu = () => {
     }, []);
 
     const [playCaseSound] = useSound('/assets/sounds/cases.mp3');
+    const sounds = useUserStore(state => state.settings.sounds)
 
     // УБРАТЬ
     const handleBABLO = async () => {
@@ -38,7 +39,7 @@ export const Menu = () => {
             setIsRewardModalActive(true);
             setIsDailyGiftActive(false);
 
-            playCaseSound();
+            sounds && playCaseSound();
 
             for (let i = 0; i < 75; i++) {
                 const { status, data } = await axios.get(`/spin/run`);

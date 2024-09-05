@@ -7,7 +7,7 @@ import {
     useState,
 } from "react";
 import styles from "./styles.module.scss";
-import { useGameStatsStore, useTapsCounterStore } from "entities/user";
+import { useGameStatsStore, useTapsCounterStore, useUserStore } from "entities/user";
 import clickCharacter from "features/clickCharacter";
 import { seededRandom } from "shared/libs/utils";
 import claim from "features/claim";
@@ -96,8 +96,9 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
     const wasted = useVillainStore((state) => state.wasted);
 
     const [play] = useSound('/assets/sounds/wasted.mp3');
+    const sounds = useUserStore(state => state.settings.sounds)
     useEffect(() => {
-        wasted && play();
+        wasted && sounds && play();
     }, [wasted]);
 
     return (

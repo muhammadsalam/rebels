@@ -5,6 +5,7 @@ import { Island, Modal } from "shared/ui";
 
 import styles from "./styles.module.scss";
 import useSound from "use-sound";
+import { useUserStore } from "entities/user";
 
 export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const current_name = useVillainStore((state) => state.current_name);
@@ -13,14 +14,16 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
     const current_description = useVillainStore(state => state.current_description);
     const [isInfoActive, setIsInfoActive] = useState(false);
 
+    const sounds = useUserStore(state => state.settings.sounds)
+
     const [playClickSound] = useSound('/assets/sounds/click.mp3');
     const handleInfoBoxClick = () => {
-        playClickSound();
+        sounds && playClickSound();
         setIsInfoActive(true);
     }
 
     const handleInfoBoxClose = () => {
-        playClickSound();
+        sounds && playClickSound();
         setIsInfoActive(false);
     }
 

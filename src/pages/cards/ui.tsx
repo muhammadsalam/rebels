@@ -40,10 +40,11 @@ export const CardsPage: FC<CardProps> = ({
     const cards = useHeroStore((state) => state.cards);
     const choosedCards = tempCards || useHeroStore((state) => state.team);
     const balance = useUserStore(state => state.balance)
+    const sounds = useUserStore(state => state.settings.sounds)
 
     const [playClickSound] = useSound('/assets/sounds/click.mp3');
     const handleCardClick = (card: Card) => {
-        playClickSound()
+        sounds && playClickSound()
         // если выбранной карточки нет, то значит перешёл на страницу my_cards сразу.
 
         if (activeChoosedCard === null) {
