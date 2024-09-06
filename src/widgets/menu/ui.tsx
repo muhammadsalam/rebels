@@ -26,13 +26,15 @@ export const Menu = () => {
         setReward(null);
     }, []);
 
-    const handleDailyGift = useCallback(() => {
-        setIsDailyGiftActive(true);
-    }, []);
-
-    const [playCaseSound] = useSound('/assets/sounds/cases.mp3');
     const sounds = useUserStore(state => state.settings.sounds)
 
+    const [playClickSound] = useSound('/assets/sounds/click.mp3');
+    const handleDailyGift = useCallback(() => {
+        sounds && playClickSound();
+        setIsDailyGiftActive(true);
+    }, [playClickSound]);
+
+    const [playCaseSound] = useSound('/assets/sounds/cases.mp3');
     // УБРАТЬ
     const handleBABLO = async () => {
         try {

@@ -4,7 +4,7 @@ import SkullIcon from "icons/skull.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import { saveTeam, Card, upgradeHero, useHeroStore } from "entities/heroes";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Island, Modal } from "shared/ui";
 import { formatNumber, tgApp } from "shared/libs/utils";
@@ -140,6 +140,11 @@ export const TeamPage = () => {
         setModalCard(null);
     }
 
+    const handleMyCardsClick = useCallback(() => {
+        sounds && playClickSound();
+        setIsCardsGalleryActive(true)
+    }, [playClickSound, sounds]);
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -270,7 +275,7 @@ export const TeamPage = () => {
             </div>
 
             <div className={styles.buttons}>
-                <Island tag="button" onClick={() => setIsCardsGalleryActive(true)} className={styles.button}>
+                <Island tag="button" onClick={handleMyCardsClick} className={styles.button}>
                     My cards
                 </Island>
 

@@ -10,14 +10,19 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useUserStore } from "entities/user";
 import { tgApp } from "shared/libs/utils";
+import useSound from "use-sound";
+import clickSound from "/assets/sounds/click.mp3";
 
 export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     const [isActiveMenu, setIsActiveMenu] = useState(false);
     const sounds = useUserStore((state) => state.settings.sounds);
 
+    const [playClickSound] = useSound(clickSound);
+
     const handleMenuOpen = useCallback(() => {
+        sounds && playClickSound();
         setIsActiveMenu((state) => !state);
-    }, []);
+    }, [playClickSound, sounds]);
 
     const handleVibroToggle = useCallback(() => {
         const newVibroState = !sounds;
@@ -26,6 +31,8 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
             ...state,
             settings: { ...state.settings, sounds: newVibroState },
         }));
+
+        playClickSound();
 
         if (parseFloat(tgApp.version) > 6.9) {
             tgApp.CloudStorage.setItem("sounds", newVibroState);
