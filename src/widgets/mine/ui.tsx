@@ -21,7 +21,7 @@ function calculateTimeToFill({ mining_claimed_at, mining_duration }: any) {
         return "0h 0m 0s";
     }
 
-    const currentTime = Math.ceil(Date.now()) / 1000; // Текущее время в секундах
+    const currentTime = Math.round(+Date.now() / 1000); // Текущее время в секундах
     const miningDurationSeconds = mining_duration * 3600; // Продолжительность добычи в секундах
     const miningEndTime = mining_claimed_at + miningDurationSeconds;
 
@@ -76,10 +76,12 @@ export const Mine = () => {
             setTimeToFill(time);
 
             const newBalance = Math.min(
-                ((+new Date() / 1000 - mining_claimed_at) / 3600) *
+                ((Math.round(+new Date() / 1000) - mining_claimed_at) / 3600) *
                 mining_speed,
                 mining_max_points
             );
+
+            console.log(newBalance, mining_balance, mining_claimed_at, mining_duration, mining_max_points);
 
             useGameStatsStore.setState({
                 mining_balance: newBalance,
