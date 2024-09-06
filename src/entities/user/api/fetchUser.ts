@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import useChestsStore from "entities/chests";
 import { useHeroStore } from "entities/heroes";
-import useQuestsStore, { Quest } from "entities/quests";
+import useQuestsStore, { Quest, QuestType } from "entities/quests";
 import useReferalStore from "entities/referal";
 import { useUserStore, useGameStatsStore } from "entities/user";
 import useVillainStore from "entities/villain";
@@ -81,6 +81,7 @@ type TTask = {
     status: "Start" | "Check" | "Claim" | "Done";
     attemps: number;
     scenario: 1 | 2 | 3;
+    type: QuestType;
 }
 
 type TBoxRarity = "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary";
@@ -184,6 +185,10 @@ export const fetchUser = async () => {
             quests: data.task.map((item: Quest) => {
                 let scenario: 1 | 2 | 3;
                 const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+                if (item.type === "TELEGRAM") {
+                    return { ...item, attemps: 1, scenario: 1 }
+                }
 
                 if (randomNumber <= 20) {
                     scenario = 1;

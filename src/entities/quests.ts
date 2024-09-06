@@ -1,6 +1,8 @@
 import { axios, showAlert } from 'shared/libs/utils';
 import { create } from 'zustand';
 
+export type QuestType = 'TELEGRAM' | any;
+
 export type Quest = {
     id: number;
     name: string;
@@ -9,6 +11,7 @@ export type Quest = {
     status: 'Start' | 'Check' | 'Claim' | 'Done';
     attemps: number;
     scenario: 1 | 2 | 3;
+    type: QuestType;
 }
 
 interface HeroState {
@@ -32,6 +35,11 @@ const useQuestsStore = create<HeroState>((set) => ({
                 quests: data.map((item: Quest) => {
                     let scenario: 1 | 2 | 3;
                     const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+                    console.log(item);
+                    if (item.type === "TELEGRAM") {
+                        return { ...item, attemps: 1, scenario: 1 }
+                    }
 
                     if (randomNumber <= 20) {
                         scenario = 1;

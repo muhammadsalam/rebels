@@ -17,6 +17,7 @@ export const QuestsPage = () => {
         const backButtonClick = () => {
             navigate("/");
         };
+        console.log(quests);
 
         tgApp.BackButton.onClick(backButtonClick);
 
@@ -28,7 +29,6 @@ export const QuestsPage = () => {
 
     const handleQuestClick = async (e: any, quest: Quest) => {
         try {
-            console.log(isProcessing);
             if (isProcessing) return e.preventDefault();
 
             useQuestsStore.setState({ isProcessing: true })
@@ -45,8 +45,7 @@ export const QuestsPage = () => {
 
                 // Показываем статус "Checking" на 3 секунды
                 setTempStatus((prev) => ({ ...prev, [quest.id]: "Checking" }));
-                await new Promise((resolve) => setTimeout(resolve, 3000));
-
+                await new Promise((resolve) => setTimeout(resolve, quest.type === "TELEGRAM" ? 0 : 3000));
 
                 switch (quest.scenario) {
                     // при первом сценарии принимаем сразу
@@ -94,19 +93,17 @@ export const QuestsPage = () => {
             }
 
             // удаление статуса "Checking" и "Failed"
-            await setTempStatus((prev) => {
+            quest.type !== "TELEGRAM" && await setTempStatus((prev) => {
                 const { [quest.id]: _, ...newState } = prev;
                 return newState;
             });
 
-            const { status, data } = await axios.post(
+            const { data } = await axios.post(
                 `task/${quest.status.toLowerCase()}`,
                 { task_id: quest.id }
             );
 
-            if (status !== 200) {
-                throw new Error("Something went wrong. Please try again later");
-            }
+
 
             if (data.status && data.new_status === "Done") {
                 useUserStore.setState({
@@ -126,8 +123,22 @@ export const QuestsPage = () => {
 
             useQuestsStore.setState({ isProcessing: false })
 
-        } catch (e: any) {
-            showAlert(`Something went wrong. Please try again later. ${e.message}`);
+        } catch (error: any) {
+            if (error.response?.status === 422) {
+                setTempStatus((prev) => ({
+                    ...prev,
+                    [quest.id]: "Failed"
+                }));
+
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                setTempStatus((prev) => ({ ...prev, [quest.id]: "Start" }));
+
+                useQuestsStore.setState({ isProcessing: false })
+
+                return;
+            }
+
+            showAlert(`Something went wrong. Please try again later. ${error.message}`);
         }
     };
 
@@ -139,8 +150,11 @@ export const QuestsPage = () => {
 
             <div className={styles.inner}>
                 {quests.map((quest) => (
-                    <div
+                    <a
                         key={quest.id}
+                        onClick={(e) => handleQuestClick(e, quest)}
+                        target="_blank"
+                        href={quest.url}
                         className={clsx(
                             styles.quest,
                             styles[
@@ -155,12 +169,7 @@ export const QuestsPage = () => {
                                 {formatNumber(quest.reward, "ru-RU")}
                             </p>
                         </div>
-                        <a
-                            target="_blank"
-                            href={quest.url}
-                            onClick={(e) => handleQuestClick(e, quest)}
-                            className={styles.quest_button}
-                        >
+                        <span className={styles.quest_button} >
                             {
                                 tempStatus[quest.id] === "Checking" ? <>
                                     Checking
@@ -171,8 +180,8 @@ export const QuestsPage = () => {
                                     </div>
                                 </> : tempStatus[quest.id] || quest.status
                             }
-                        </a>
-                    </div>
+                        </span>
+                    </a>
                 ))}
             </div>
         </div>
