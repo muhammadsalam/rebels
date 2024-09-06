@@ -19,15 +19,19 @@ export const ModalReward: FC<{
     reward: TReward | null;
     handleClaimChest: () => void;
 }> = ({ reward, handleClaimChest }) => {
-
-    const sounds = useUserStore(state => state.settings.sounds)
+    const sounds = useUserStore((state) => state.settings.sounds);
     const [playGiftSound] = useSound("/assets/sounds/gift.mp3");
     const handleClaimClick = () => {
         sounds && playGiftSound();
         handleClaimChest();
-    }
+    };
     return (
-        <Modal onModalHide={handleClaimChest} heading="Your reward">
+        <Modal
+            onModalHide={handleClaimChest}
+            heading="Your reward"
+            closeDisabled
+            overlayClickDisabled
+        >
             <div
                 className={clsx(
                     styles.reward_info,
@@ -45,7 +49,8 @@ export const ModalReward: FC<{
                         <>
                             <div className={styles.reward_img}>
                                 <img
-                                    src={`${import.meta.env.VITE_API_BACK}/hero/${reward.photo}`}
+                                    src={`${import.meta.env.VITE_API_BACK
+                                        }/hero/${reward.photo}`}
                                     alt={reward.name}
                                 />
                             </div>

@@ -12,6 +12,8 @@ interface ModalProps extends HTMLAttributes<HTMLDivElement> {
     paddingTop?: number;
     paddingBottom?: number;
     innerClassName?: string;
+    closeDisabled?: boolean;
+    overlayClickDisabled?: boolean;
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -23,22 +25,30 @@ export const Modal: FC<ModalProps> = ({
     paddingTop = 32,
     paddingBottom = '7.18vh',
     innerClassName,
+    closeDisabled = false,
+    overlayClickDisabled = false,
     ...props
 }) => {
     useBodyLock();
 
+    const handleOverlayClick = () => {
+        if (!overlayClickDisabled) {
+            onModalHide();
+        }
+    };
+
     return (
         <div className={`${styles.modal} ${className}`} {...props}>
-            <div className={styles.modal_overlay} onClick={onModalHide}></div>
+            <div className={styles.modal_overlay} onClick={handleOverlayClick}></div>
 
             <div className={clsx(styles.modal_inner, innerClassName)}>
                 <div
                     className={styles.wrapper}
                     style={{ paddingTop, paddingBottom }}
                 >
-                    <Island tag="button" className={styles.close} onClick={onModalHide}>
+                    {!closeDisabled && <Island tag="button" className={styles.close} onClick={onModalHide}>
                         <CloseIcon />
-                    </Island>
+                    </Island>}
                     {heading && <h2 className={styles.heading}>{heading}</h2>}
                     {subheading && (
                         <p className={styles.subheading}>{subheading}</p>

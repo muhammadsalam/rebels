@@ -36,7 +36,7 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
             </div>
             <InfoBoxIcon onClick={handleInfoBoxClick} />
 
-            {isInfoActive && <Modal onModalHide={() => setIsInfoActive(false)}>
+            {isInfoActive && <Modal closeDisabled onModalHide={() => setIsInfoActive(false)}>
                 <div className={styles.person_top}>
                     <img
                         src={`${import.meta.env.VITE_API_BACK}/villain/${current_image}`}
