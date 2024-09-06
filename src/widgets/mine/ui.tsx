@@ -81,8 +81,6 @@ export const Mine = () => {
                 mining_max_points
             );
 
-            console.log(newBalance, mining_balance, mining_claimed_at, mining_duration, mining_max_points);
-
             useGameStatsStore.setState({
                 mining_balance: newBalance,
             });

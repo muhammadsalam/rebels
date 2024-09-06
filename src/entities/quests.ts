@@ -36,7 +36,6 @@ const useQuestsStore = create<HeroState>((set) => ({
                     let scenario: 1 | 2 | 3;
                     const randomNumber = Math.floor(Math.random() * 100) + 1;
 
-                    console.log(item);
                     if (item.type === "TELEGRAM") {
                         return { ...item, attemps: 1, scenario: 1 }
                     }

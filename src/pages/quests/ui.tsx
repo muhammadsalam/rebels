@@ -17,7 +17,6 @@ export const QuestsPage = () => {
         const backButtonClick = () => {
             navigate("/");
         };
-        console.log(quests);
 
         tgApp.BackButton.onClick(backButtonClick);
 

@@ -126,7 +126,6 @@ export const FriendsPage = memo(() => {
 
         } catch (error: any) {
             showAlert(`Something went wrong. Please try again later. ${error.message}`);
-            console.log(error);
         } finally {
             setIsClaiming(false);
         }
