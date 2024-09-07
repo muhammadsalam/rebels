@@ -65,6 +65,7 @@ export const ModalGift: FC<{
                 useGameStatsStore.setState({
                     energy_update: data.energy_update,
                     max_energy: data.max_energy,
+                    daily_available_at: (+Date.now() + 24 * 60 * 60 * 1000) / 1000,
                 });
             } catch (e) {
                 showAlert("Something went wrong. Please try again later. " + e);

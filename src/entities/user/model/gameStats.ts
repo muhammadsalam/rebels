@@ -24,6 +24,8 @@ export interface GameStatsState {
     mining_max_points: number;
     mining_duration: number;
     mining_claimed_at: number;
+
+    daily_available_at: number;
 }
 
 export const useGameStatsStore = create<GameStatsState>(() => ({
@@ -49,4 +51,6 @@ export const useGameStatsStore = create<GameStatsState>(() => ({
     mining_max_points: 0,
     mining_duration: 0,
     mining_claimed_at: 0,
+
+    daily_available_at: 0
 }));

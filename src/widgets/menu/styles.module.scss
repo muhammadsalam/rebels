@@ -27,8 +27,24 @@
     font-size: 24px;
     font-weight: 700;
     line-height: 26px;
-    width: 171px;
+    width: 197px;
     height: 60px;
+}
+
+.gift {
+    position: relative;
+
+    &:after {
+        content: "";
+        width: 6px;
+        height: 6px;
+        display: block;
+        background-color: var(--orange-2);
+        border-radius: 50%;
+        position: absolute;
+        top: 14px;
+        right: 16px;
+    }
 }
 
 .links {

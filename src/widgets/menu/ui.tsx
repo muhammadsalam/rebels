@@ -11,6 +11,7 @@ import { useBodyLock } from "shared/libs/hooks";
 import { useGameStatsStore, useUserStore } from "entities/user";
 import { useHeroStore } from "entities/heroes";
 import useSound from "use-sound";
+import clsx from "clsx";
 
 
 export const Menu = () => {
@@ -19,6 +20,7 @@ export const Menu = () => {
     const [reward, setReward] = useState<TReward | null | number>(null);
     const [isDailyGiftActive, setIsDailyGiftActive] = useState(false);
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
+    const daily_available_at = useGameStatsStore(state => state.daily_available_at);
 
     const onClaim = useCallback(() => {
         setIsRewardModalActive(false);
@@ -77,6 +79,7 @@ export const Menu = () => {
                 useGameStatsStore.setState({
                     energy_update: data.energy_update,
                     max_energy: data.max_energy,
+                    daily_available_at: (Date.now() + 10000) / 1000
                 })
             }
         } catch (e) {
@@ -84,12 +87,14 @@ export const Menu = () => {
         }
     };
 
+    const DateInSeconds = +Date.now() / 1000;
+
     return (
         <>
             <div className={styles.menu}>
                 <button onClick={handleBABLO} className={styles.BABLO}>💰</button>
                 <nav className={styles.nav}>
-                    <Island tag='button' onClick={handleDailyGift} className={styles.link}>
+                    <Island tag='button' onClick={handleDailyGift} disabled={daily_available_at > DateInSeconds} className={clsx(styles.link, daily_available_at < DateInSeconds && styles.gift)}>
                         Daily gift
                     </Island>
                     <Island

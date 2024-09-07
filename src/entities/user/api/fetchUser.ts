@@ -24,7 +24,8 @@ type TUser = {
     mining_balance: number,
     mining_speed: number,
     mining_duration: number,
-    mining_claimed_at: number
+    mining_claimed_at: number,
+    daily_avaible_at: number,
 }
 
 type TProfile = {
@@ -145,6 +146,7 @@ export const fetchUser = async () => {
             mining_max_points: data.user.mining_duration * data.user.mining_speed,
             mining_duration: data.user.mining_duration,
             mining_claimed_at: data.user.mining_claimed_at,
+            daily_available_at: data.user.daily_avaible_at,
 
             total_value: data.profile.total_value,
             total_values: data.profile.total_values,
