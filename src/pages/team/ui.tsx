@@ -117,6 +117,7 @@ export const TeamPage = () => {
         let savedCondition: any = true;
         if (hasChanges()) {
             savedCondition = await handleSaveTeam();
+            console.log(savedCondition);
         }
         const upgrade_data = await upgradeHero(hero_id);
         setIsUpgrading(false);
