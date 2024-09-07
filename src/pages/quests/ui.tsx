@@ -97,18 +97,12 @@ export const QuestsPage = () => {
                 return newState;
             });
 
-            const { data } = await axios.post(
+            const { status, data } = await axios.post(
                 `task/${quest.status.toLowerCase()}`,
                 { task_id: quest.id }
             );
 
-
-
-            if (data.status && data.new_status === "Done") {
-                useUserStore.setState({
-                    balance: data.user_balance,
-                });
-            }
+            if (status !== 200) return;
 
             if (data.status) {
                 useQuestsStore.setState({
@@ -118,7 +112,18 @@ export const QuestsPage = () => {
                             : item
                     ),
                 });
+
+                if (data.new_status === "Done") {
+                    useUserStore.setState({
+                        balance: data.user_balance,
+                    });
+                }
             }
+
+            setTempStatus((prev) => {
+                const { [quest.id]: _, ...newState } = prev;
+                return newState;
+            });
 
             useQuestsStore.setState({ isProcessing: false })
 
