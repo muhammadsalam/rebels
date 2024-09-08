@@ -9,9 +9,9 @@ import FriendsIcon from "icons/friends.svg?react";
 export const Navigation: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
     return (
         <nav {...props} className={styles.navigation}>
-            <Link className={styles.link} to="/team">
+            <Link className={styles.link} to="/roster">
                 <TeamIcon />
-                <strong>Team</strong>
+                <strong>Roster</strong>
             </Link>
             <Link className={styles.link} to="/shop">
                 <ItemsIcon />

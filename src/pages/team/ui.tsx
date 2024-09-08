@@ -150,7 +150,7 @@ export const TeamPage = () => {
         <div className={styles.container}>
             <div className={styles.top}>
                 <div className={styles.top_left}>
-                    <h2 className={styles.heading}>My team</h2>
+                    <h2 className={styles.heading}>Roster</h2>
                 </div>
             </div>
 
