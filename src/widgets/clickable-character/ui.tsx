@@ -99,7 +99,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
     const sounds = useUserStore(state => state.settings.sounds)
     useEffect(() => {
         wasted && sounds && play();
-    }, [wasted]);
+    }, [wasted, sounds]);
 
     return (
         <div

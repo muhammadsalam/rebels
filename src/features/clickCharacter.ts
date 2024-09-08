@@ -19,7 +19,7 @@ export default function (damage: number, isCritical: boolean) {
     addTap(isCritical)
 
     // if ("vibrate" in navigator && useUserStore.getState().settings.sounds) navigator.vibrate(5);
-    navigator.vibrate(5);
+    if ("vibrate" in navigator) navigator.vibrate(5);
 
     if (newHealth <= 0) {
         useVillainStore.setState({ current_health: 0, wasted: true, new_level_reward: health / 2 });
