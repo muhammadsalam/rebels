@@ -8,6 +8,7 @@ export interface UserState {
     id: number | null;
     balance: number;
     username: string;
+    name: string,
     level: number;
     level_name: string;
     uci_id: number,
@@ -21,6 +22,7 @@ export const useUserStore = create<UserState>(() => ({
     id: null,
     balance: 0,
     username: '',
+    name: '',
     level: 0,
     level_name: '',
     uci_id: 0,

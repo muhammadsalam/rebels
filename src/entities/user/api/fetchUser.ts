@@ -160,7 +160,8 @@ export const fetchUser = async () => {
             uci_id: data.user.telegram_id,
             level: data.profile.level,
             level_name: data.profile.level_name,
-            username: data.user.username
+            username: data.user.username,
+            name: data.user.username || (data.user.first_name + " " + data.user.last_name)
         });
 
         useGameStatsStore.setState(game_stats);
