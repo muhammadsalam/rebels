@@ -16,6 +16,19 @@
     background-color: rgba(0, 0, 0, 0.6);
     z-index: -1;
     backdrop-filter: blur(5px);
+
+    animation: overlayShowing 0.1s ease-in-out forwards;
+}
+
+@keyframes overlayShowing {
+    0% {
+        backdrop-filter: blur(0px);
+        opacity: 0;
+    }
+    100% {
+        backdrop-filter: blur(5px);
+        opacity: 1;
+    }
 }
 
 .close {
@@ -27,8 +40,20 @@
 }
 
 .modal_inner {
+    translate: 0 100%;
     height: 100%;
     position: relative;
+
+    animation: modalShowing 0.15s ease-in-out forwards;
+}
+
+@keyframes modalShowing {
+    0% {
+        translate: 0 100%;
+    }
+    100% {
+        translate: 0 0;
+    }
 }
 
 .wrapper {
