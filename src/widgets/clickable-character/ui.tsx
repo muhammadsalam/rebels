@@ -127,7 +127,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
                         color: isCritical ? "#df2e13" : undefined,
                         fontSize: isCritical ? "60px" : undefined,
                         fontWeight: isCritical ? "700" : undefined,
-                        // zIndex: isCritical ? 3 : undefined,
+                        zIndex: isCritical ? 3 : undefined,
                     }}
                 >
                     {damage}
