@@ -123,18 +123,9 @@
 }
 
 .progress_line {
-    margin: 18px 0 28px;
-    box-shadow: var(--inner-shadow);
-    margin-top: 12px;
-    width: 100%;
-    border-radius: 25px;
-}
-
-.progress_line_inner {
-    height: 9px;
-    background-color: var(--green);
-    box-shadow: 0.63px 3px 11.7px 0px #c4eb2a94;
-    border-radius: 25px;
+    margin: 12px 0 28px;
+    --action-box-shadow: 0.63px 3px 11.7px 0px #c4eb2a94;
+    --action-background: var(--green);
 }
 
 .progress_bottom {
@@ -230,16 +221,8 @@
 
 .claim_line {
     margin-top: 24px;
-    box-shadow: var(--inner-shadow);
-    width: 100%;
-    border-radius: 25px;
-}
-
-.claim_line_inner {
-    height: 9px;
-    background-color: var(--orange-2);
-    box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
-    border-radius: 25px;
+    --action-box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
+    --action-background: var(--orange-2);
 }
 
 .claim_button {

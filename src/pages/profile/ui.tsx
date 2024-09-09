@@ -13,6 +13,7 @@ import {
 } from "shared/CONSTANT";
 import { tgApp } from "shared/libs/utils";
 import { useNavigate } from "react-router-dom";
+import { Line } from "shared/ui";
 
 export const ProfilePage = () => {
     const user_rank = useUserStore((state) => state.level_name);
@@ -71,14 +72,11 @@ export const ProfilePage = () => {
                         {total_value} {total_value_next && `/ ${total_value_next}`}
                     </span>
                 </div>
-                <div className={styles.total_skills_line}>
-                    <div
-                        className={styles.total_skills_line_inner}
-                        style={{
-                            width: `${((total_value - total_value_start) / (total_value_next - total_value_start)) * 100}%`,
-                        }}
-                    ></div>
-                </div>
+                <Line
+                    className={styles.total_skills_line}
+                    width={((total_value - total_value_start) / (total_value_next - total_value_start)) * 100}
+                    height={9}
+                />
             </div>
             <div className={styles.skills}>
                 <div className={clsx(styles.skill, styles.skill__knowledge)}>
@@ -91,17 +89,11 @@ export const ProfilePage = () => {
                             {total_values.knowledge}
                         </span>
                     </div>
-                    <div className={styles.line}>
-                        <div
-                            className={clsx(styles.line_inner)}
-                            style={{
-                                width: `${(total_values.knowledge /
-                                    MAX_TOTAL_KNOWLEDGE_VALUE) *
-                                    100
-                                    }%`,
-                            }}
-                        ></div>
-                    </div>
+                    <Line
+                        className={styles.line}
+                        width={(total_values.knowledge / MAX_TOTAL_KNOWLEDGE_VALUE) * 100}
+                        height={2}
+                    />
                 </div>
                 <div className={clsx(styles.skill, styles.skill__loyalty)}>
                     <div className={styles.skill_top}>
@@ -113,17 +105,11 @@ export const ProfilePage = () => {
                             {total_values.loyalty}
                         </span>
                     </div>
-                    <div className={styles.line}>
-                        <div
-                            className={clsx(styles.line_inner)}
-                            style={{
-                                width: `${(total_values.loyalty /
-                                    MAX_TOTAL_LOYALTY_VALUE) *
-                                    100
-                                    }%`,
-                            }}
-                        ></div>
-                    </div>
+                    <Line
+                        className={styles.line}
+                        width={(total_values.loyalty / MAX_TOTAL_LOYALTY_VALUE) * 100}
+                        height={2}
+                    />
                 </div>
                 <div className={clsx(styles.skill, styles.skill__influence)}>
                     <div className={styles.skill_top}>
@@ -135,17 +121,11 @@ export const ProfilePage = () => {
                             {total_values.influence}
                         </span>
                     </div>
-                    <div className={styles.line}>
-                        <div
-                            className={clsx(styles.line_inner)}
-                            style={{
-                                width: `${(total_values.influence /
-                                    MAX_TOTAL_INFLUENCE_VALUE) *
-                                    100
-                                    }%`,
-                            }}
-                        ></div>
-                    </div>
+                    <Line
+                        className={styles.line}
+                        width={(total_values.influence / MAX_TOTAL_INFLUENCE_VALUE) * 100}
+                        height={2}
+                    />
                 </div>
             </div>
         </div>

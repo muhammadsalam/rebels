@@ -101,72 +101,72 @@
 }
 
 .total_skills__recruit {
-    .total_skills_line_inner {
-        background-color: #34c759;
-        box-shadow: none;
+    .total_skills_line {
+        --action-background: #34c759;
+        --action-box-shadow: none;
     }
 }
 
 .total_skills__rookie {
-    .total_skills_line_inner {
-        background-color: #34c759;
-        box-shadow: 0.63px 3px 11.7px 0px #34c75994;
+    .total_skills_line {
+        --action-background: #34c759;
+        --action-box-shadow: 0.63px 3px 11.7px 0px #34c75994;
     }
 }
 
 .total_skills__mercenary {
-    .total_skills_line_inner {
-        background-color: #32ade6;
-        box-shadow: none;
+    .total_skills_line {
+        --action-background: #32ade6;
+        --action-box-shadow: none;
     }
 }
 
 .total_skills__warrior {
-    .total_skills_line_inner {
-        background-color: #32ade6;
-        box-shadow: 0.63px 3px 11.7px 0px #32ade694;
+    .total_skills_line {
+        --action-background: #32ade6;
+        --action-box-shadow: 0.63px 3px 11.7px 0px #32ade694;
     }
 }
 
 .total_skills__commander {
-    .total_skills_line_inner {
-        background-color: #e21515;
-        box-shadow: none;
+    .total_skills_line {
+        --action-background: #e21515;
+        --action-box-shadow: none;
     }
 }
 
 .total_skills__guardian {
-    .total_skills_line_inner {
-        background-color: #e21515;
-        box-shadow: 0.63px 3px 11.7px 0px #e2151594;
+    .total_skills_line {
+        --action-background: #e21515;
+        --action-box-shadow: 0.63px 3px 11.7px 0px #e2151594;
     }
 }
 
 .total_skills__veteran {
-    .total_skills_line_inner {
-        background-color: #af52de;
-        box-shadow: none;
+    .total_skills_line {
+        --action-background: #af52de;
+        --action-box-shadow: none;
     }
 }
 
 .total_skills__hero {
-    .total_skills_line_inner {
-        background-color: #af52de;
-        box-shadow: 0.63px 3px 11.7px 0px #af52de94;
+    .total_skills_line {
+        --action-background: #af52de;
+        --action-box-shadow: 0.63px 3px 11.7px 0px #af52de94;
     }
 }
 
 .total_skills__legend {
-    .total_skills_line_inner {
-        background-color: var(--orange-2);
-        box-shadow: none;
+    .total_skills_line {
+        --action-background: var(--orange-2);
+        --action-box-shadow: none;
     }
 }
 
 .total_skills__rebel {
-    .total_skills_line_inner {
-        background-color: var(--orange-2);
-        box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
+    .total_skills_line {
+        --action-background: var(--orange-2);
+        --action-box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
     }
 }
 
@@ -181,17 +181,7 @@
 }
 
 .total_skills_line {
-    box-shadow: var(--inner-shadow);
     margin-top: 12px;
-    width: 100%;
-    border-radius: 25px;
-}
-
-.total_skills_line_inner {
-    height: 9px;
-    background-color: var(--white);
-    box-shadow: 0.63px 3px 11.7px 0px var(--white);
-    border-radius: 25px;
 }
 
 .skills {
@@ -241,9 +231,9 @@
 }
 
 .skill__knowledge {
-    .line_inner {
-        background-color: var(--orange-2);
-        box-shadow: 0.63px 3px 11.7px 0px #eb642a94;
+    .line {
+        --action-background: var(--orange-2);
+        --action-box-shadow: 0.63px 3px 11.7px 0px rgb(235, 100, 42, 0.58);
     }
 
     .skill_value {
@@ -252,9 +242,9 @@
 }
 
 .skill__loyalty {
-    .line_inner {
-        background-color: var(--green);
-        box-shadow: 0.63px 3px 11.7px 0px #c4eb2a94;
+    .line {
+        --action-background: var(--green);
+        --action-box-shadow: 0.63px 3px 11.7px 0px #c4eb2a94;
     }
 
     .skill_value {
@@ -263,9 +253,9 @@
 }
 
 .skill__influence {
-    .line_inner {
-        background-color: var(--c-pink);
-        box-shadow: 0.63px 3px 11.7px 0px #ff2d5594;
+    .line {
+        --action-background: var(--c-pink);
+        --action-box-shadow: 0.63px 3px 11.7px 0px #ff2d5594;
     }
 
     .skill_value {

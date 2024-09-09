@@ -9,6 +9,7 @@ import clsx from "clsx";
 import DoneIcon from 'icons/done.svg?react';
 import { useUserStore } from "entities/user";
 import useSound from "use-sound";
+import { Line } from "shared/ui";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -175,15 +176,11 @@ export const FriendsPage = memo(() => {
                         <p className={styles.progress_top_ph}>from friends</p>
                     </div>
                 </div>
-                <div className={styles.progress_line}>
-                    <div
-                        className={styles.progress_line_inner}
-                        style={{
-                            width: `${(refState.ref_count / refState.next_level) * 100
-                                }%`,
-                        }}
-                    ></div>
-                </div>
+                <Line
+                    className={styles.progress_line}
+                    width={(refState.ref_count / refState.next_level) * 100}
+                    height={9}
+                />
                 <div className={styles.progress_bottom}>
                     <button className={clsx(styles.progress_button, isCopied && styles.progress_button__done)} onClick={handleCopy}>
                         <div className={styles.progress_button_text}>
@@ -216,14 +213,11 @@ export const FriendsPage = memo(() => {
                     <p className={styles.progress_top_ph}>referral earnings</p>
                     {timeToFill && <p className={styles.progress_top_ph}>claim in </p>}
                 </div>
-                <div className={styles.claim_line}>
-                    <div
-                        className={styles.claim_line_inner}
-                        style={{
-                            width: `${Math.min(((((+new Date() / 1000) - (refState.claim_time - 12 * 60 * 60)) / (12 * 60 * 60)) * 100), 100)}%`,
-                        }}
-                    ></div>
-                </div>
+                <Line
+                    className={styles.claim_line}
+                    width={Math.min(((((+new Date() / 1000) - (refState.claim_time - 12 * 60 * 60)) / (12 * 60 * 60)) * 100), 100)}
+                    height={9}
+                />
             </div>
 
             {<button onClick={handleClaim} className={clsx(styles.claim_button, styles.claim_time)} disabled={!!timeToFill || claim_time === 0}>

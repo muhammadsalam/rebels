@@ -5,6 +5,7 @@ import useVillainStore from "entities/villain";
 import { useGameStatsStore } from "entities/user";
 import { axios, formatNumber } from "shared/libs/utils";
 import { Island, Line } from "shared/ui";
+import clsx from "clsx";
 
 export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
     (props) => {
@@ -36,14 +37,12 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
                     <Line
                         height={9}
                         width={(current_health / health) * 100}
-                        className={styles.line}
-                        innerClassName={styles.line__health}
+                        className={clsx(styles.line, styles.line__health)}
                     />
                     <Line
                         height={9}
                         width={(current_energy / max_energy) * 100}
-                        className={styles.line}
-                        innerClassName={styles.line__energy}
+                        className={clsx(styles.line, styles.line__energy)}
                     />
                 </div>
                 <div className={styles.battery_count}>

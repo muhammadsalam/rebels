@@ -1,34 +1,42 @@
 import clsx from "clsx";
-import { FC, HTMLAttributes } from "react";
+import { FC, HTMLAttributes, memo, useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 
 interface LineProps extends HTMLAttributes<HTMLDivElement> {
     width: number;
     height: number;
-    innerClassName?: string;
+    withPadding?: boolean;
 }
 
-export const Line: FC<LineProps> = ({
+
+export const Line: FC<LineProps> = memo(({
     height,
     width,
     className,
-    innerClassName,
+    withPadding = false,
     ...props
 }) => {
+    const divRef = useRef<HTMLDivElement>(null);
+    const [wrapperWidth, setWrapperWidth] = useState(0);
+
+    useEffect(() => {
+        if (divRef.current) {
+            setWrapperWidth(divRef.current.clientWidth);
+        }
+    }, []);
+
     return (
         <div
+            ref={divRef}
             {...props}
-            className={clsx(className, styles.line, styles.line__health)}
+            className={clsx(className, styles.line, (wrapperWidth / 100 * width) < height && styles.line__overflow, withPadding && styles.line__padding)}
         >
-            <div
-                className={clsx(innerClassName, styles.line_inner)}
-                style={{ height: `${height}px` }}
-            >
+            <div className={styles.inner}>
                 <div
                     className={styles.elem}
-                    style={{ width: `${width}%`, minWidth: `${height}px` }}
+                    style={{ width: `${width}%`, height: `${height}px` }}
                 ></div>
             </div>
         </div>
     );
-};
+});

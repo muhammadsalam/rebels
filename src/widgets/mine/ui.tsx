@@ -185,7 +185,8 @@ export const Mine = () => {
             <Line
                 className={styles.line}
                 width={mining_claimed_at === 0 ? 0 : (mining_balance / mining_max_points) * 100}
-                height={27}
+                height={21}
+                withPadding
             />
         </div>
     );
