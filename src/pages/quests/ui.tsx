@@ -128,7 +128,7 @@ export const QuestsPage = () => {
             useQuestsStore.setState({ isProcessing: false })
 
         } catch (error: any) {
-            if (error.response?.status === 422) {
+            if (error.response?.status === 400) {
                 setTempStatus((prev) => ({
                     ...prev,
                     [quest.id]: "Failed"
