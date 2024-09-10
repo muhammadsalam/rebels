@@ -25,6 +25,7 @@ export const ModalGift: FC<{
 
         const onCardClick = async (index: number) => {
             try {
+                console.log(isDailySending);
                 sounds && playGiftSound();
                 if (isDailySending) return;
                 setIsDailySending(true);
@@ -67,9 +68,11 @@ export const ModalGift: FC<{
                     max_energy: data.max_energy,
                     daily_available_at: (+Date.now() + 24 * 60 * 60 * 1000) / 1000,
                 });
+
+                setIsDailySending(false);
             } catch (e) {
                 showAlert("Something went wrong. Please try again later. " + e);
-            } finally {
+
                 setIsDailySending(false);
             }
         };
