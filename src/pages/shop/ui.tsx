@@ -35,14 +35,14 @@ export const ShopPage = () => {
 
     const [isRewardModalActive, setIsRewardModalActive] = useState(false);
     const [reward, setReward] = useState<TReward | null>(null);
-    const [isBuyingId, setIsBuyingId] = useState<null | number>(null);
+    const [isBuying, setIsBuying] = useState(false);
     const [playChestAudio] = useSound('/assets/sounds/chest.mp3');
 
     const handleBuyChest = async (id: number) => {
         try {
-            if (isBuyingId) return;
+            if (isBuying) return;
+            setIsBuying(true)
 
-            setIsBuyingId(id)
             const { status, data } = await axios.post(`/shop/buy/box/${id}`);
 
             if (status !== 200) {
@@ -79,7 +79,7 @@ export const ShopPage = () => {
         } catch (error) {
             showAlert(`Failed to buy chest. Please try again later. ${error}`);
         } finally {
-            setIsBuyingId(null)
+            setIsBuying(false)
         }
     };
 
@@ -108,7 +108,7 @@ export const ShopPage = () => {
                             styles[`chest__${chest.rarity.toLowerCase()}`]
                         )}
                         onClick={() => handleBuyChest(chest.id)}
-                        disabled={balance < chest.price || level < chest.required_level || chest.id === isBuyingId}
+                        disabled={balance < chest.price || level < chest.required_level || isBuying}
                     >
                         <div className={styles.chest_icon}>
                             <ChestIcon />
