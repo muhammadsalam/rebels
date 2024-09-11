@@ -12,7 +12,8 @@ import { FriendsInfoPage } from 'pages/friends-info';
 import { AboutPage } from 'pages/about';
 import { FAQPage } from 'pages/faq';
 import useSound from 'use-sound';
-import { useUserStore } from 'entities/user';
+import { useTapsCounterStore, useUserStore } from 'entities/user';
+import claim from 'features/claim';
 // import pageClicksAudio from '/assets/sounds/pageclicks.mp3';
 
 export const AppRoutes: React.FC = () => {
@@ -22,6 +23,7 @@ export const AppRoutes: React.FC = () => {
 
     useEffect(() => {
         sounds && playPageChanged();
+        useTapsCounterStore.getState().taps !== 0 && claim();
     }, [location])
 
     return <Routes>
