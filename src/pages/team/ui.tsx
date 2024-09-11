@@ -70,7 +70,9 @@ export const TeamPage = () => {
         return hasChange;
     };
 
-    const handleSaveTeam = () => {
+    const handleSaveTeam = async () => {
+        let changed = true;
+
         if (hasChanges()) {
             let teamKnowledge = 0,
                 teamLoyalty = 0,
@@ -90,10 +92,12 @@ export const TeamPage = () => {
                 },
             });
 
-            saveTeam(choosedCards).then(() => {
-                // setChoosedCards(useHeroStore.getState().team);
-            });
+            await saveTeam(choosedCards)
+
+            changed = true;
         }
+
+        return changed;
     };
 
     const navigate = useNavigate();
@@ -115,10 +119,10 @@ export const TeamPage = () => {
     const handleUpgradeCard = async (hero_id: number) => {
         setIsUpgrading(true);
         let savedCondition: any = true;
-        if (hasChanges()) {
-            savedCondition = await handleSaveTeam();
-            console.log(savedCondition);
-        }
+
+        savedCondition = await handleSaveTeam();
+        console.log(savedCondition);
+
         const upgrade_data = await upgradeHero(hero_id);
         setIsUpgrading(false);
 
