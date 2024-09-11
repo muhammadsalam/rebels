@@ -42,7 +42,7 @@ export const CardsPage: FC<CardProps> = ({
     const balance = useUserStore(state => state.balance)
     const sounds = useUserStore(state => state.settings.sounds)
 
-    const [playClickSound] = useSound('/assets/sounds/click.mp3');
+    const [playClickSound] = useSound('/assets/sounds/card_change.mp3');
     const handleCardClick = (card: Card) => {
         sounds && playClickSound()
         // если выбранной карточки нет, то значит перешёл на страницу my_cards сразу.

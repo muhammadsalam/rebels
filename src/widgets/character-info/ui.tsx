@@ -16,14 +16,15 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
 
     const sounds = useUserStore(state => state.settings.sounds)
 
-    const [playClickSound] = useSound('/assets/sounds/click.mp3');
+    const [playInfoOpenSound] = useSound('/assets/sounds/open_info.mp3');
+    const [playInfoCloseSound] = useSound('/assets/sounds/close_info.mp3');
     const handleInfoBoxClick = () => {
-        sounds && playClickSound();
+        sounds && playInfoOpenSound();
         setIsInfoActive(true);
     }
 
     const handleInfoBoxClose = () => {
-        sounds && playClickSound();
+        sounds && playInfoCloseSound();
         setIsInfoActive(false);
     }
 
