@@ -97,7 +97,9 @@ export const Mine = () => {
     const sounds = useUserStore((state) => state.settings.sounds);
     const [playClaimingSound] = useSound(claimSound);
     const [playStartMiningSound] = useSound(startMiningSound);
+    const [isMineSending, setIsMineSending] = useState(false);
     const handleOnClickButton = (e: MouseEvent<HTMLButtonElement>) => {
+        setIsMineSending(true);
         const target = e.target as HTMLButtonElement;
 
         target.classList.add(styles.button__active);
@@ -113,12 +115,16 @@ export const Mine = () => {
 
         if (mining_claimed_at === 0) {
             sounds && playStartMiningSound();
-            return startMining();
+            return startMining().then(() => {
+                setIsMineSending(false);
+            });
         }
 
         if (mining_balance === mining_max_points) {
             sounds && playClaimingSound();
-            return claimMining();
+            return claimMining().then(() => {
+                setIsMineSending(false);
+            });
         }
     };
 
@@ -149,6 +155,7 @@ export const Mine = () => {
                     className={styles.button}
                     onClick={(e) => handleOnClickButton(e)}
                     disabled={
+                        isMineSending ||
                         mining_claimed_at !== 0 &&
                         mining_balance !== mining_max_points
                     }
