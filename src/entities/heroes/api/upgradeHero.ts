@@ -30,10 +30,14 @@ export const upgradeHero = async function (hero_id: number) {
         useHeroStore.getState().teamFromCards();
         useUserStore.setState({
             balance: data.balance,
-
-            level: data.profile.level,
             level_name: data.profile.level_name
         });
+
+        setTimeout(() => {
+            useUserStore.setState({
+                level: data.profile.level
+            })
+        }, useUserStore.getState().level !== data.profile.level ? 2000 : 0);
 
         return { upgradedCard: data.result, upgraded_team: useHeroStore.getState().team };
     } catch (error) {

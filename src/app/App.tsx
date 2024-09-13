@@ -7,6 +7,7 @@ import { AppRoutes } from "./providers/RouterProvider";
 import { useEnergy } from "features/energy";
 import { useLoadFonts } from "./hooks/useLoadFonts";
 import { useOrientation } from "./hooks/useOrientation";
+import { LevelUpModal } from "widgets/level-up-modal";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
     return (
         <>
             {isLandscape && <AutoRotate />}
+            <LevelUpModal />
             <Router>
                 <AppRoutes />
             </Router>
