@@ -128,7 +128,7 @@ interface TUserResponse {
     refferal_stats: TReferalStats
 }
 
-export const fetchUser = async () => {
+export const fetchUser: (retry?: undefined | boolean) => Promise<boolean> = async (retry = undefined) => {
     try {
         const { data, status, }: AxiosResponse<TUserResponse> = await axios.get("/user");
 
@@ -158,6 +158,7 @@ export const fetchUser = async () => {
             id: data.user.id,
             balance: data.user.balance,
             uci_id: data.user.telegram_id,
+            prev_level: data.profile.level,
             level: data.profile.level,
             level_name: data.profile.level_name,
             username: data.user.username,
@@ -212,7 +213,12 @@ export const fetchUser = async () => {
 
         return true;
     } catch (error) {
-        showAlert('Failed to fetch user. Please try again later.' + error);
-        return false;
+        if (retry === undefined || retry) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            return fetchUser(true);
+        } else {
+            showAlert('Failed to fetch user.' + error);
+            return false;
+        }
     }
 };

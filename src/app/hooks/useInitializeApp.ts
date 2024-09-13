@@ -36,7 +36,7 @@ export const useInitializeApp = () => {
         const token = await getToken();
 
         if (token) {
-          await fetchUser().then(() => setIsInitialized(true));
+          await fetchUser().then((state) => setIsInitialized(state));
         }
       } catch (error) {
         console.error('Initialization error:', error);
