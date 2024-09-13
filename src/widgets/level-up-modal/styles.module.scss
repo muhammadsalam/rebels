@@ -52,6 +52,46 @@
     }
 }
 
+.levelup__recruit {
+    --action-color: #34c759;
+}
+
+.levelup__rookie {
+    --action-color: #34c759;
+}
+
+.levelup__mercenary {
+    --action-color: #32ade6;
+}
+
+.levelup__warrior {
+    --action-color: #32ade6;
+}
+
+.levelup__commander {
+    --action-color: #e21515;
+}
+
+.levelup__guardian {
+    --action-color: #e21515;
+}
+
+.levelup__veteran {
+    --action-color: #af52de;
+}
+
+.levelup__hero {
+    --action-color: #af52de;
+}
+
+.levelup__legend {
+    --action-color: #eb642a;
+}
+
+.levelup__rebel {
+    --action-color: #eb642a;
+}
+
 .overflow {
     overflow: hidden;
     display: inline;
@@ -72,7 +112,7 @@
     font-size: 75px;
     font-weight: 400;
     line-height: 60px;
-    color: var(--c-cyan);
+    color: var(--action-color);
     text-shadow: rgb(0, 0, 0) 5px 0px 0px, rgb(0, 0, 0) 4.90033px 0.993347px 0px,
         rgb(0, 0, 0) 4.60531px 1.94709px 0px,
         rgb(0, 0, 0) 4.12668px 2.82321px 0px,
@@ -117,7 +157,7 @@
 }
 
 .levelup_rank {
-    color: var(--c-cyan);
+    color: var(--action-color);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -126,7 +166,7 @@
     animation: translate 0.1s ease-in-out 0.55s forwards;
 
     path {
-        fill: var(--c-cyan);
+        fill: var(--action-color);
     }
 
     span {

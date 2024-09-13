@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import TrophyIcon from "icons/trophy.svg?react";
 import styles from './styles.module.scss';
 import useSound from "use-sound";
+import clsx from "clsx";
 
 export const LevelUpModal: FC = () => {
     const level = useUserStore((state) => state.level);
@@ -17,10 +18,13 @@ export const LevelUpModal: FC = () => {
         const levelUpgrade = async () => {
             if (levelUpgradingCondition) {
                 setIsLevelUpgradedShow(true)
+
                 playUpgradeSound()
+
                 await setTimeout(() => {
                     setIsLevelUpgradedShow(false);
                 }, 2000);
+
                 useUserStore.setState({ prev_level: level });
             }
         }
@@ -32,7 +36,7 @@ export const LevelUpModal: FC = () => {
     return (
         <div className={styles.modal}>
             <div className={styles.modal_overlay}></div>
-            <div className={styles.levelup}>
+            <div className={clsx(styles.levelup, styles[`levelup__${level_name.toLowerCase()}`])}>
                 <div className={styles.overflow}>
                     <p className={styles.levelup_text}>Congratulations!</p>
                 </div>
