@@ -212,8 +212,8 @@ export const fetchUser: (retry?: undefined | boolean) => Promise<boolean> = asyn
         })
 
         return true;
-    } catch (error) {
-        if (retry === undefined || retry) {
+    } catch (error: any) {
+        if (error?.code === "ERR_NETWORK" && (retry === undefined || retry)) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             return fetchUser(true);
         } else {

@@ -15,7 +15,7 @@ export const fetchToken: (retry?: boolean | undefined) => Promise<string | null>
 
         return data.token;
     } catch (error: any) {
-        if (retry === undefined || retry) {
+        if (error?.code === "ERR_NETWORK" && (retry === undefined || retry)) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             return fetchToken(true);
         } else {
