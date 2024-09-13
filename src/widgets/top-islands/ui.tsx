@@ -9,7 +9,7 @@ import CloseIcon from "icons/close.svg?react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useUserStore } from "entities/user";
-import { tgApp } from "shared/libs/utils";
+import { axios, showAlert, tgApp } from "shared/libs/utils";
 import useSound from "use-sound";
 import clickSound from "/assets/sounds/pageclicks.mp3";
 
@@ -38,6 +38,23 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
             localStorage.setItem("sounds", "" + newVibroState);
         }
     }, [sounds]);
+
+    const BABLO = async () => {
+        try {
+            const { status } = await axios.post('/user/points');
+
+            if (status !== 200) {
+                throw new Error('Failed to send points. Please try again later.')
+            }
+
+            playClickSound();
+
+            useUserStore.setState({ balance: useUserStore.getState().balance + 5_000_000 });
+
+        } catch (error) {
+            showAlert('Иди работай, бэк лёг');
+        }
+    }
 
     return (
         <div {...props} className={styles.wrapper}>
@@ -94,7 +111,7 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
 
             {isActiveMenu && <Menu />}
 
-            <CoinsIsland />
+            <CoinsIsland onClick={BABLO} />
 
             <Island tag={Link} to="/profile">
                 <UserIcon />
