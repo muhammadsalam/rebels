@@ -29,6 +29,11 @@
     font-weight: 400;
     font-size: 16px;
     color: rgba($color: #b6b6b6, $alpha: 0.5);
+    flex-shrink: 0;
+}
+
+.info_icon {
+    flex-shrink: 0;
 }
 
 .person_top {

@@ -35,7 +35,7 @@ export const CharacterInfo: FC<HTMLAttributes<HTMLDivElement>> = memo((props) =>
                 <div className={styles.info_line}></div>
                 <div className={styles.info_name}>{current_name}</div>
             </div>
-            <InfoBoxIcon onClick={handleInfoBoxClick} />
+            <InfoBoxIcon className={styles.info_icon} onClick={handleInfoBoxClick} />
 
             {isInfoActive && <Modal closeDisabled onModalHide={() => setIsInfoActive(false)}>
                 <div className={styles.person_top}>
