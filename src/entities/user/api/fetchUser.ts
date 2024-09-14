@@ -128,7 +128,9 @@ interface TUserResponse {
     refferal_stats: TReferalStats
 }
 
-export const fetchUser: (retry?: undefined | boolean) => Promise<boolean> = async (retry = undefined) => {
+export const fetchUser: (retry?: number) => Promise<boolean> = async (retry = 0) => {
+    const MAX_RETRIES = 3;
+
     try {
         const { data, status, }: AxiosResponse<TUserResponse> = await axios.get("/user");
 
@@ -213,12 +215,13 @@ export const fetchUser: (retry?: undefined | boolean) => Promise<boolean> = asyn
 
         return true;
     } catch (error: any) {
-        if (error?.code === "ERR_NETWORK" && (retry === undefined || retry)) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            return fetchUser(true);
+        if (error.code === "ERR_NETWORK" && error.message.includes("Network Error") && retry < MAX_RETRIES) {
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            return fetchUser(retry + 1);
         } else {
             showAlert('Failed to fetch user.' + error);
             return false;
         }
     }
 };
+
