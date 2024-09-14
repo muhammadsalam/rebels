@@ -10,7 +10,7 @@ export interface GameStatsState {
     isProfileLoading: boolean;
     total_value: number;
     start_level_value: number;
-    next_level_value: number;
+    next_level_value: number | null;
     damage: number;
     critical_chance: number;
 

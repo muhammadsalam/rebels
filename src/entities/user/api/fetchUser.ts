@@ -32,7 +32,7 @@ type TProfile = {
     level: number;
     level_name: string,
     start_value: number,
-    next_level_value: number,
+    next_level_value: number | null,
     total_value: number,
     total_values: {
         knowledge: number,

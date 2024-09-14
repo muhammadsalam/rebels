@@ -74,7 +74,7 @@ export const ProfilePage = () => {
                 </div>
                 <Line
                     className={styles.total_skills_line}
-                    width={((total_value - total_value_start) / (total_value_next - total_value_start)) * 100}
+                    width={total_value_next ? ((total_value - total_value_start) / (total_value_next - total_value_start)) * 100 : 100}
                     height={9}
                 />
             </div>
