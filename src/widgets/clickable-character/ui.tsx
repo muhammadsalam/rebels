@@ -111,12 +111,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
             )}
             onTouchStartCapture={handleClick}
         >
-            <img
-                src="/assets/wasted.png"
-                alt="WASTED"
-                width={327}
-                className={styles.wasted}
-            />
+            <strong className={styles.wasted}>wasted</strong>
             {clickPositions.map(({ x, y, id, isCritical, damage }) => (
                 <div
                     key={id}

@@ -45,7 +45,7 @@
 
 @keyframes translate {
     from {
-        translate: var(--starting-x, 0) var(--starting-y, 0);
+        translate: var(--starting-x, 0) var(--starting-y, 0%);
     }
     to {
         translate: 0 0;
@@ -107,8 +107,9 @@
 }
 
 .levelup_title {
+    text-transform: lowercase;
     margin-top: 11px;
-    font-family: gta;
+    font-family: "GTA";
     font-size: 75px;
     font-weight: 400;
     line-height: 60px;
@@ -172,5 +173,10 @@
     span {
         font-size: 28px;
         line-height: 30px;
+        display: inline-block;
+        --starting-x: -100%;
+        --starting-y: 0;
+        translate: var(--starting-x);
+        animation: translate 0.1s ease-in-out 0.65s forwards;
     }
 }

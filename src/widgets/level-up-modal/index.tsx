@@ -48,7 +48,10 @@ export const LevelUpModal: FC = () => {
                 </div>
                 <div className={styles.overflow}>
                     <div className={styles.levelup_rank}>
-                        <TrophyIcon /> <span>{level}</span>
+                        <TrophyIcon />
+                        <div className={styles.overflow}>
+                            <span>{level}</span>
+                        </div>
                     </div>
                 </div>
             </div>

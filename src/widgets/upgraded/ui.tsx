@@ -20,7 +20,7 @@ export const Upgraded: FC<UpgradedProps> = ({ onModalHide, info, ...props }) => 
                 <div className={styles.overflow}>
                     <strong className={styles.upgraded_name}>{info.name}</strong>
                 </div>
-                <img className={styles.upgraded_img} src="/assets/upgraded.png" alt="UPGRADED" />
+                <strong className={styles.upgraded_text}>upgraded</strong>
                 <div className={styles.overflow}>
                     <span className={styles.upgraded_span}>level {info.level}</span>
                 </div>
