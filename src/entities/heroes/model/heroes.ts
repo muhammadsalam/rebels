@@ -25,6 +25,11 @@ interface HeroState {
         loyalty: number;
         influence: number;
     };
+    max_team_skills: {
+        knowledge: number;
+        loyalty: number;
+        influence: number;
+    }
     teamFromCards: () => void;
 }
 
@@ -32,6 +37,11 @@ export const useHeroStore = create<HeroState>((set, get) => ({
     cards: [],
     team: [],
     team_skills: {
+        knowledge: 0,
+        loyalty: 0,
+        influence: 0
+    },
+    max_team_skills: {
         knowledge: 0,
         loyalty: 0,
         influence: 0

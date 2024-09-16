@@ -6,11 +6,6 @@ import { useGameStatsStore, useUserStore } from "entities/user/";
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
-import {
-    MAX_TOTAL_INFLUENCE_VALUE,
-    MAX_TOTAL_KNOWLEDGE_VALUE,
-    MAX_TOTAL_LOYALTY_VALUE,
-} from "shared/CONSTANT";
 import { tgApp } from "shared/libs/utils";
 import { useNavigate } from "react-router-dom";
 import { Line } from "shared/ui";
@@ -28,6 +23,9 @@ export const ProfilePage = () => {
     );
     const total_values = useGameStatsStore(
         (state) => state.total_values
+    );
+    const max_total_values = useGameStatsStore(
+        (state) => state.max_total_values
     );
 
     const navigate = useNavigate();
@@ -91,7 +89,7 @@ export const ProfilePage = () => {
                     </div>
                     <Line
                         className={styles.line}
-                        width={(total_values.knowledge / MAX_TOTAL_KNOWLEDGE_VALUE) * 100}
+                        width={(total_values.knowledge / max_total_values.knowledge) * 100}
                         height={2}
                     />
                 </div>
@@ -107,7 +105,7 @@ export const ProfilePage = () => {
                     </div>
                     <Line
                         className={styles.line}
-                        width={(total_values.loyalty / MAX_TOTAL_LOYALTY_VALUE) * 100}
+                        width={(total_values.loyalty / max_total_values.loyalty) * 100}
                         height={2}
                     />
                 </div>
@@ -123,7 +121,7 @@ export const ProfilePage = () => {
                     </div>
                     <Line
                         className={styles.line}
-                        width={(total_values.influence / MAX_TOTAL_INFLUENCE_VALUE) * 100}
+                        width={(total_values.influence / max_total_values.influence) * 100}
                         height={2}
                     />
                 </div>

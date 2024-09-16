@@ -116,7 +116,21 @@ type TReferalInfo = {
     percent: number
 }[]
 
+type TMaxValues = {
+    team: {
+        knowledge: number,
+        loyalty: number,
+        influence: number
+    },
+    total: {
+        knowledge: number,
+        loyalty: number,
+        influence: number
+    };
+}
+
 interface TUserResponse {
+    max_values: TMaxValues,
     user: TUser,
     profile: TProfile,
     villain: TVillain,
@@ -150,6 +164,7 @@ export const fetchUser: (retry?: number) => Promise<boolean> = async (retry = 0)
             mining_claimed_at: data.user.mining_claimed_at,
             daily_available_at: data.user.daily_avaible_at,
 
+            max_total_values: data.max_values.total,
             total_value: data.profile.total_value,
             total_values: data.profile.total_values,
             start_level_value: data.profile.start_value,
@@ -180,7 +195,8 @@ export const fetchUser: (retry?: number) => Promise<boolean> = async (retry = 0)
 
         useHeroStore.setState({
             cards: data.heroes,
-            team_skills: data.team_values
+            team_skills: data.team_values,
+            max_team_skills: data.max_values.team
         });
 
         useHeroStore.getState().teamFromCards();

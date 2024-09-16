@@ -15,9 +15,6 @@ import {
     MAX_CARD_INFLUENCE,
     MAX_CARD_KNOWLEDGE,
     MAX_CARD_LOYALTY,
-    MAX_TEAM_INFLUENCE,
-    MAX_TEAM_KNOWLEDGE,
-    MAX_TEAM_LOYALTY,
 } from "shared/CONSTANT";
 import styles from "./styles.module.scss";
 import useSound from "use-sound";
@@ -28,6 +25,7 @@ export const TeamPage = () => {
     const [team_skills, setTeamSkills] = useState(
         useHeroStore((state) => state.team_skills)
     );
+    const max_team_skills = useHeroStore((state) => state.max_team_skills);
     const [activeChoosedCard, setActiveChoosedCard] = useState<Card | null>(
         null
     );
@@ -225,7 +223,7 @@ export const TeamPage = () => {
                     <Line
                         className={styles.line}
                         height={2}
-                        width={(team_skills.knowledge / MAX_TEAM_KNOWLEDGE) * 100}
+                        width={(team_skills.knowledge / max_team_skills.knowledge) * 100}
                     />
                 </div>
                 <div className={clsx(styles.skill, styles.skill__loyalty)}>
@@ -241,7 +239,7 @@ export const TeamPage = () => {
                     <Line
                         className={styles.line}
                         height={2}
-                        width={(team_skills.loyalty / MAX_TEAM_LOYALTY) * 100}
+                        width={(team_skills.loyalty / max_team_skills.loyalty) * 100}
                     />
                 </div>
                 <div className={clsx(styles.skill, styles.skill__influence)}>
@@ -257,7 +255,7 @@ export const TeamPage = () => {
                     <Line
                         className={styles.line}
                         height={2}
-                        width={(team_skills.influence / MAX_TEAM_INFLUENCE) * 100}
+                        width={(team_skills.influence / max_team_skills.influence) * 100}
                     />
                 </div>
             </div>

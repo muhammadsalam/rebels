@@ -1,16 +1,21 @@
 import { create } from 'zustand';
 
 export interface GameStatsState {
+    isProfileLoading: boolean;
+    start_level_value: number;
+    next_level_value: number | null;
+    total_value: number;
     total_values: {
         knowledge: number;
         loyalty: number;
         influence: number;
     };
+    max_total_values: {
+        knowledge: number;
+        loyalty: number;
+        influence: number;
+    };
 
-    isProfileLoading: boolean;
-    total_value: number;
-    start_level_value: number;
-    next_level_value: number | null;
     damage: number;
     critical_chance: number;
 
@@ -34,6 +39,11 @@ export const useGameStatsStore = create<GameStatsState>(() => ({
     start_level_value: 0,
     next_level_value: 0,
     total_values: {
+        knowledge: 0,
+        loyalty: 0,
+        influence: 0
+    },
+    max_total_values: {
         knowledge: 0,
         loyalty: 0,
         influence: 0
