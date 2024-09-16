@@ -35,7 +35,7 @@ export const FriendsPage = memo(() => {
 
     const { fetchReferals, ...refState } = useReferalStore((state) => state);
     const uci_id = useUserStore((state) => state.uci_id);
-    const link = `http://t.me/d_rebels_bot/app?startapp=${uci_id}`;
+    const link = `${import.meta.env.VITE_APP_LINK}=${uci_id}`;
     const [isCopied, setIsCopied] = useState(false);
 
     const navigate = useNavigate();
