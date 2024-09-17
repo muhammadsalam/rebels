@@ -27,6 +27,7 @@ export const QuestsPage = () => {
     }, []);
     const isProcessing = useQuestsStore(state => state.isProcessing);
 
+    const sounds = useUserStore(state => state.settings.sounds)
     const [playClickSound] = useSound('/assets/sounds/pageclicks.mp3');
     const [playClaimSound] = useSound('/assets/sounds/claim.mp3');
     const handleQuestClick = async (e: any, quest: Quest) => {
@@ -39,7 +40,7 @@ export const QuestsPage = () => {
             if (quest.status !== "Start" && tempStatus[quest.id] !== "Start") e.preventDefault();
 
             if (quest.status === "Start" || tempStatus[quest.id] === "Start") {
-                playClickSound()
+                sounds && playClickSound()
             }
 
             if (quest.status === 'Check') {
@@ -125,7 +126,7 @@ export const QuestsPage = () => {
                         balance: data.user_balance,
                     });
 
-                    playClaimSound();
+                    sounds && playClaimSound();
                 }
             }
 

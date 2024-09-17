@@ -14,12 +14,14 @@ export const LevelUpModal: FC = () => {
     const [isLevelUpgradedShow, setIsLevelUpgradedShow] = useState(false);
     const [playUpgradeSound] = useSound('/assets/sounds/upgrade.mp3');
 
+    const sounds = useUserStore((state) => state.settings.sounds);
+
     useEffect(() => {
         const levelUpgrade = async () => {
             if (levelUpgradingCondition) {
                 setIsLevelUpgradedShow(true)
 
-                playUpgradeSound()
+                sounds && playUpgradeSound()
 
                 await setTimeout(() => {
                     setIsLevelUpgradedShow(false);

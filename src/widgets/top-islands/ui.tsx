@@ -47,7 +47,7 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
                 throw new Error('Failed to send points. Please try again later.')
             }
 
-            playClickSound();
+            sounds && playClickSound();
 
             useUserStore.setState({ balance: useUserStore.getState().balance + 5_000_000 });
 

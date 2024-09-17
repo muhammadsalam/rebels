@@ -32,7 +32,7 @@ export const Menu = () => {
     const handleDailyGift = useCallback(() => {
         sounds && playClickSound();
         setIsDailyGiftActive(true);
-    }, [playClickSound]);
+    }, [playClickSound, sounds]);
 
     const DateInSeconds = +Date.now() / 1000;
 
