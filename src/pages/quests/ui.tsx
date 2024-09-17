@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
 import useQuestsStore, { Quest } from "entities/quests";
 import { useUserStore } from "entities/user";
+import useSound from "use-sound";
 
 export const QuestsPage = () => {
     const quests = useQuestsStore((state) => state.quests);
@@ -26,6 +27,8 @@ export const QuestsPage = () => {
     }, []);
     const isProcessing = useQuestsStore(state => state.isProcessing);
 
+    const [playClickSound] = useSound('/assets/sounds/pageclicks.mp3');
+    const [playClaimSound] = useSound('/assets/sounds/claim.mp3');
     const handleQuestClick = async (e: any, quest: Quest) => {
         try {
             if (isProcessing) return e.preventDefault();
@@ -34,6 +37,10 @@ export const QuestsPage = () => {
 
             // если не показано старт, то пропускаем
             if (quest.status !== "Start" && tempStatus[quest.id] !== "Start") e.preventDefault();
+
+            if (quest.status === "Start" || tempStatus[quest.id] === "Start") {
+                playClickSound()
+            }
 
             if (quest.status === 'Check') {
                 if (tempStatus[quest.id] === 'Start') {
@@ -117,6 +124,8 @@ export const QuestsPage = () => {
                     useUserStore.setState({
                         balance: data.user_balance,
                     });
+
+                    playClaimSound();
                 }
             }
 
