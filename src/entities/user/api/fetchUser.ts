@@ -179,7 +179,11 @@ export const fetchUser: (retry?: number) => Promise<boolean> = async (retry = 0)
             level: data.profile.level,
             level_name: data.profile.level_name,
             username: data.user.username,
-            name: data.user.username || (data.user.first_name + " " + data.user.last_name)
+            name: data.user.username || (
+                data.user.last_name
+                    ? `${data.user.first_name} ${data.user.last_name}`
+                    : data.user.first_name
+            ),
         });
 
         useGameStatsStore.setState(game_stats);
