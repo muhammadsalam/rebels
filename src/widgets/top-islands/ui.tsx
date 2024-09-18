@@ -8,7 +8,7 @@ import { Menu } from "widgets/menu";
 import CloseIcon from "icons/close.svg?react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import { useUserStore } from "entities/user";
+import { useGameStatsStore, useUserStore } from "entities/user";
 import { axios, showAlert, tgApp } from "shared/libs/utils";
 import useSound from "use-sound";
 import clickSound from "/assets/sounds/pageclicks.mp3";
@@ -56,10 +56,14 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
         }
     }
 
+    const daily_available_at = useGameStatsStore(state => state.daily_available_at);
+
+    const DateInSeconds = +Date.now() / 1000;
+
     return (
         <div {...props} className={styles.wrapper}>
             <Island
-                className={clsx(isActiveMenu && styles.close)}
+                className={clsx(isActiveMenu && styles.close, !isActiveMenu && daily_available_at < DateInSeconds && styles.notification)}
                 onClick={handleMenuOpen}
             >
                 {isActiveMenu ? (
