@@ -5,7 +5,7 @@ import { CharacterInfo } from "widgets/character-info";
 import { CharacterStatus } from "widgets/character-status";
 import { Navigation } from "widgets/navigation";
 import { useEffect, useState } from "react";
-import { tgApp } from "shared/libs/utils";
+import { preloadImage, tgApp } from "shared/libs/utils";
 import { Switcher } from "shared/ui";
 import { Mine } from "widgets/mine";
 import clsx from "clsx";
@@ -36,6 +36,15 @@ export const HomePage = () => {
         toggleVillain();
     };
 
+    const [isVillainLoaded, setIsVillainLoaded] = useState(false);
+    useEffect(() => {
+        if (wasted) {
+            preloadImage(`${import.meta.env.VITE_API_URL}/villain/${useVillainStore.getState().image}`).then(() => {
+                setIsVillainLoaded(true);
+            });
+        }
+    }, [wasted])
+
     return (
         <div className={styles.container}>
             <TopIslands />
@@ -64,7 +73,7 @@ export const HomePage = () => {
                 <button
                     className={styles.button__wasted}
                     onClick={handleNextVillain}
-                    disabled={current_health === 0}
+                    disabled={current_health === 0 && isVillainLoaded}
                 >
                     Next rogue
                 </button>

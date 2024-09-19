@@ -1,6 +1,6 @@
 import { useTapsCounterStore, useGameStatsStore, useUserStore } from "entities/user";
 import useVillainStore from "entities/villain";
-import { axios, preloadImage, showAlert } from "shared/libs/utils";
+import { axios, showAlert } from "shared/libs/utils";
 
 export default async function () {
     const { taps, critical_taps, seed } = useTapsCounterStore.getState();
@@ -35,8 +35,6 @@ export default async function () {
             useUserStore.setState({ balance: data.user.balance })
             useGameStatsStore.setState(game_stats)
             useVillainStore.setState({ ...data.villain, image: data.villain.photo });
-
-            preloadImage(`${import.meta.env.VITE_API_BACK}/villain/${data.villain.photo}`);
         }
 
     } catch (error) {
