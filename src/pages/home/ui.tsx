@@ -39,8 +39,8 @@ export const HomePage = () => {
     const [isVillainLoaded, setIsVillainLoaded] = useState(false);
     useEffect(() => {
         if (wasted) {
-            preloadImage(`${import.meta.env.VITE_API_URL}/villain/${useVillainStore.getState().image}`).then(() => {
-                setIsVillainLoaded(true);
+            preloadImage(`${import.meta.env.VITE_API_BACK}/villain/${useVillainStore.getState().image}`).then((state) => {
+                setIsVillainLoaded(state);
             });
         }
     }, [wasted])
@@ -73,7 +73,7 @@ export const HomePage = () => {
                 <button
                     className={styles.button__wasted}
                     onClick={handleNextVillain}
-                    disabled={current_health === 0 && isVillainLoaded}
+                    disabled={current_health === 0 || !isVillainLoaded}
                 >
                     Next rogue
                 </button>
