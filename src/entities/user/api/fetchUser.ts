@@ -5,7 +5,7 @@ import useQuestsStore, { Quest, QuestType } from "entities/quests";
 import useReferalStore from "entities/referal";
 import { useUserStore, useGameStatsStore } from "entities/user";
 import useVillainStore from "entities/villain";
-import { axios, showAlert } from "shared/libs/utils";
+import { axios, preloadImage, showAlert } from "shared/libs/utils";
 
 type TUser = {
     id: number,
@@ -149,6 +149,8 @@ export const fetchUser: (retry?: number) => Promise<boolean> = async (retry = 0)
         const { data, status, }: AxiosResponse<TUserResponse> = await axios.get("/user");
 
         if (status !== 200) return false;
+
+        preloadImage(`${import.meta.env.VITE_API_BACK}/villain/${data.villain.photo}`);
 
         const game_stats = {
             damage: data.user.damage,
