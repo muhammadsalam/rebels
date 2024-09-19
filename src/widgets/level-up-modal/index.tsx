@@ -25,7 +25,7 @@ export const LevelUpModal: FC = () => {
 
                 await setTimeout(() => {
                     setIsLevelUpgradedShow(false);
-                }, 3500);
+                }, 3000);
 
                 useUserStore.setState({ prev_level: level });
             }
