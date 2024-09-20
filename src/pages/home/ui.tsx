@@ -38,12 +38,12 @@ export const HomePage = () => {
 
     const [isVillainLoaded, setIsVillainLoaded] = useState(false);
     useEffect(() => {
-        if (wasted) {
+        if (wasted && current_health !== 0) {
             preloadImage(`${import.meta.env.VITE_API_BACK}/villain/${useVillainStore.getState().image}`).then((state) => {
                 setIsVillainLoaded(state);
             });
         }
-    }, [wasted])
+    }, [wasted, current_health])
 
     return (
         <div className={styles.container}>
