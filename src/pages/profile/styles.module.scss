@@ -31,11 +31,11 @@
 }
 
 .info__recruit {
-    --action-color: #34c759;
+    --action-color: var(--c-green);
 }
 
 .info__rookie {
-    --action-color: #34c759;
+    --action-color: var(--c-green);
 }
 
 .info__mercenary {
@@ -102,14 +102,14 @@
 
 .total_skills__recruit {
     .total_skills_line {
-        --action-background: #34c759;
+        --action-background: var(--c-green);
         --action-box-shadow: none;
     }
 }
 
 .total_skills__rookie {
     .total_skills_line {
-        --action-background: #34c759;
+        --action-background: var(--c-green);
         --action-box-shadow: 0.63px 3px 11.7px 0px #34c75994;
     }
 }
@@ -255,7 +255,7 @@
 .skill__influence {
     .line {
         --action-background: var(--c-pink);
-        --action-box-shadow: 0.63px 3px 11.7px 0px #ff2d5594;
+        --action-box-shadow: 0.63px 3px 11.7px 0px #ff2d2d94;
     }
 
     .skill_value {

@@ -20,7 +20,7 @@ export const ModalReward: FC<{
     handleClaimChest: () => void;
 }> = ({ reward, handleClaimChest }) => {
     const sounds = useUserStore((state) => state.settings.sounds);
-    const [playGiftSound] = useSound("/assets/sounds/gift.mp3");
+    const [playGiftSound] = useSound("/assets/sounds/upgrade.mp3");
     const handleClaimClick = () => {
         sounds && playGiftSound();
         handleClaimChest();
