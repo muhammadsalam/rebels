@@ -49,6 +49,10 @@
             color 0.2s ease-in-out;
     }
 
+    &.button__loading:disabled {
+        opacity: 1;
+    }
+
     &__active {
         box-shadow: 2px 2px 4px -30px #000, -2px -2px 3px -30px #606060,
             2px 2px 4px 1px #000 inset,

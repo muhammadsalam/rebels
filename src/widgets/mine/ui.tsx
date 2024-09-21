@@ -8,6 +8,7 @@ import useSound from "use-sound";
 import claimSound from "/assets/sounds/claim.mp3";
 import startMiningSound from '/assets/sounds/startmining.mp3';
 import { Line } from "shared/ui";
+import clsx from "clsx";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -152,7 +153,7 @@ export const Mine = () => {
         <div className={styles.miner}>
             <div className={styles.mine}>
                 <button
-                    className={styles.button}
+                    className={clsx(styles.button, isMineSending && styles.button__loading)}
                     onClick={(e) => handleOnClickButton(e)}
                     disabled={
                         isMineSending ||
