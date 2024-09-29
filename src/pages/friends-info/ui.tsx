@@ -1,26 +1,14 @@
 import styles from "./styles.module.scss";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import clsx from "clsx";
-import { useNavigate } from "react-router-dom";
-import { formatNumber, tgApp } from "shared/libs/utils";
-import useReferalStore, { ReferalInfoCard } from "entities/referal";
+import { formatNumber } from "shared/libs/utils";
+import { ReferalInfoCard, useReferralStore } from "entities/referral";
+import { useBackButton } from "shared/libs/hooks";
 
 export const FriendsInfoPage = () => {
-    const infoItems = useReferalStore((state) => state.info);
+    useBackButton('/friends');
 
-    const navigate = useNavigate();
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/friends");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
+    const infoItems = useReferralStore((state) => state.info);
 
     const Card: FC<ReferalInfoCard> = ({
         level,

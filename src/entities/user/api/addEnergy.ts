@@ -1,4 +1,4 @@
-import { useGameStatsStore } from "../model/gameStats";
+import { useGameStatsStore } from "../store/gameStats";
 
 export const addEnergy = () => {
     useGameStatsStore.setState((state) => ({

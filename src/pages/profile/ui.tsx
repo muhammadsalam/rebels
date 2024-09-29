@@ -1,16 +1,16 @@
 import styles from "./styles.module.scss";
 import TrophyIcon from "icons/trophy.svg?react";
 import clsx from "clsx";
-import { useEffect } from "react";
 import { useGameStatsStore, useUserStore } from "entities/user/";
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
-import { tgApp } from "shared/libs/utils";
-import { useNavigate } from "react-router-dom";
 import { Line } from "shared/ui";
+import { useBackButton } from "shared/libs/hooks";
 
 export const ProfilePage = () => {
+    useBackButton();
+
     const user_rank = useUserStore((state) => state.level_name);
     const level = useUserStore((state) => state.level);
     const total_value = useGameStatsStore((state) => state.total_value);
@@ -27,20 +27,6 @@ export const ProfilePage = () => {
     const max_total_values = useGameStatsStore(
         (state) => state.max_total_values
     );
-
-    const navigate = useNavigate();
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
 
     return (
         <div className={styles.container}>

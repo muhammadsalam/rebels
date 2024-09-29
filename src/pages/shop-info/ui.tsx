@@ -1,27 +1,12 @@
-import useChestsStore from "entities/chests";
+import { useChestsStore } from "entities/chests";
 import styles from "./styles.module.scss";
-import { useEffect } from "react";
 import clsx from "clsx";
-import { useNavigate } from "react-router-dom";
-import { tgApp } from "shared/libs/utils";
+import { useBackButton } from "shared/libs/hooks";
 
 export const ShopInfoPage = () => {
+    useBackButton('/shop');
+
     const chests = useChestsStore((state) => state.chests);
-
-    const navigate = useNavigate();
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/shop");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
-
     return (
         <div className={styles.container}>
             <div className={styles.top}>

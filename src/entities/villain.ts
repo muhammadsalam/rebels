@@ -18,7 +18,7 @@ interface VillainState {
     toggleVillain: () => void;
 }
 
-const useVillainStore = create<VillainState>((set) => ({
+export const useVillainStore = create<VillainState>((set) => ({
     id: null,
     health: 0,
     current_health: 0,
@@ -42,5 +42,3 @@ const useVillainStore = create<VillainState>((set) => ({
         new_level_reward: null,
     })),
 }));
-
-export default useVillainStore;

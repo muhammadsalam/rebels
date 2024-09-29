@@ -46,5 +46,5 @@ export const useInitializeApp = () => {
     initialize();
   }, [getToken]);
 
-  return { isInitialized };
+  return isInitialized;
 };

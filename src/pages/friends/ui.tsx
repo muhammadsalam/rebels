@@ -1,15 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
 import { memo, useEffect, useRef, useState } from "react";
-import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
-import useReferalStore from "entities/referal";
+import { axios, formatNumber, showAlert } from "shared/libs/utils";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import DoneIcon from 'icons/done.svg?react';
 import { useUserStore } from "entities/user";
 import useSound from "use-sound";
 import { Line } from "shared/ui";
+import { useReferralStore } from "entities/referral";
+import { useBackButton } from "shared/libs/hooks";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -31,28 +32,18 @@ function calculateTimeToFill({ claim_time }: any) {
 }
 
 export const FriendsPage = memo(() => {
+    useBackButton()
+
     const refLink = useRef<HTMLTextAreaElement>(null);
 
-    const { fetchReferals, ...refState } = useReferalStore((state) => state);
+    const { fetchReferrals, ...refState } = useReferralStore((state) => state);
     const uci_id = useUserStore((state) => state.uci_id);
     const link = `${import.meta.env.VITE_APP_LINK}=${uci_id}`;
     const [isCopied, setIsCopied] = useState(false);
 
-    const navigate = useNavigate();
     useEffect(() => {
-        fetchReferals();
-
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
+        fetchReferrals();
+    }, [])
 
     const handleCopy = () => {
         try {
@@ -89,7 +80,7 @@ export const FriendsPage = memo(() => {
         }
     };
 
-    const claim_time = useReferalStore((state) => state.claim_time);
+    const claim_time = useReferralStore((state) => state.claim_time);
     const [timeToFill, setTimeToFill] = useState("");
 
     useEffect(() => {
@@ -123,7 +114,7 @@ export const FriendsPage = memo(() => {
             sounds && playClaimingSound();
 
             useUserStore.setState({ balance: data.balance });
-            useReferalStore.setState({ claim_time: data.referral_balance_claim_at, balance: 0 });
+            useReferralStore.setState({ claim_time: data.referral_balance_claim_at, balance: 0 });
 
         } catch (error: any) {
             showAlert(`Something went wrong. Please try again later. ${error.message}`);

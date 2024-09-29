@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes, memo } from "react";
 import styles from "./styles.module.scss";
 import HeartIcon from "icons/heart.svg?react";
-import useVillainStore from "entities/villain";
+import { useVillainStore } from "entities/villain/";
 import { useGameStatsStore } from "entities/user";
 import { axios, formatNumber } from "shared/libs/utils";
 import { Island, Line } from "shared/ui";

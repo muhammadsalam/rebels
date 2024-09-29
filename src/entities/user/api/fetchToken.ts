@@ -1,5 +1,5 @@
 import { axios, showAlert, tgApp } from "shared/libs/utils";
-import { useUserStore } from "../model/user";
+import { useUserStore } from "../store/user";
 
 export const fetchToken: (retry?: number) => Promise<string | null> = async (retry = 0) => {
     const MAX_RETRIES = 3;

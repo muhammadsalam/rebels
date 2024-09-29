@@ -9,7 +9,7 @@ import { preloadImage, tgApp } from "shared/libs/utils";
 import { Switcher } from "shared/ui";
 import { Mine } from "widgets/mine";
 import clsx from "clsx";
-import useVillainStore from "entities/villain";
+import { useVillainStore } from "entities/villain/";
 import useSound from "use-sound";
 import { useUserStore } from "entities/user";
 

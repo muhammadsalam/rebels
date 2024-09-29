@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios";
-import useChestsStore from "entities/chests";
+import { useChestsStore } from "entities/chests";
 import { useHeroStore } from "entities/heroes";
-import useQuestsStore, { Quest, QuestType } from "entities/quests";
-import useReferalStore from "entities/referal";
+import { Quest, QuestType, useQuestsStore } from "entities/quests";
+import { useReferralStore } from "entities/referral";
 import { useUserStore, useGameStatsStore } from "entities/user";
-import useVillainStore from "entities/villain";
+import { useVillainStore } from "entities/villain/";
 import { axios, preloadImage, showAlert } from "shared/libs/utils";
 
 type TUser = {
@@ -181,11 +181,7 @@ export const fetchUser: (retry?: number) => Promise<boolean> = async (retry = 0)
             level: data.profile.level,
             level_name: data.profile.level_name,
             username: data.user.username,
-            name: data.user.username || (
-                data.user.last_name
-                    ? `${data.user.first_name} ${data.user.last_name}`
-                    : data.user.first_name
-            ),
+            name: data.user.username || data.user.first_name,
         });
 
         useGameStatsStore.setState(game_stats);
@@ -230,7 +226,7 @@ export const fetchUser: (retry?: number) => Promise<boolean> = async (retry = 0)
             })
         });
 
-        useReferalStore.setState({
+        useReferralStore.setState({
             info: data.refferal_info,
             ...data.refferal_stats
         })

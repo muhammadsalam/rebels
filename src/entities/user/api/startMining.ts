@@ -1,5 +1,5 @@
 import { axios, showAlert } from "shared/libs/utils";
-import { useGameStatsStore } from "../model/gameStats";
+import { useGameStatsStore } from "../store/gameStats";
 
 export const startMining = async () => {
     try {

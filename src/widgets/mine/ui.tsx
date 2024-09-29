@@ -2,8 +2,7 @@ import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
 import { claimMining, startMining, useGameStatsStore, useUserStore } from "entities/user";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { formatNumber, tgApp } from "shared/libs/utils";
-import { useNavigate } from "react-router-dom";
+import { formatNumber } from "shared/libs/utils";
 import useSound from "use-sound";
 import claimSound from "/assets/sounds/claim.mp3";
 import startMiningSound from '/assets/sounds/startmining.mp3';
@@ -40,21 +39,6 @@ export const Mine = () => {
     const mining_claimed_at = useGameStatsStore(
         (state) => state.mining_claimed_at
     );
-
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
 
     const [timeToFill, setTimeToFill] = useState("");
 

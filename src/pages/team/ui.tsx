@@ -4,10 +4,9 @@ import SkullIcon from "icons/skull.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import { saveTeam, Card, upgradeHero, useHeroStore } from "entities/heroes";
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
 import { Island, Line, Modal } from "shared/ui";
-import { formatNumber, tgApp } from "shared/libs/utils";
+import { formatNumber } from "shared/libs/utils";
 import { useUserStore } from "entities/user";
 import { CardsPage } from "pages/cards";
 import { Upgraded } from "widgets/upgraded";
@@ -18,9 +17,12 @@ import {
 } from "shared/CONSTANT";
 import styles from "./styles.module.scss";
 import useSound from "use-sound";
+import { useBackButton } from "shared/libs/hooks";
 
 
 export const TeamPage = () => {
+    useBackButton();
+
     const team = useHeroStore((state) => state.team);
     const [team_skills, setTeamSkills] = useState(
         useHeroStore((state) => state.team_skills)
@@ -97,20 +99,6 @@ export const TeamPage = () => {
 
         return changed;
     };
-
-    const navigate = useNavigate();
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
 
     const [playUpgradeAudio] = useSound('/assets/sounds/upgrade.mp3');
     const [isUpgrading, setIsUpgrading] = useState(false);

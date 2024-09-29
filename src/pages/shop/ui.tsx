@@ -1,35 +1,24 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import InfoBoxIcon from "icons/info-box.svg?react";
 import ChestIcon from "icons/chest.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
-import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
-import { useEffect, useState } from "react";
-import useChestsStore from "entities/chests";
+import { axios, formatNumber, showAlert } from "shared/libs/utils";
+import { useState } from "react";
+import { useChestsStore } from "entities/chests";
 import { useUserStore, useGameStatsStore } from "entities/user";
 import { ModalReward, TReward } from "widgets/modal-reward";
 import { useHeroStore } from "entities/heroes";
 import useSound from "use-sound";
+import { useBackButton } from "shared/libs/hooks";
 
 export const ShopPage = () => {
+    useBackButton();
+
     const chests = useChestsStore((state) => state.chests);
     const balance = useUserStore((state) => state.balance);
     const level = useUserStore((state) => state.level);
-
-    const navigate = useNavigate();
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
 
     const sounds = useUserStore(state => state.settings.sounds)
 

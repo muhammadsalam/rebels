@@ -12,7 +12,7 @@ import clickCharacter from "features/clickCharacter";
 import { seededRandom } from "shared/libs/utils";
 import claim from "features/claim";
 import clsx from "clsx";
-import useVillainStore from "entities/villain";
+import { useVillainStore } from "entities/villain/";
 import useSound from "use-sound";
 
 interface ClickPosition {

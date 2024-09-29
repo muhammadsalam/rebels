@@ -6,16 +6,12 @@ import { useInitializeApp } from "./hooks/useInitializeApp";
 import { AppRoutes } from "./providers/RouterProvider";
 import { useEnergy } from "features/energy";
 import { useLoadFonts } from "./hooks/useLoadFonts";
-import { useOrientation } from "./hooks/useOrientation";
 import { LevelUpModal } from "widgets/level-up-modal";
 
-
 function App() {
-    const { isInitialized } = useInitializeApp();
-    const isFontsLoaded = useLoadFonts();
-    const isLandscape = useOrientation();
     useEnergy();
-
+    const isInitialized = useInitializeApp();
+    const isFontsLoaded = useLoadFonts();
     const [isLoading, setIsLoading] = useState(true);
     setTimeout(() => setIsLoading(false), 5000);
 
@@ -29,7 +25,7 @@ function App() {
 
     return (
         <>
-            {isLandscape && <AutoRotate />}
+            <AutoRotate />
             <LevelUpModal />
             <Router>
                 <AppRoutes />

@@ -1,46 +1,25 @@
 import { axios, showAlert } from 'shared/libs/utils';
 import { create } from 'zustand';
+import { HeroState, Quest } from '../model/quests.types';
+import { CHECK_QUESTS } from '../model/CONSTANTS';
 
-export type QuestType = 'TELEGRAM' | any;
-
-export type Quest = {
-    id: number;
-    name: string;
-    reward: number;
-    url: string;
-    status: 'Start' | 'Check' | 'Claim' | 'Done';
-    attemps: number;
-    scenario: 1 | 2 | 3;
-    type: QuestType;
-}
-
-interface HeroState {
-    quests: Quest[];
-    isProcessing: boolean;
-    fetchQuests: () => void;
-}
-
-const useQuestsStore = create<HeroState>((set) => ({
+export const useQuestsStore = create<HeroState>((set) => ({
     quests: [],
     isProcessing: false,
     fetchQuests: async () => {
         try {
-            const { status, data } = await axios.get('/task');
-
-            if (status !== 200) {
-                throw new Error('Something went wrong. Please try again later');
-            }
+            const { data } = await axios.get('/task');
 
             set({
                 quests: data.map((item: Quest) => {
                     let scenario: 1 | 2 | 3;
                     const randomNumber = Math.floor(Math.random() * 100) + 1;
 
-                    if (item.type === "TELEGRAM") {
+                    if (CHECK_QUESTS.includes(item.type)) {
                         return { ...item, attemps: 1, scenario: 1 }
                     }
 
-                    if (randomNumber <= 20) {
+                    if (randomNumber <= 30) {
                         scenario = 1;
                     } else if (randomNumber <= 60) {
                         scenario = 2;
@@ -56,5 +35,3 @@ const useQuestsStore = create<HeroState>((set) => ({
         }
     }
 }));
-
-export default useQuestsStore;

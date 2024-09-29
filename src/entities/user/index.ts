@@ -1,6 +1,6 @@
-export * from './model/gameStats';
-export * from './model/tapsCounter';
-export * from './model/user';
+export * from './store/gameStats';
+export * from './store/tapsCounter';
+export * from './store/user';
 
 export * from './api/fetchUser';
 export * from './api/fetchProfile';

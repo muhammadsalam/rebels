@@ -1,160 +1,24 @@
 import clsx from "clsx";
 import styles from "./styles.module.scss";
 import CoinIcon from "icons/coin.svg?react";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { axios, formatNumber, showAlert, tgApp } from "shared/libs/utils";
-import useQuestsStore, { Quest } from "entities/quests";
+import { useState } from "react";
+import { formatNumber } from "shared/libs/utils";
 import { useUserStore } from "entities/user";
 import useSound from "use-sound";
+import { handleQuestClick, useQuestsStore } from "entities/quests";
+import { useBackButton } from "shared/libs/hooks";
 
 export const QuestsPage = () => {
+    useBackButton();
+
     const quests = useQuestsStore((state) => state.quests);
     const [tempStatus, setTempStatus] = useState<Record<number, string>>({});
 
-    const navigate = useNavigate();
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
     const isProcessing = useQuestsStore(state => state.isProcessing);
 
     const sounds = useUserStore(state => state.settings.sounds)
     const [playClickSound] = useSound('/assets/sounds/pageclicks.mp3');
     const [playClaimSound] = useSound('/assets/sounds/claim.mp3');
-    const handleQuestClick = async (e: any, quest: Quest) => {
-        try {
-            if (isProcessing) return e.preventDefault();
-
-            useQuestsStore.setState({ isProcessing: true })
-
-            // если не показано старт, то пропускаем
-            if (quest.status !== "Start" && tempStatus[quest.id] !== "Start") e.preventDefault();
-
-            if (quest.status === "Start" || tempStatus[quest.id] === "Start") {
-                sounds && playClickSound()
-            }
-
-            if (quest.status === 'Check') {
-                if (tempStatus[quest.id] === 'Start') {
-                    useQuestsStore.setState({ isProcessing: false })
-                    // Показываем статус "Check"
-                    return setTempStatus((prev) => ({ ...prev, [quest.id]: "Check" }));
-                }
-
-                // Показываем статус "Checking" на 3 секунды
-                setTempStatus((prev) => ({ ...prev, [quest.id]: "Checking" }));
-                await new Promise((resolve) => setTimeout(resolve, quest.type === "TELEGRAM" ? 0 : 3000));
-
-                switch (quest.scenario) {
-                    // при первом сценарии принимаем сразу
-                    case 1:
-                        break;
-                    case 2:
-                        if (quest.attemps === 1) {
-                            setTempStatus((prev) => ({
-                                ...prev,
-                                [quest.id]: "Failed"
-                            }));
-                            await new Promise((resolve) => setTimeout(resolve, 3000));
-                            setTempStatus((prev) => ({ ...prev, [quest.id]: "Start" }));
-                            useQuestsStore.setState({ isProcessing: false })
-
-                            return useQuestsStore.setState({
-                                quests: quests.map((item) =>
-                                    item.id === quest.id
-                                        ? { ...item, attemps: 2 }
-                                        : item
-                                ),
-                            });
-                        }
-                        break;
-                    case 3:
-                        if (quest.attemps <= 2) {
-                            setTempStatus((prev) => ({
-                                ...prev,
-                                [quest.id]: "Failed"
-                            }));
-                            await new Promise((resolve) => setTimeout(resolve, 3000));
-                            setTempStatus((prev) => ({ ...prev, [quest.id]: "Start" }));
-                            useQuestsStore.setState({ isProcessing: false })
-                            return useQuestsStore.setState({
-                                quests: quests.map((item) =>
-                                    item.id === quest.id
-                                        ? { ...item, attemps: quest.attemps + 1 }
-                                        : item
-                                ),
-                            });
-                        }
-                        break;
-
-                }
-            }
-
-            // удаление статуса "Checking" и "Failed"
-            quest.type !== "TELEGRAM" && await setTempStatus((prev) => {
-                const { [quest.id]: _, ...newState } = prev;
-                return newState;
-            });
-
-            const { status, data } = await axios.post(
-                `task/${quest.status.toLowerCase()}`,
-                { task_id: quest.id }
-            );
-
-            if (status !== 200) return;
-
-            if (data.status) {
-                useQuestsStore.setState({
-                    quests: quests.map((item) =>
-                        item.id === quest.id
-                            ? { ...item, status: data.new_status }
-                            : item
-                    ),
-                });
-
-                if (data.new_status === "Done") {
-                    useUserStore.setState({
-                        balance: data.user_balance,
-                    });
-
-                    sounds && playClaimSound();
-                }
-            }
-
-            setTempStatus((prev) => {
-                const { [quest.id]: _, ...newState } = prev;
-                return newState;
-            });
-
-            useQuestsStore.setState({ isProcessing: false })
-
-        } catch (error: any) {
-            if (error.response?.status === 400) {
-                setTempStatus((prev) => ({
-                    ...prev,
-                    [quest.id]: "Failed"
-                }));
-
-                await new Promise((resolve) => setTimeout(resolve, 3000));
-                setTempStatus((prev) => ({ ...prev, [quest.id]: "Start" }));
-
-                useQuestsStore.setState({ isProcessing: false })
-
-                return;
-            }
-
-            showAlert(`Something went wrong. Please try again later. ${error.message}`);
-        }
-    };
 
     return (
         <div className={styles.container}>
@@ -166,7 +30,7 @@ export const QuestsPage = () => {
                 {quests.map((quest) => (
                     <a
                         key={quest.id}
-                        onClick={(e) => handleQuestClick(e, quest)}
+                        onClick={(e) => handleQuestClick(e, quest, tempStatus, setTempStatus, playClickSound, playClaimSound, isProcessing, sounds, quests)}
                         target="_blank"
                         href={quest.url}
                         className={clsx(

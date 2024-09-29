@@ -1,9 +1,15 @@
 import { memo } from 'react';
 import styles from './style.module.scss'
-import { useBodyLock } from 'shared/libs/hooks';
+import { useBodyLock, useOrientation } from 'shared/libs/hooks';
 
 export const AutoRotate = memo(() => {
-    useBodyLock();
+    const isLandscape = useOrientation();
+
+    useBodyLock(isLandscape);
+
+    if (!isLandscape) {
+        return null;
+    }
 
     return (
         <div className={styles.rotate}>

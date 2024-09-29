@@ -1,23 +1,9 @@
-import { tgApp } from "shared/libs/utils";
 import styles from "./styles.module.scss";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Accordeon } from "widgets/accordeon";
+import { useBackButton } from "shared/libs/hooks";
 
 export const FAQPage = () => {
-    const navigate = useNavigate();
-    useEffect(() => {
-        tgApp.BackButton.show();
-        const backButtonClick = () => {
-            navigate("/");
-        };
-
-        tgApp.BackButton.onClick(backButtonClick);
-
-        return () => {
-            tgApp.BackButton.offClick(backButtonClick);
-        };
-    }, []);
+    useBackButton();
 
     return (
         <div className={styles.faq}>
