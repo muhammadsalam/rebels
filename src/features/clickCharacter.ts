@@ -19,7 +19,10 @@ export default function (damage: number, isCritical: boolean) {
     addTap(isCritical)
 
     // if ("vibrate" in navigator && useUserStore.getState().settings.sounds) navigator.vibrate(5);
-    if ("vibrate" in navigator) navigator.vibrate(5);
+    if ("vibrate" in navigator) navigator.vibrate(20);
+    else if ("oVibrate" in navigator) (navigator as any).oVibrate(20);
+    else if ("mozVibrate" in navigator) (navigator as any).mozVibrate(20);
+    else if ("webkitVibrate" in navigator) (navigator as any).webkitVibrate(20);
 
     if (newHealth <= 0) {
         useVillainStore.setState({ current_health: 0, wasted: true, new_level_reward: health / 2 });
