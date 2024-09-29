@@ -4,7 +4,7 @@ import { useHeroStore } from "entities/heroes";
 import { Quest, QuestType, useQuestsStore } from "entities/quests";
 import { useReferralStore } from "entities/referral";
 import { useUserStore, useGameStatsStore } from "entities/user";
-import { useVillainStore } from "entities/villain/";
+import { useVillainStore } from "entities/villain";
 import { axios, preloadImage, showAlert } from "shared/libs/utils";
 
 type TUser = {

@@ -1,5 +1,5 @@
 import { useTapsCounterStore, useGameStatsStore, useUserStore } from "entities/user";
-import { useVillainStore } from "entities/villain/";
+import { useVillainStore } from "entities/villain";
 import { axios, showAlert } from "shared/libs/utils";
 
 export default async function () {

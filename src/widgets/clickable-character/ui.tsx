@@ -12,8 +12,8 @@ import clickCharacter from "features/clickCharacter";
 import { seededRandom } from "shared/libs/utils";
 import claim from "features/claim";
 import clsx from "clsx";
-import { useVillainStore } from "entities/villain/";
 import useSound from "use-sound";
+import { useVillainStore } from "entities/villain";
 
 interface ClickPosition {
     x: number;

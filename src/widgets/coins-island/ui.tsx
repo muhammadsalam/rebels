@@ -4,7 +4,7 @@ import CoinIcon from "icons/coin.svg?react";
 import { formatNumber } from "shared/libs/utils";
 import { useUserStore } from "entities/user";
 import clsx from "clsx";
-import { useVillainStore } from "entities/villain/";
+import { useVillainStore } from "entities/villain";
 import { Island } from "shared/ui";
 
 export const CoinsIsland: FC<HTMLAttributes<HTMLDivElement>> = memo(({

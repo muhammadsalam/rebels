@@ -1,5 +1,5 @@
 import { FC, HTMLAttributes, memo, useState } from "react";
-import { useVillainStore } from "entities/villain/";
+import { useVillainStore } from "entities/villain";
 import InfoBoxIcon from 'icons/info-box.svg?react';
 import { Island, Modal } from "shared/ui";
 
