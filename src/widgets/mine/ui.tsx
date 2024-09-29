@@ -175,7 +175,7 @@ export const Mine = () => {
                 </div>
             </div>
             <Line
-                className={styles.line}
+                className={clsx(styles.line, mining_balance === mining_max_points && styles.line__full)}
                 width={mining_claimed_at === 0 ? 0 : (mining_balance / mining_max_points) * 100}
                 height={21}
                 withPadding
