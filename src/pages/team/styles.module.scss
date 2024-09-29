@@ -26,6 +26,17 @@
     line-height: 33px;
 }
 
+.top_icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 77px;
+    background: var(--dark);
+    box-shadow: var(--shadow-1);
+}
+
 .choosed_cards {
     display: flex;
     justify-content: space-between;

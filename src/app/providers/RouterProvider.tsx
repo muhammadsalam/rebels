@@ -14,6 +14,7 @@ import { FAQPage } from 'pages/faq';
 import useSound from 'use-sound';
 import { useTapsCounterStore, useUserStore } from 'entities/user';
 import claim from 'features/claim';
+import { TeamInfoPage } from 'pages/team-info';
 // import pageClicksAudio from '/assets/sounds/pageclicks.mp3';
 
 export const AppRoutes: React.FC = () => {
@@ -30,6 +31,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/roster" element={<TeamPage />} />
+        <Route path="/roster/info" element={<TeamInfoPage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/shop/info" element={<ShopInfoPage />} />
         <Route path="/quests" element={<QuestsPage />} />

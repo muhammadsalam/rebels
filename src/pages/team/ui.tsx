@@ -18,7 +18,8 @@ import {
 import styles from "./styles.module.scss";
 import useSound from "use-sound";
 import { useBackButton } from "shared/libs/hooks";
-
+import InfoBoxIcon from "icons/info-box.svg?react";
+import { Link } from "react-router-dom";
 
 export const TeamPage = () => {
     useBackButton();
@@ -142,6 +143,9 @@ export const TeamPage = () => {
                 <div className={styles.top_left}>
                     <h2 className={styles.heading}>Roster</h2>
                 </div>
+                <Link to="/roster/info" className={styles.top_icon}>
+                    <InfoBoxIcon />
+                </Link>
             </div>
 
             <div className={styles.choosed_cards}>
