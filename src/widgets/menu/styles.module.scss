@@ -29,6 +29,10 @@
     line-height: 26px;
     width: 197px;
     height: 60px;
+
+    &:disabled {
+        color: var(--gray);
+    }
 }
 
 .gift {

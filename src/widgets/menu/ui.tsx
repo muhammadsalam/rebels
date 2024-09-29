@@ -11,6 +11,11 @@ import { useGameStatsStore, useUserStore } from "entities/user";
 import useSound from "use-sound";
 import clsx from "clsx";
 
+const formatTimeRemaining = (secondsRemaining: number) => {
+    const hours = Math.floor(secondsRemaining / 3600);
+    const minutes = Math.floor((secondsRemaining % 3600) / 60);
+    return hours > 0 ? `${hours}h ${minutes}m` : (minutes > 0 ? ` ${minutes}m` : '');
+};
 
 export const Menu = () => {
     useBodyLock();
@@ -34,14 +39,20 @@ export const Menu = () => {
         setIsDailyGiftActive(true);
     }, [playClickSound, sounds]);
 
-    const DateInSeconds = +Date.now() / 1000;
+    const DateInSeconds = Math.floor(Date.now() / 1000);
+    const secondsRemaining = daily_available_at - DateInSeconds;
+    const isGiftAvailable = secondsRemaining <= 0;
 
     return (
         <>
             <div className={styles.menu}>
                 <nav className={styles.nav}>
                     <Island tag='button' onClick={handleDailyGift} disabled={daily_available_at > DateInSeconds} className={clsx(styles.link, daily_available_at < DateInSeconds && styles.gift)}>
-                        Daily gift
+                        {
+                            isGiftAvailable
+                                ? 'Daily gift'
+                                : `${formatTimeRemaining(secondsRemaining)}`
+                        }
                     </Island>
                     <Island
                         tag={Link}
