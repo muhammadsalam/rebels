@@ -1,6 +1,6 @@
 import { axios, showAlert } from "shared/libs/utils";
 
-export default async () => {
+const fetchReferrals = async () => {
     try {
         const { data } = await axios.get('/user/referal/stats');
         return data;
@@ -9,3 +9,5 @@ export default async () => {
         return null;
     }
 }
+
+export default fetchReferrals;
