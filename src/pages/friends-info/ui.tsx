@@ -47,7 +47,7 @@ export const FriendsInfoPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.top}>
-                <h2 className={styles.heading}>Referral info</h2>
+                <h2 className={styles.heading}>Referral system info</h2>
             </div>
 
             <div className={styles.cards}>
