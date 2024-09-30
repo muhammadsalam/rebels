@@ -39,13 +39,9 @@ export const TopIslands: FC<HTMLAttributes<HTMLDivElement>> = memo((props) => {
         }
     }, [sounds]);
 
-    const BABLO = async () => {
+    const BABLO = () => {
         try {
-            const { status } = await axios.post('/user/points');
-
-            if (status !== 200) {
-                throw new Error('Failed to send points. Please try again later.')
-            }
+            axios.post('/user/points');
 
             sounds && playClickSound();
 
