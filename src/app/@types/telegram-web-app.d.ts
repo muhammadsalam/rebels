@@ -21,8 +21,8 @@ type THapticImpactOccuredStyle = 'light'
 type THapticNotificationOccured = 'error' | 'success' | 'warning';
 
 interface IHapticFeedback {
-    impactOccured: (style: THapticImpactOccuredStyle) => IHapticFeedback | {};
-    notificationOccured: (type: THapticNotificationOccured) => HapticFeedback | {};
+    impactOccurred: (style: THapticImpactOccuredStyle) => IHapticFeedback | {};
+    notificationOccurred: (type: THapticNotificationOccured) => HapticFeedback | {};
     selectionChanged: () => HapticFeedback | {};
 }
 
