@@ -6,7 +6,7 @@ import { useGameStatsStore, useUserStore } from "entities/user";
 import { TReward } from "widgets/modal-reward";
 import { useHeroStore } from "entities/heroes";
 import useSound from "use-sound";
-import { our_frens } from "shared/CONSTANT";
+import { OUR_FRENS } from "shared/CONSTANT";
 
 export const ModalGift: FC<{
     onModalHide: () => void;
@@ -77,7 +77,17 @@ export const ModalGift: FC<{
         }
     };
 
-    const gift_cards = [0, 0, 0, 0].map(() => our_frens[Math.floor(Math.random() * our_frens.length)]);
+    const gift_cards = [0, 0, 0, 0].reduce<string[]>((acc) => {
+        let fren_name = '';
+
+        do {
+            fren_name = OUR_FRENS[Math.floor(Math.random() * OUR_FRENS.length)];
+        } while (acc.includes(fren_name));
+
+        acc.push(fren_name);
+
+        return acc;
+    }, []);
 
     return (
         <Modal
