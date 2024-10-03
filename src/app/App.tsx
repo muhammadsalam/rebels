@@ -7,18 +7,22 @@ import { AppRoutes } from "./providers/RouterProvider";
 import { useEnergy } from "features/energy";
 import { useLoadFonts } from "./hooks/useLoadFonts";
 import { LevelUpModal } from "widgets/level-up-modal";
+import { useImagesPreload } from "./hooks/useImagesPreload";
 
 function App() {
     useEnergy();
     const isInitialized = useInitializeApp();
     const isFontsLoaded = useLoadFonts();
-    const [isLoading, setIsLoading] = useState(true);
-    setTimeout(() => setIsLoading(false), 5000);
+    const isImagesLoading = useImagesPreload(isInitialized && isFontsLoaded);
+
+    const [isTimeGoing, setIsTimeGoing] = useState(true);
+    setTimeout(() => setIsTimeGoing(false), 5000);
 
     if (
         !isInitialized
         || !isFontsLoaded
-        || isLoading
+        || isTimeGoing
+        || isImagesLoading
     )
         return <Loading />;
 
