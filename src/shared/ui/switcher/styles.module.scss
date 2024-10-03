@@ -6,64 +6,6 @@
     border-radius: 100px;
     background-color: var(--dark);
     position: relative;
-
-    --border-angle: 0turn; // For animation.
-    --main-bg: conic-gradient(
-        from var(--border-angle),
-        var(--dark),
-        var(--dark)
-    );
-    border: solid 0.5px transparent;
-    --line-color: #eb642a;
-    --gradient-border: conic-gradient(
-        from var(--border-angle),
-        transparent 30%,
-        var(--orange-2),
-        var(--orange-2) 70%,
-        transparent
-    );
-
-    overflow: hidden;
-
-    background: 
-      // padding-box clip this background in to the overall element except the border.
-        var(--main-bg) padding-box,
-        // border-box extends this background to the border space
-        var(--gradient-border) border-box,
-        // Duplicate main background to fill in behind the gradient border. You can remove this if you want the border to extend "outside" the box background.
-        var(--main-bg) border-box;
-    background-repeat: no-repeat;
-
-    background-position: center center;
-
-    animation: bg-spin 5s linear infinite,
-        border-opacity 5s linear infinite alternate;
-    @keyframes bg-spin {
-        to {
-            --border-angle: 1turn;
-        }
-    }
-
-    @keyframes border-opacity {
-        0% {
-            --border-opacity: 1;
-        }
-        100% {
-            --border-opacity: 0;
-        }
-    }
-}
-
-@property --border-angle {
-    syntax: "<angle>";
-    inherits: true;
-    initial-value: 0turn;
-}
-
-@property --border-opacity {
-    syntax: "<number>";
-    inherits: false;
-    initial-value: 1;
 }
 
 .toggle {
