@@ -29,12 +29,12 @@ export const Line: FC<LineProps> = memo(({
         <div
             ref={divRef}
             {...props}
-            className={clsx(className, styles.line, (wrapperWidth / 100 * width) < height && styles.line__overflow, withPadding && styles.line__padding)}
+            className={clsx(className, styles.line, (wrapperWidth / 100 * (width < 0 ? 0 : width)) < height && styles.line__overflow, withPadding && styles.line__padding)}
         >
             <div className={styles.inner}>
                 <div
                     className={styles.elem}
-                    style={{ width: `${width}%`, height: `${height}px` }}
+                    style={{ width: `${(width < 0 ? 0 : width)}%`, height: `${height}px` }}
                 ></div>
             </div>
         </div>
