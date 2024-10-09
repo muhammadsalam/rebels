@@ -59,24 +59,24 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
                     >
                         <path
                             d="M3.66667 4H2V15.6667H17V12.3333H18.6667V7.33333H17V4H3.66667ZM15.3333 5.66667V14H3.66667V5.66667H15.3333Z"
-                            fill="#C4EB2A"
+                            fill="#38c313"
                         />
                         {energyPercentage > 10 && (
                             <path
                                 d="M6.99999 7.33334H5.33333V12.3333H6.99999V7.33334Z"
-                                fill="#C4EB2A"
+                                fill="#38c313"
                             />
                         )}
                         {energyPercentage > 40 && (
                             <path
                                 d="M8.66667 7.33334H10.3333V12.3333H8.66667V7.33334Z"
-                                fill="#C4EB2A"
+                                fill="#38c313"
                             />
                         )}
                         {energyPercentage > 75 && (
                             <path
                                 d="M12 7.33334H13.6667V12.3333H12V7.33334Z"
-                                fill="#C4EB2A"
+                                fill="#38c313"
                             />
                         )}
                     </svg>
