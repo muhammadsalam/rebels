@@ -20,6 +20,21 @@
     color: var(--white);
     font-size: 0;
 
+    &_icon__active {
+        position: relative;
+        &:after {
+            content: "";
+            width: 6px;
+            height: 6px;
+            display: block;
+            background-color: var(--orange-2);
+            border-radius: 50%;
+            position: absolute;
+            right: -12px;
+            top: 0.5px;
+        }
+    }
+
     strong {
         font-size: 14px;
         font-weight: 700;

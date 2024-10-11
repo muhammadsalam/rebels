@@ -11,6 +11,7 @@ import useSound from "use-sound";
 import { Line } from "shared/ui";
 import { useReferralStore } from "entities/referral";
 import { useBackButton } from "shared/libs/hooks";
+import { RefLevelUpModal } from "widgets/ref-level-up-modal";
 
 const formatTime = (timeInSeconds: number) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -42,7 +43,9 @@ export const FriendsPage = memo(() => {
     const [isCopied, setIsCopied] = useState(false);
 
     useEffect(() => {
-        fetchReferrals();
+        if (localStorage.getItem("ref_level") === null) {
+            localStorage.setItem("ref_level", refState.level);
+        }
     }, [])
 
     const handleCopy = () => {
@@ -124,96 +127,99 @@ export const FriendsPage = memo(() => {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.top}>
-                <div className={styles.top_left}>
-                    <h2 className={styles.heading}>My Friends</h2>
-                </div>
-                <Link to="/friends/info" className={styles.top_icon}>
-                    <InfoBoxIcon />
-                </Link>
-            </div>
-
-            <div
-                className={clsx(
-                    styles.tag,
-                    styles[`tag__${refState.level.toLowerCase()}`]
-                )}
-            >
-                {refState.level} referrer
-            </div>
-
-            <div className={styles.progress}>
-                <textarea defaultValue={link} className={styles.textarea} ref={refLink}></textarea>
-                <div className={styles.progress_top}>
-                    <div className={styles.progress_top_left}>
-                        <div className={styles.progress_top_title}>
-                            <span>{refState.ref_count}</span>
-                            {
-                                refState.level.toLowerCase() !== 'legendary' && <>
-                                    {" / "}
-                                    {refState.next_level}
-                                </>
-                            }
-                        </div>
-                        <p className={styles.progress_top_ph}>
-                            friends invited
-                        </p>
+        <>
+            <RefLevelUpModal />
+            <div className={styles.container}>
+                <div className={styles.top}>
+                    <div className={styles.top_left}>
+                        <h2 className={styles.heading}>My Friends</h2>
                     </div>
-                    <div className={styles.progress_top_right}>
-                        <div className={styles.progress_top_title}>
-                            {refState.ref_percent} %
-                        </div>
-                        <p className={styles.progress_top_ph}>from friends</p>
-                    </div>
+                    <Link to="/friends/info" className={styles.top_icon}>
+                        <InfoBoxIcon />
+                    </Link>
                 </div>
-                <Line
-                    className={styles.progress_line}
-                    width={(refState.ref_count / refState.next_level) * 100}
-                    height={9}
-                />
-                <div className={styles.progress_bottom}>
-                    <button className={clsx(styles.progress_button, isCopied && styles.progress_button__done)} onClick={handleCopy}>
-                        <div className={styles.progress_button_text}>
-                            Copy
+
+                <div
+                    className={clsx(
+                        styles.tag,
+                        styles[`tag__${refState.level.toLowerCase()}`]
+                    )}
+                >
+                    {refState.level} referrer
+                </div>
+
+                <div className={styles.progress}>
+                    <textarea defaultValue={link} className={styles.textarea} ref={refLink}></textarea>
+                    <div className={styles.progress_top}>
+                        <div className={styles.progress_top_left}>
+                            <div className={styles.progress_top_title}>
+                                <span>{refState.ref_count}</span>
+                                {
+                                    refState.level.toLowerCase() !== 'legendary' && <>
+                                        {" / "}
+                                        {refState.next_level}
+                                    </>
+                                }
+                            </div>
+                            <p className={styles.progress_top_ph}>
+                                friends invited
+                            </p>
                         </div>
-                        {isCopied && <DoneIcon className={styles.progress_button_icon} />}
-                    </button>
-                    <span></span>
-                    <a
-                        target="_blank"
-                        href={`https://t.me/share/url?url=Join the ranks of the REBELS through my link and fight for our common victory!
+                        <div className={styles.progress_top_right}>
+                            <div className={styles.progress_top_title}>
+                                {refState.ref_percent} %
+                            </div>
+                            <p className={styles.progress_top_ph}>from friends</p>
+                        </div>
+                    </div>
+                    <Line
+                        className={styles.progress_line}
+                        width={(refState.ref_count / refState.next_level) * 100}
+                        height={9}
+                    />
+                    <div className={styles.progress_bottom}>
+                        <button className={clsx(styles.progress_button, isCopied && styles.progress_button__done)} onClick={handleCopy}>
+                            <div className={styles.progress_button_text}>
+                                Copy
+                            </div>
+                            {isCopied && <DoneIcon className={styles.progress_button_icon} />}
+                        </button>
+                        <span></span>
+                        <a
+                            target="_blank"
+                            href={`https://t.me/share/url?url=Join the ranks of the REBELS through my link and fight for our common victory!
                             
                         ${link}`}
-                        className={styles.progress_button}
-                    >
-                        Send
-                    </a>
-                </div>
-            </div>
-
-            <div className={styles.claim}>
-                <div className={styles.claim_row}>
-                    <div className={styles.claim_coins}>
-                        <CoinIcon width={24} height={24} />
-                        {formatNumber(refState.balance, "ru-RU")}
+                            className={styles.progress_button}
+                        >
+                            Send
+                        </a>
                     </div>
-                    {timeToFill && <div className={styles.claim_time}>{timeToFill}</div>}
                 </div>
-                <div className={styles.claim_row}>
-                    <p className={styles.progress_top_ph}>referral earnings</p>
-                    {timeToFill && <p className={styles.progress_top_ph}>claim in </p>}
-                </div>
-                <Line
-                    className={styles.claim_line}
-                    width={Math.min(((((+new Date() / 1000) - (refState.claim_time - 12 * 60 * 60)) / (12 * 60 * 60)) * 100), 100)}
-                    height={9}
-                />
-            </div>
 
-            {<button onClick={handleClaim} className={clsx(styles.claim_button, styles.claim_time)} disabled={!!timeToFill || claim_time === 0}>
-                {timeToFill ? "Wait" : "Claim"}
-            </button>}
-        </div>
+                <div className={styles.claim}>
+                    <div className={styles.claim_row}>
+                        <div className={styles.claim_coins}>
+                            <CoinIcon width={24} height={24} />
+                            {formatNumber(refState.balance, "ru-RU")}
+                        </div>
+                        {timeToFill && <div className={styles.claim_time}>{timeToFill}</div>}
+                    </div>
+                    <div className={styles.claim_row}>
+                        <p className={styles.progress_top_ph}>referral earnings</p>
+                        {timeToFill && <p className={styles.progress_top_ph}>claim in </p>}
+                    </div>
+                    <Line
+                        className={styles.claim_line}
+                        width={Math.min(((((+new Date() / 1000) - (refState.claim_time - 12 * 60 * 60)) / (12 * 60 * 60)) * 100), 100)}
+                        height={9}
+                    />
+                </div>
+
+                {<button onClick={handleClaim} className={clsx(styles.claim_button, styles.claim_time)} disabled={!!timeToFill || claim_time === 0}>
+                    {timeToFill ? "Wait" : "Claim"}
+                </button>}
+            </div>
+        </>
     );
 });

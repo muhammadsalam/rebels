@@ -5,7 +5,7 @@ import { Quest, QuestType, useQuestsStore } from "entities/quests";
 import { useReferralStore } from "entities/referral";
 import { useUserStore, useGameStatsStore } from "entities/user";
 import { useVillainStore } from "entities/villain";
-import { axios, preloadImage, showAlert } from "shared/libs/utils";
+import { axios, preloadImage, showAlert, tgApp } from "shared/libs/utils";
 
 type TUser = {
     id: number,
@@ -226,7 +226,16 @@ export const fetchUser: (retry?: number) => Promise<boolean> = async (retry = 0)
             })
         });
 
+        if (useReferralStore.getState().prev_level === '') {
+            if (parseFloat(tgApp.version) > 6.9) {
+                tgApp.CloudStorage.setItem("ref_level", data.refferal_stats.level);
+            } else {
+                localStorage.setItem("ref_level", data.refferal_stats.level);
+            }
+        }
+
         useReferralStore.setState({
+            prev_level: useReferralStore.getState().prev_level === '' ? data.refferal_stats.level : useReferralStore.getState().prev_level,
             info: data.refferal_info,
             ...data.refferal_stats
         })

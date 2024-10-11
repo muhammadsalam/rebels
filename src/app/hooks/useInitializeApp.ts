@@ -3,6 +3,7 @@ import { tgApp } from 'shared/libs/utils';
 import { fetchUser } from 'entities/user/api/fetchUser';
 import { useAuth } from 'features/auth';
 import { useUserStore } from 'entities/user';
+import { useReferralStore } from 'entities/referral';
 
 export const useInitializeApp = () => {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -25,13 +26,18 @@ export const useInitializeApp = () => {
               settings: { ...state.settings, sounds: value }
             }))
           });
+
+          tgApp.CloudStorage.getItem('ref_level', (_: any, value: any) => {
+            if (value) useReferralStore.setState({ prev_level: value })
+          })
         } else {
           useUserStore.setState((state) => ({
             ...state,
             settings: { ...state.settings, sounds: localStorage.getItem('sounds') === 'true' }
           }))
-        }
 
+          useReferralStore.setState({ prev_level: localStorage.getItem('ref_level') || '' })
+        }
 
         const token = await getToken();
 
