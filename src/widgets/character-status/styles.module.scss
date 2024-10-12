@@ -47,8 +47,8 @@
     align-items: start;
 
     span {
-        &:first-child {
-            color: #38c313;
+        &:first-of-type {
+            color: var(--green);
         }
 
         &:last-child {
@@ -56,6 +56,43 @@
             opacity: 0.3;
         }
     }
+}
+
+@keyframes point {
+    0% {
+        translate: -50% 0;
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    80% {
+        translate: -50% -13px;
+        opacity: 0.1;
+    }
+    100% {
+        translate: -50% -13px;
+        opacity: 0;
+    }
+}
+
+.energy_elements {
+    position: relative;
+    width: 100%;
+}
+
+.energy {
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    z-index: 1;
+    pointer-events: none;
+    font-size: 16px;
+    line-height: 17px;
+    translate: -50%;
+    animation: point 1s ease-out forwards;
+    color: var(--green);
+    opacity: 0.5;
 }
 
 .battery_icon {

@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, memo } from "react";
+import { FC, HTMLAttributes, memo, useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import HeartIcon from "icons/heart.svg?react";
 import { useVillainStore } from "entities/villain";
@@ -6,6 +6,12 @@ import { useGameStatsStore } from "entities/user";
 import { axios, formatNumber } from "shared/libs/utils";
 import { Island, Line } from "shared/ui";
 import clsx from "clsx";
+
+type Energy = {
+    id: number;
+    positive: boolean;
+    amount: number;
+}
 
 export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
     (props) => {
@@ -23,6 +29,39 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
                 useGameStatsStore.setState({ energy_balance: useGameStatsStore.getState().max_energy })
             })
         }
+
+        const energyId = useRef(0);
+        const energyRef = useRef(current_energy)
+
+        const [energyElements, setEnergyElements] = useState<Energy[]>([]);
+
+        useEffect(() => {
+            let positive = true;
+            if (current_energy < energyRef.current) {
+                positive = false;
+            }
+
+            const id = energyId.current;
+
+            setEnergyElements((elements) => [
+                ...elements,
+                {
+                    id,
+                    amount: positive ? useGameStatsStore.getState().energy_update : useGameStatsStore.getState().energy_usage,
+                    positive: positive
+                }
+            ]);
+
+            setTimeout(() => {
+                setEnergyElements((prev) =>
+                    prev.filter((pos) => pos.id !== id)
+                );
+            }, 1000);
+
+            energyId.current += 1;
+            energyRef.current = current_energy
+
+        }, [current_energy])
 
         return (
             <div {...props} className={styles.wrapper}>
@@ -46,6 +85,13 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
                     />
                 </div>
                 <div className={styles.battery_count}>
+                    <div className={styles.energy_elements}>
+                        {energyElements.map(item => {
+                            return <div key={item.id} className={styles.energy}>
+                                {item.positive ? "+" : "-"}{formatNumber(item.amount)}
+                            </div>
+                        })}
+                    </div>
                     <span>{formatNumber(current_energy)}</span>
                     <span>{formatNumber(max_energy)}</span>
                 </div>
