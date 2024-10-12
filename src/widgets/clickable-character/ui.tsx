@@ -125,7 +125,7 @@ export const ClickableCharacter: FC<HTMLAttributes<HTMLDivElement>> = (
                         zIndex: isCritical ? 3 : undefined,
                     }}
                 >
-                    {damage}
+                    -{damage}
                 </div>
             ))}
             <img
