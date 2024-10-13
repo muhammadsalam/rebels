@@ -37,6 +37,11 @@ export const CharacterStatus: FC<HTMLAttributes<HTMLDivElement>> = memo(
 
         useEffect(() => {
             let positive = true;
+
+            if (current_energy === energyRef.current) {
+                return;
+            }
+
             if (current_energy < energyRef.current) {
                 positive = false;
             }
