@@ -58,6 +58,7 @@ type TTeamValue = {
 }
 
 type THero = {
+    base_damage: number,
     name: string,
     photo: string,
     rarity: "Common" | "Uncommon" | "Rare" | "Epic" | "Legend",

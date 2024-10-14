@@ -19,6 +19,7 @@ export const useHeroStore = create<HeroState>((set, get) => ({
         set({
             team: team.concat(
                 (new Array(5) as Card[]).fill({
+                    base_damage: 0,
                     photo: '',
                     id: 0,
                     level: 0,

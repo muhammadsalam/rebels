@@ -13,6 +13,7 @@ export type Card = {
     rarity: 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legend';
     upgrade_price: number;
     count: number;
+    base_damage: number;
 }
 
 export interface HeroState {

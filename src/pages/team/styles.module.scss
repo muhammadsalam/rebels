@@ -166,14 +166,42 @@
     width: 100%;
 }
 
-.skills_heading {
-    font-family: "Pixel Operator";
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 25px;
-    text-align: left;
+.skills_top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
     margin-bottom: 16px;
+}
+
+.skills_heading {
+    flex-grow: 1;
+    font-family: "Pixel Operator";
+    font-size: 20px;
+    line-height: 21px;
+    font-weight: 400;
+    text-align: center;
     color: var(--gray);
+    transition: color 0.123s ease-in-out;
+}
+
+.skills_heading__active {
+    color: var(--white);
+    pointer-events: none;
+}
+
+.skills_slider {
+    display: flex;
+    gap: 20px;
+    transition: translate 0.123s ease-in;
+}
+
+.skills_slider__active {
+    translate: calc(-100% - 20px) 0 0;
+}
+
+.skills_slide {
+    flex-shrink: 0;
+    width: 100%;
 }
 
 .skill {

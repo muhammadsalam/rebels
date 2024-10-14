@@ -1,11 +1,12 @@
 import SwordIcon from "icons/sword.svg?react";
 import FlashIcon from "icons/flash.svg?react";
 import SkullIcon from "icons/skull.svg?react";
+import PixelCoinIcon from "icons/pixel-coin.svg?react";
 import CoinIcon from "icons/coin.svg?react";
 import clsx from "clsx";
 import { saveTeam, Card, upgradeHero, useHeroStore } from "entities/heroes";
-import { useCallback, useState } from "react";
-import { Island, Line, Modal } from "shared/ui";
+import { useCallback, useMemo, useState } from "react";
+import { Island, Line, Modal, Switcher } from "shared/ui";
 import { formatNumber } from "shared/libs/utils";
 import { useUserStore } from "entities/user";
 import { CardsPage } from "pages/cards";
@@ -20,6 +21,15 @@ import useSound from "use-sound";
 import { useBackButton } from "shared/libs/hooks";
 import InfoBoxIcon from "icons/info-box.svg?react";
 import { Link } from "react-router-dom";
+
+const MIN_DAMAGE = 67;
+const MAX_DAMAGE = 850;
+
+const MIN_ENERGY_USAGE = 87;
+const MAX_ENERGY_USAGE = 54;
+
+const MIN_MINING = 686;
+const MAX_MINING = 39674;
 
 export const TeamPage = () => {
     useBackButton();
@@ -137,6 +147,22 @@ export const TeamPage = () => {
         setIsCardsGalleryActive(true)
     }, [playClickSound, sounds]);
 
+    const [playSwitchSound] = useSound('/assets/sounds/click.mp3');
+    const [isSwitched, setIsSwitched] = useState(false);
+    const handleSwitch = () => {
+        sounds && playSwitchSound();
+        setIsSwitched((state) => !state);
+    };
+
+    const damage = useMemo(() => Math.floor(choosedCards.reduce((sum, item) => sum + item.base_damage, 0) * (1 + team_skills.knowledge / 100)), [choosedCards, team_skills]);
+    const damagePercentage = useMemo(() => ((damage - MIN_DAMAGE) / (MAX_DAMAGE - MIN_DAMAGE)) * 100, [damage]);
+
+    const energy_hit = useMemo(() => Math.floor(100 / (1 + team_skills.loyalty / 100)), [team_skills]);
+    const energyPercentage = useMemo(() => ((energy_hit - MIN_ENERGY_USAGE) / (MAX_ENERGY_USAGE - MIN_ENERGY_USAGE)) * 100, [energy_hit]);
+
+    const mining = useMemo(() => (team_skills.knowledge + team_skills.influence) * team_skills.loyalty, [team_skills]);
+    const miningPercentage = useMemo(() => ((mining - MIN_MINING) / (MAX_MINING - MIN_MINING)) * 100, [mining]);
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -153,6 +179,7 @@ export const TeamPage = () => {
                     let item = cardsArray.find(item => item.position === index);
 
                     if (item === undefined) item = {
+                        base_damage: 0,
                         id: 0,
                         level: 0,
                         count: 0,
@@ -201,54 +228,114 @@ export const TeamPage = () => {
             </div>
 
             <div className={styles.skills}>
-                <h3 className={styles.skills_heading}>Team power:</h3>
-                <div className={clsx(styles.skill, styles.skill__knowledge)}>
-                    <div className={styles.skill_top}>
-                        <div className={styles.skill_top_left}>
-                            <SwordIcon />
-                            Knowledge
-                        </div>
-                        <span className={styles.skill_value}>
-                            {team_skills.knowledge}
-                        </span>
-                    </div>
-                    <Line
-                        className={styles.line}
-                        height={2}
-                        width={(team_skills.knowledge / max_team_skills.knowledge) * 100}
-                    />
+                <div className={styles.skills_top}>
+                    <h3 className={clsx(styles.skills_heading, isSwitched === false && styles.skills_heading__active)} onClick={handleSwitch}>Power</h3>
+                    <Switcher active={isSwitched} handleSwitch={handleSwitch} />
+                    <h3 className={clsx(styles.skills_heading, isSwitched === true && styles.skills_heading__active)} onClick={handleSwitch}>Stats</h3>
                 </div>
-                <div className={clsx(styles.skill, styles.skill__loyalty)}>
-                    <div className={styles.skill_top}>
-                        <div className={styles.skill_top_left}>
-                            <FlashIcon />
-                            Loyalty
+
+                <div className={clsx(styles.skills_slider, isSwitched && styles.skills_slider__active)}>
+                    <div className={styles.skills_slide}>
+                        <div className={clsx(styles.skill, styles.skill__knowledge)}>
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <SwordIcon />
+                                    Knowledge
+                                </div>
+                                <span className={styles.skill_value}>
+                                    {team_skills.knowledge}
+                                </span>
+                            </div>
+                            <Line
+                                className={styles.line}
+                                height={2}
+                                width={(team_skills.knowledge / max_team_skills.knowledge) * 100}
+                            />
                         </div>
-                        <span className={styles.skill_value}>
-                            {team_skills.loyalty}
-                        </span>
-                    </div>
-                    <Line
-                        className={styles.line}
-                        height={2}
-                        width={(team_skills.loyalty / max_team_skills.loyalty) * 100}
-                    />
-                </div>
-                <div className={clsx(styles.skill, styles.skill__influence)}>
-                    <div className={styles.skill_top}>
-                        <div className={styles.skill_top_left}>
-                            <SkullIcon />
-                            Influence
+                        <div className={clsx(styles.skill, styles.skill__loyalty)}>
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <FlashIcon />
+                                    Loyalty
+                                </div>
+                                <span className={styles.skill_value}>
+                                    {team_skills.loyalty}
+                                </span>
+                            </div>
+                            <Line
+                                className={styles.line}
+                                height={2}
+                                width={(team_skills.loyalty / max_team_skills.loyalty) * 100}
+                            />
                         </div>
-                        <span className={styles.skill_value}>
-                            {team_skills.influence}
-                        </span>
+                        <div className={clsx(styles.skill, styles.skill__influence)}>
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <SkullIcon />
+                                    Influence
+                                </div>
+                                <span className={styles.skill_value}>
+                                    {team_skills.influence}
+                                </span>
+                            </div>
+                            <Line
+                                className={styles.line}
+                                height={2}
+                                width={(team_skills.influence / max_team_skills.influence) * 100}
+                            />
+                        </div>
                     </div>
-                    <Line
-                        className={styles.line}
-                        height={2}
-                        width={(team_skills.influence / max_team_skills.influence) * 100}
-                    />
+
+                    <div className={styles.skills_slide}>
+                        <div className={clsx(styles.skill, styles.skill__knowledge)}>
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <SwordIcon />
+                                    Damage / hit
+                                </div>
+                                <span className={styles.skill_value}>
+                                    {damage}
+                                </span>
+                            </div>
+                            <Line
+                                className={styles.line}
+                                height={2}
+                                width={damagePercentage}
+                            />
+                        </div>
+                        <div className={clsx(styles.skill, styles.skill__loyalty)}>
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <FlashIcon />
+                                    Energy / hit
+                                </div>
+                                <span className={styles.skill_value}>
+                                    {energy_hit}
+                                </span>
+                            </div>
+                            <Line
+                                className={styles.line}
+                                height={2}
+                                width={energyPercentage}
+                            />
+                        </div>
+                        <div className={clsx(styles.skill, styles.skill__influence)}>
+                            <div className={styles.skill_top}>
+                                <div className={styles.skill_top_left}>
+                                    <PixelCoinIcon />
+                                    Mining / hour
+                                </div>
+                                <span className={styles.skill_value}>
+                                    {mining}
+                                </span>
+                            </div>
+                            <Line
+                                className={styles.line}
+                                height={2}
+                                width={miningPercentage}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
 
